@@ -1,0 +1,49 @@
+name: PARC
+display_name: PARC
+family: graph_clustering
+report: true
+core_contract: author_core_unchanged
+core_status: original_source_smoke_tested
+aliases:
+  - parc
+source:
+  kind: original_source
+  path: external/original_code/PARC
+  reference: https://github.com/ShobiStassen/PARC
+runner:
+  kind: command_template
+  command:
+    - '{python_bin}'
+    - '{source_path}/scrbenchmark_wrapper.py'
+    - --input
+    - '{data}'
+    - --output
+    - '{raw_dir}'
+    - --clusters
+    - '{n_labels}'
+    - --seed
+    - '{seed}'
+    - --n-top-genes
+    - '{n_top_genes}'
+    - --min-genes-per-cell
+    - '{min_genes_per_cell}'
+    - --max-genes-per-cell
+    - '{max_genes_per_cell}'
+    - --min-cells-per-gene
+    - '{min_cells_per_gene}'
+    - --target-sum
+    - '{target_sum}'
+    - --scale-max-value
+    - '{scale_max_value}'
+    - --hvg-flavor
+    - '{hvg_flavor}'
+    - --n-pcs
+    - '{n_pcs}'
+    - '{param_args}'
+output:
+  expected_file: results/analysis_results.csv
+  labels_file: raw/labels.csv
+  labels_column: cluster
+  cell_id_column: cell_id
+  latent_file: raw/latent.csv
+notes: External PARC source cloned from https://github.com/ShobiStassen/PARC. The SCRBenchmark wrapper only adapts AnnData input, configurable preprocessing, hyperparameters, and output files.

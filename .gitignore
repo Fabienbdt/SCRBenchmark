@@ -1,0 +1,111 @@
+# SCRBenchmark - Git Ignore File
+
+# ===========================
+# Python
+# ===========================
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ===========================
+# Virtual Environments
+# ===========================
+.env
+.venv
+env/
+venv/
+
+# ===========================
+# OS-specific
+# ===========================
+.DS_Store
+.Rhistory
+*.swp
+*.swo
+
+# ===========================
+# Model Weights & Checkpoints
+# ===========================
+*.pth.tar
+*.pth
+*.ckpt
+*.pt
+
+# ===========================
+# Large Generated Data Files
+# ===========================
+# These can be regenerated from raw data using scripts/setup/prepare_baron_dataset.py
+data/**/*.h5
+data/**/*.h5ad
+data/stable_generalist/DOWNLOAD_MANIFEST.csv
+data/**/*.zip
+
+# Exclude large CSV files in data root, but NOT in subdirectories
+data/*.csv
+
+# ===========================
+# RAW DATA - KEEP TRACKED
+# ===========================
+# The GSE84133_RAW folder contains the original Baron dataset files
+# These are small compressed files (~25MB total) and MUST be tracked
+# to ensure reproducibility for all users.
+!data/GSE84133_RAW/
+!data/GSE84133_RAW/*.csv.gz
+
+# ===========================
+# Results (generated)
+# ===========================
+results*/
+results/
+results_CLI/
+outputs/
+logs/
+*.log
+figures/
+verification_results/
+scripts/maintenance/test_output/
+*.h5ad
+# Keep source package tracked despite "results*/" ignore rule
+!src/scrbenchmark/gui/results_explorer/
+!src/scrbenchmark/gui/results_explorer/**
+# But still ignore Python cache/artifacts inside that package
+src/scrbenchmark/gui/results_explorer/**/__pycache__/
+src/scrbenchmark/gui/results_explorer/**/*.pyc
+src/scrbenchmark/gui/results_explorer/**/*.pyo
+src/scrbenchmark/gui/results_explorer/**/*.pyd
+
+# ===========================
+# Claude/Agent Files
+# ===========================
+CLAUDE.MD
+claude.md
+.claude/
+.gemini/
+data/_pancreas_cache/
+
+# ===========================
+# Public repository hygiene
+# ===========================
+external/original_code/**/.git/
+scripts/analysis/**/.git/
+docs/**/*.pdf
+docs/*.pdf
+external/original_code/CellSIUS/
+external/original_code/DeepScena/
+external/original_code/GiniClust/
+external/original_code/aide/
+external/original_code/rph_kmeans/
+external/original_code/scAIDE/
+external/original_code/scCAD/
+scripts/analysis/GiniClust/
+scripts/analysis/scCAD/

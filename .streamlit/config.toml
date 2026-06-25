@@ -1,0 +1,13 @@
+[server]
+# 10 GB limit for uploads
+maxUploadSize = 10000
+maxMessageSize = 2000
+enableXsrfProtection = false
+enableCORS = false
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+# Default theme
+base = "light"

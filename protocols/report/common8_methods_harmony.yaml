@@ -1,0 +1,66 @@
+schema_version: 1
+id: common8_methods_harmony
+name: Rapport - Common-8 methods + Harmony
+experiment_type: transductive
+description: Report common-8 datasets with the primary methods and Harmony-composed complements.
+tags:
+  - report
+  - common8
+  - harmony
+datasets:
+  - key: bbag094_zeisel
+  - key: bbag094_spleen
+  - key: baron_human_pancreas
+  - key: gse112013_human_testis_raw_counts
+  - key: kang_pbmc_gse96583_singlets_raw_counts
+  - key: macaque_retina_gse118480_bipolar_raw_counts
+  - key: paul15_bone_marrow_raw_counts
+  - key: Tabula_Muris_liver_filtered_raw_counts
+split:
+  mode: all
+preprocessing:
+  preset: report_default
+methods:
+  report_methods:
+    - scRAW
+    - scAIDE
+    - CellSIUS
+    - DeepScena
+    - scCAD
+    - GiniClust
+    - scvi
+    - scMAE
+    - pca_leiden
+    - scNAME
+    - Harmony
+    - ComBat
+    - DESC
+    - Scanorama
+    - scMAE+Harmony
+    - scNAME+Harmony
+    - scvi+Harmony
+    - DeepScena+Harmony
+    - CellSIUS+Harmony
+    - GiniClust+Harmony
+    - scAIDE+Harmony
+    - scCAD+Harmony
+report_method:
+  n_pcs: 50
+  harmony_max_iter: 10
+  harmony_nclust: 50
+execution:
+  output_dir: results/report_design/common8_methods_harmony
+  seed: 42
+  n_repeats: 1
+  device: auto
+metrics:
+  - NMI
+  - ARI
+  - ACC
+  - Silhouette
+sweeps:
+  report_method.n_pcs:
+    - 30
+    - 50
+  report_method.harmony_max_iter:
+    - 10

@@ -1,0 +1,60 @@
+# Template YAML bas niveau.
+# Pour le guide utilisateur pas a pas d'ajout d'algorithme externe, voir:
+#   docs/algorithm_extension_guide.md
+# Copier ce fichier seulement si vous connaissez deja le contrat YAML.
+#
+# Regles pour les methodes auteur:
+# - conserver le coeur algorithmique dans vendor/<method>/ ou external/original_code/<method>/;
+# - utiliser runner.command pour appeler le script auteur avec les placeholders SCRBenchmark;
+# - exposer preprocessing et hyperparametres via les placeholders et {param_args}
+#   au lieu de les hardcoder dans l'integration;
+# - ajouter un petit adaptateur seulement si le script auteur ne peut pas lire
+#   l'entree exportee ou ecrire labels/embeddings dans un fichier reutilisable;
+# - declarer toute modification intentionnelle comme methode experimentale separee.
+#
+# Choix de runner:
+# - command_template: recommande pour les nouvelles methodes externes.
+#   SCRBenchmark remplit {data}, {output}, {n_labels}, {seed}, {device}, etc.
+# - scrbenchmark_cli: methode deja appelable par la CLI SCRBenchmark, mais ce
+#   YAML reste l'entree benchmark/reproduction.
+# - les executants legacy comme external_method ou passthrough_script restent
+#   disponibles pour les anciennes methodes; les nouvelles integrations doivent
+#   preferer command_template.
+
+name: my_method
+display_name: My Method
+family: deep_learning
+report: true
+core_contract: author_core_unchanged
+core_status: original_source_pending_validation
+aliases: []
+source:
+  kind: original_source
+  path: vendor/my_method
+  reference: "paper/repository DOI or URL"
+runner:
+  kind: command_template
+  command:
+    - "{python_bin}"
+    - "{source_path}/main.py"
+    - "--input"
+    - "{data}"
+    - "--output"
+    - "{raw_dir}"
+    - "--clusters"
+    - "{n_labels}"
+    - "--seed"
+    - "{seed}"
+    - "--n-top-genes"
+    - "{n_top_genes}"
+    - "--target-sum"
+    - "{target_sum}"
+    - "{param_args}"
+output:
+  expected_file: results/analysis_results.csv
+  labels_file: raw/labels.csv
+  labels_column: cluster
+  cell_id_column: cell_id
+  # Optionnel, si la methode ecrit des embeddings:
+  # latent_file: raw/latent.csv
+notes: "Adapter runner.command et output.* au code auteur."

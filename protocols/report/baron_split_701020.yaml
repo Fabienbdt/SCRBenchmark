@@ -1,0 +1,43 @@
+schema_version: 1
+id: baron_split_701020
+name: Rapport - Baron split 70-10-20
+experiment_type: transductive_split
+description: Baron human pancreas split with 70% train, 10% validation and 20% test.
+tags:
+  - report
+  - baron
+  - split
+dataset:
+  key: baron_human_pancreas
+split:
+  mode: stratified
+  train_ratio: 0.7
+  val_ratio: 0.1
+  stratify_by_batch: true
+  stratify_by_labels: true
+  use_stratified_base: true
+preprocessing:
+  preset: report_default
+methods:
+  local_algorithms:
+    - pca_kmeans
+    - pca_leiden
+    - scdeepcluster
+    - sccdcg
+    - sc_mae
+    - scname
+execution:
+  output_dir: results/report_design/baron_split_701020
+  seed: 42
+  n_repeats: 3
+  device: auto
+metrics:
+  - NMI
+  - ARI
+  - ACC
+  - Silhouette
+sweeps:
+  execution.n_repeats:
+    - 3
+  execution.seed:
+    - 42

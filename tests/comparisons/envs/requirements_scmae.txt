@@ -1,0 +1,16 @@
+# Requirements for original scMAE
+# Python 3.10 required
+# From: https://github.com/theislab/sc_mae
+
+# IMPORTANT: Use Python 3.10
+# conda create -n scmae_env python=3.10
+
+# Note: Original uses PyTorch Lightning
+pytorch-lightning>=2.0.0
+torch>=2.0.0
+scanpy>=1.9.0
+anndata>=0.8.0
+numpy>=1.21.0
+scipy>=1.9.0
+scikit-learn>=1.0.0
+h5py>=3.7.0

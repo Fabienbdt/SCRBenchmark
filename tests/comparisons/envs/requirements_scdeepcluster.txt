@@ -1,0 +1,12 @@
+# Requirements for original scDeepCluster
+# From: https://github.com/ttgump/scDeepCluster_pytorch
+# No specific Python version mentioned
+
+scanpy==1.7.0
+torch>=1.8.0
+numpy>=1.19.0
+scipy>=1.5.0
+scikit-learn>=0.24.0
+h5py>=2.10.0
+pandas>=1.1.0
+anndata>=0.7.0

@@ -1,0 +1,1202 @@
+methods:
+  - name: scRAW
+    aliases:
+      - scraw
+    display_name: scRAW
+    family: scraw
+    report: true
+    core_contract: author_core_unchanged
+    core_status: external_scraw_reproduction
+    source:
+      kind: original_source
+      path: /data2/fbidet/scRAW
+      provenance: external scRAW repository
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/adapters/run_scraw_external.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: PCA
+    aliases:
+      - pca
+    display_name: PCA + selectable clustering
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: sklearn_pca_with_configurable_clustering
+    source:
+      kind: package_api
+      packages:
+        - scikit-learn
+        - scanpy
+        - igraph
+        - leidenalg
+        - hdbscan
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: pca
+      default_params:
+        clustering_method: leiden
+    output:
+      expected_file: results/results.csv
+  - name: kmeans
+    aliases:
+      - K-Means
+      - k-means
+      - pca_kmeans
+    display_name: PCA + K-Means
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: sklearn_pca_then_kmeans
+    source:
+      kind: package_api
+      packages:
+        - scikit-learn
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: pca
+      default_params:
+        clustering_method: kmeans
+    output:
+      expected_file: results/results.csv
+  - name: louvain
+    aliases:
+      - Louvain
+      - pca_louvain
+    display_name: PCA + Louvain
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: sklearn_pca_then_igraph_louvain
+    source:
+      kind: package_api
+      packages:
+        - scikit-learn
+        - igraph
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: pca
+      default_params:
+        clustering_method: louvain
+    output:
+      expected_file: results/results.csv
+  - name: leiden
+    aliases:
+      - Leiden
+      - pca_leiden_generic
+    display_name: PCA + Leiden
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: sklearn_pca_scanpy_neighbors_leiden
+    source:
+      kind: package_api
+      packages:
+        - scikit-learn
+        - scanpy
+        - leidenalg
+        - igraph
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: pca
+      default_params:
+        clustering_method: leiden
+    output:
+      expected_file: results/results.csv
+  - name: hdbscan
+    aliases:
+      - HDBSCAN
+      - pca_hdbscan
+    display_name: PCA + HDBSCAN
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: sklearn_pca_then_hdbscan
+    source:
+      kind: package_api
+      packages:
+        - scikit-learn
+        - hdbscan
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: pca
+      default_params:
+        clustering_method: hdbscan
+    output:
+      expected_file: results/results.csv
+  - name: pca_leiden
+    aliases:
+      - pca_leiden_batch_baseline
+    display_name: PCA + Leiden (batch baseline)
+    family: classical
+    report: true
+    core_contract: package_api_pipeline
+    core_status: scanpy_pca_neighbors_leiden_pipeline
+    source:
+      kind: package_api
+      packages:
+        - scanpy
+        - leidenalg
+        - igraph
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - pca_leiden
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - --n-pcs
+        - '{n_pcs}'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: Harmony
+    aliases:
+      - harmony
+    display_name: Harmony
+    family: batch_correction
+    report: true
+    core_contract: package_api_pipeline
+    core_status: harmonypy_api
+    source:
+      kind: package_api
+      packages:
+        - harmonypy
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - harmony
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - --n-pcs
+        - '{n_pcs}'
+        - --harmony-max-iter
+        - '{harmony_max_iter}'
+        - --harmony-nclust
+        - '{harmony_nclust}'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: ComBat
+    aliases:
+      - combat
+    display_name: ComBat
+    family: batch_correction
+    report: true
+    core_contract: package_api_pipeline
+    core_status: scanpy_combat_api
+    source:
+      kind: package_api
+      packages:
+        - scanpy
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - combat
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --n-pcs
+        - '50'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: ComBat-seq
+    aliases:
+      - combat_seq
+      - combat-seq
+    display_name: ComBat-seq
+    family: batch_correction
+    report: true
+    core_contract: package_api_pipeline
+    core_status: stable_generalist_runner
+    source:
+      kind: package_api
+      packages:
+        - scanpy
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - combat_seq
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --n-pcs
+        - '50'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: Scanorama
+    aliases:
+      - scanorama
+    display_name: Scanorama
+    family: batch_correction
+    report: true
+    core_contract: package_api_pipeline
+    core_status: scanorama_api
+    source:
+      kind: package_api
+      packages:
+        - scanorama
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - scanorama
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --n-pcs
+        - '50'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scvi
+    aliases:
+      - scVI
+    display_name: scVI
+    family: deep_learning
+    report: true
+    core_contract: package_api_pipeline
+    core_status: scvi_tools_api
+    source:
+      kind: package_api
+      packages:
+        - scvi-tools
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_batch_baselines.py'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --method
+        - scvi
+        - --seed
+        - '{seed}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --n-pcs
+        - '50'
+        - --resolutions
+        - '{resolutions}'
+        - --selection-expected-n-classes
+        - '{selection_expected_n_classes}'
+        - --compute-scib
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --skip-umap-plots
+        - --verbose
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scMAE
+    aliases:
+      - sc_mae
+    display_name: scMAE
+    family: deep_learning
+    report: true
+    core_contract: author_logic_preserved
+    core_status: ported_methodology_with_comparison_tests
+    source:
+      kind: local_port
+      path: src/scrbenchmark/algorithms/sc_mae.py
+      original_path: external/original_code/scMAE-main
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: sc_mae
+    output:
+      expected_file: results/results.csv
+  - name: scNAME
+    aliases:
+      - scname
+    display_name: scNAME
+    family: deep_learning
+    report: true
+    core_contract: author_logic_preserved
+    core_status: ported_methodology_with_comparison_tests
+    source:
+      kind: local_port
+      path: src/scrbenchmark/algorithms/scname.py
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: scname
+    output:
+      expected_file: results/results.csv
+  - name: scDeepCluster
+    aliases:
+      - scdeepcluster
+    display_name: scDeepCluster
+    family: deep_learning
+    report: true
+    core_contract: author_logic_preserved
+    core_status: ported_methodology_with_comparison_tests
+    source:
+      kind: local_port
+      path: src/scrbenchmark/algorithms/scdeepcluster.py
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: scdeepcluster
+    output:
+      expected_file: results/results.csv
+  - name: scCDCG
+    aliases:
+      - sccdcg
+    display_name: scCDCG
+    family: deep_learning
+    report: true
+    core_contract: author_logic_preserved
+    core_status: ported_methodology_with_comparison_tests
+    source:
+      kind: local_port
+      path: src/scrbenchmark/algorithms/sccdcg.py
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: sccdcg
+    output:
+      expected_file: results/results.csv
+  - name: DESC
+    aliases:
+      - desc
+    display_name: DESC
+    family: batch_correction
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/desc
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: DeepScena
+    aliases:
+      - deepscena
+    display_name: DeepScena
+    family: rare_specific
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/DeepScena
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: CellSIUS
+    aliases:
+      - cellsius
+    display_name: CellSIUS
+    family: rare_specific
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/CellSIUS
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: GiniClust
+    aliases:
+      - giniclust
+    display_name: GiniClust
+    family: rare_specific
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/GiniClust
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scAIDE
+    aliases:
+      - scaide
+    display_name: scAIDE
+    family: rare_specific
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/scAIDE
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scCAD
+    aliases:
+      - sccad
+    display_name: scCAD
+    family: rare_specific
+    report: true
+    core_contract: author_core_unchanged
+    core_status: original_source_with_legacy_dependency_fallback
+    source:
+      kind: original_source
+      path: external/original_code/scCAD
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scMAE+Harmony
+    display_name: scMAE + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_embedding
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: scMAE
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_posthoc_harmony.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - --n-pcs
+        - '{n_pcs}'
+        - --harmony-max-iter
+        - '{harmony_max_iter}'
+        - --harmony-nclust
+        - '{harmony_nclust}'
+        - '{param_args}'
+        - '{verbose_flag}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scNAME+Harmony
+    display_name: scNAME + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_embedding
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: scNAME
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_posthoc_harmony.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - --n-pcs
+        - '{n_pcs}'
+        - --harmony-max-iter
+        - '{harmony_max_iter}'
+        - --harmony-nclust
+        - '{harmony_nclust}'
+        - '{param_args}'
+        - '{verbose_flag}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scvi+Harmony
+    aliases:
+      - scVI+Harmony
+    display_name: scVI + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_embedding
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: scvi
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_posthoc_harmony.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - --n-pcs
+        - '{n_pcs}'
+        - --harmony-max-iter
+        - '{harmony_max_iter}'
+        - --harmony-nclust
+        - '{harmony_nclust}'
+        - '{param_args}'
+        - '{verbose_flag}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: DeepScena+Harmony
+    display_name: DeepScena + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_embedding
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: DeepScena
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: CellSIUS+Harmony
+    display_name: CellSIUS + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_output
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: CellSIUS
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: GiniClust+Harmony
+    display_name: GiniClust + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_output
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: GiniClust
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scAIDE+Harmony
+    display_name: scAIDE + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_output
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: scAIDE
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scCAD+Harmony
+    display_name: scCAD + Harmony
+    family: composed_protocol
+    report: true
+    core_contract: composed_protocol_after_author_output
+    core_status: posthoc_harmony_not_author_claim
+    source:
+      kind: composed
+      base_method: scCAD
+      correction: Harmony
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv
+  - name: scMAE_scRAW_weighted
+    aliases:
+      - sc_mae_scraw_weighted
+    display_name: scMAE + scRAW weighted loss
+    family: loss_transfer
+    report: true
+    core_contract: experimental_plugin_explicitly_not_author_baseline
+    core_status: report_loss_transfer_variant
+    source:
+      kind: local_experiment
+      path: src/scrbenchmark/algorithms/sc_mae_scraw_weighted.py
+      base_method: scMAE
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: sc_mae_scraw_weighted
+    output:
+      expected_file: results/results.csv
+  - name: scDeepCluster_scRAW_weighted
+    aliases:
+      - scdeepcluster_scraw_weighted
+    display_name: scDeepCluster + scRAW weighted loss
+    family: loss_transfer
+    report: true
+    core_contract: experimental_plugin_explicitly_not_author_baseline
+    core_status: report_loss_transfer_variant
+    source:
+      kind: local_experiment
+      path: src/scrbenchmark/algorithms/scdeepcluster_scraw_weighted.py
+      base_method: scDeepCluster
+    runner:
+      kind: scrbenchmark_cli
+      algorithm: scdeepcluster_scraw_weighted
+    output:
+      expected_file: results/results.csv
+  - name: DESC_scRAW_weighted
+    aliases:
+      - desc_scraw_weighted
+    display_name: DESC + scRAW weighted loss
+    family: loss_transfer
+    report: true
+    core_contract: experimental_plugin_explicitly_not_author_baseline
+    core_status: report_loss_transfer_variant
+    source:
+      kind: local_experiment
+      path: vendor/stable_generalist_runners/scripts/run_desc.py
+      base_method: DESC
+    runner:
+      kind: command_template
+      command:
+        - '{python_bin}'
+        - '{repo_root}/scripts/reproduction/run_external_method.py'
+        - --method
+        - '{method}'
+        - --data
+        - '{data}'
+        - --output
+        - '{output}'
+        - --dataset-key
+        - '{dataset_key}'
+        - --label-key
+        - '{label_key}'
+        - --batch-key
+        - '{batch_key}'
+        - --n-labels
+        - '{n_labels}'
+        - --seed
+        - '{seed}'
+        - --device
+        - '{device}'
+        - --scib-n-jobs
+        - '{scib_n_jobs}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
+    output:
+      expected_file: results/analysis_results.csv

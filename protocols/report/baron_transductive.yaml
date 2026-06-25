@@ -1,0 +1,38 @@
+schema_version: 1
+id: baron_transductive
+name: Rapport - Baron transductive
+experiment_type: transductive
+description: Local algorithm comparison on the full Baron human pancreas dataset.
+tags:
+  - report
+  - baron
+  - transductive
+dataset:
+  key: baron_human_pancreas
+split:
+  mode: all
+preprocessing:
+  preset: report_default
+methods:
+  local_algorithms:
+    - pca_kmeans
+    - pca_leiden
+    - scdeepcluster
+    - sccdcg
+    - sc_mae
+    - scname
+execution:
+  output_dir: results/report_design/baron_transductive
+  seed: 42
+  n_repeats: 3
+  device: auto
+metrics:
+  - NMI
+  - ARI
+  - ACC
+  - Silhouette
+sweeps:
+  execution.n_repeats:
+    - 3
+  preprocessing.n_top_genes:
+    - 2000

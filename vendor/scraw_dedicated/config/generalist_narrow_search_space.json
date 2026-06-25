@@ -1,0 +1,478 @@
+{
+  "timestamp": "2026-03-27T15:17:57.723429",
+  "source_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/ultra_searches/baron_pancreas_ultra_search/stage2_refine_topk/summaries/aggregated_topk.csv",
+  "top_k_considered": 10,
+  "score_weights": {
+    "ARI": 0.2,
+    "NMI": 0.17,
+    "ACC": 0.15,
+    "F1_Macro": 0.13,
+    "BalancedACC": 0.1,
+    "RareACC": 0.1,
+    "UltraRareACC": 0.15
+  },
+  "frozen_params": {
+    "use_batch_conditioning": true,
+    "masking_apply_weighted": true,
+    "pseudo_label_method": "leiden",
+    "hdbscan_cluster_selection_method": "eom"
+  },
+  "sampled_params": {
+    "final_clustering_requested": {
+      "type": "categorical",
+      "choices": [
+        "hdbscan",
+        "leiden"
+      ]
+    },
+    "hidden_layers": {
+      "type": "categorical",
+      "choices": [
+        "512,256,128",
+        "512,256"
+      ]
+    },
+    "z_dim": {
+      "type": "categorical",
+      "choices": [
+        128,
+        192,
+        256
+      ]
+    },
+    "dropout": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        0.25,
+        0.3
+      ]
+    },
+    "epochs": {
+      "type": "categorical",
+      "choices": [
+        80,
+        100,
+        210
+      ]
+    },
+    "warmup_epochs": {
+      "type": "categorical",
+      "choices": [
+        36,
+        45,
+        74
+      ]
+    },
+    "batch_size": {
+      "type": "categorical",
+      "choices": [
+        192,
+        384
+      ]
+    },
+    "reconstruction_distribution": {
+      "type": "categorical",
+      "choices": [
+        "nb",
+        "mse"
+      ]
+    },
+    "nb_input_transform": {
+      "type": "categorical",
+      "choices": [
+        "log1p",
+        "pearson_residuals"
+      ]
+    },
+    "masking_rate": {
+      "type": "categorical",
+      "choices": [
+        0.1,
+        0.15,
+        0.2
+      ]
+    },
+    "masked_recon_weight": {
+      "type": "categorical",
+      "choices": [
+        0.6,
+        0.8
+      ]
+    },
+    "weight_exponent": {
+      "type": "categorical",
+      "choices": [
+        0.1,
+        0.2
+      ]
+    },
+    "density_knn_k": {
+      "type": "categorical",
+      "choices": [
+        15
+      ]
+    },
+    "density_weight_clip": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        8.0
+      ]
+    },
+    "dynamic_weight_update_interval": {
+      "type": "categorical",
+      "choices": [
+        10,
+        20
+      ]
+    },
+    "max_cell_weight": {
+      "type": "categorical",
+      "choices": [
+        8.0,
+        10.0,
+        15.0
+      ]
+    },
+    "weight_fusion_mode": {
+      "type": "categorical",
+      "choices": [
+        "additive",
+        "multiplicative"
+      ]
+    },
+    "rare_triplet_start_epoch": {
+      "type": "categorical",
+      "choices": [
+        46,
+        60,
+        84
+      ]
+    },
+    "rare_triplet_margin": {
+      "type": "categorical",
+      "choices": [
+        0.4,
+        0.5
+      ]
+    },
+    "rare_triplet_min_weight": {
+      "type": "categorical",
+      "choices": [
+        0.8,
+        1.0,
+        1.8
+      ]
+    },
+    "max_triplet_anchors_per_batch": {
+      "type": "categorical",
+      "choices": [
+        64,
+        128
+      ]
+    },
+    "hdbscan_min_cluster_size": {
+      "type": "categorical",
+      "choices": [
+        8,
+        9
+      ]
+    },
+    "hdbscan_min_samples": {
+      "type": "categorical",
+      "choices": [
+        2,
+        3,
+        4,
+        8
+      ]
+    },
+    "hdbscan_reassign_noise": {
+      "type": "categorical",
+      "choices": [
+        false,
+        true
+      ]
+    },
+    "adversarial_lambda": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        1.0,
+        1.25,
+        1.5,
+        1.75
+      ]
+    },
+    "adversarial_start_epoch": {
+      "type": "categorical",
+      "choices": [
+        30,
+        40,
+        55
+      ]
+    },
+    "adversarial_ramp_epochs": {
+      "type": "categorical",
+      "choices": [
+        50,
+        55,
+        60
+      ]
+    },
+    "mmd_batch_weight": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.05
+      ]
+    },
+    "lr": {
+      "type": "float",
+      "low": 0.00047,
+      "high": 0.0024,
+      "log": true
+    },
+    "nb_theta": {
+      "type": "float",
+      "low": 2.6,
+      "high": 104.8,
+      "log": true
+    },
+    "rare_triplet_weight": {
+      "type": "float",
+      "low": 0.0226,
+      "high": 0.2346,
+      "log": true
+    },
+    "adversarial_batch_weight": {
+      "type": "float",
+      "low": 0.028,
+      "high": 0.314,
+      "log": true
+    },
+    "cluster_density_alpha": {
+      "type": "float",
+      "low": 0.2,
+      "high": 0.6,
+      "log": false
+    },
+    "dynamic_weight_momentum": {
+      "type": "float",
+      "low": 0.5,
+      "high": 0.85,
+      "log": false
+    },
+    "min_cell_weight": {
+      "type": "float",
+      "low": 0.29,
+      "high": 0.505,
+      "log": false
+    }
+  },
+  "warm_start_candidates": [
+    {
+      "candidate_rank": 1,
+      "candidate_id": "rank_001_stable_generalist",
+      "trial": 206,
+      "score_mean": 0.871663836410025,
+      "params": {
+        "z_dim": 192,
+        "rare_triplet_weight": 0.2346,
+        "lr": 0.00233670337683859,
+        "reconstruction_distribution": "mse",
+        "batch_size": 192,
+        "dynamic_weight_momentum": 0.85,
+        "hdbscan_reassign_noise": true,
+        "max_cell_weight": 8.0,
+        "epochs": 210,
+        "rare_triplet_margin": 0.4,
+        "adversarial_ramp_epochs": 60,
+        "max_triplet_anchors_per_batch": 64,
+        "warmup_epochs": 74,
+        "nb_theta": 2.6,
+        "density_weight_clip": 8.0,
+        "hdbscan_min_samples": 8,
+        "masked_recon_weight": 0.8,
+        "adversarial_start_epoch": 55,
+        "hdbscan_min_cluster_size": 8,
+        "masking_rate": 0.15,
+        "density_knn_k": 15,
+        "rare_triplet_min_weight": 1.8,
+        "adversarial_batch_weight": 0.056150696336115635,
+        "min_cell_weight": 0.45000000000000007,
+        "nb_input_transform": "log1p",
+        "hidden_layers": "512,256,128",
+        "mmd_batch_weight": 0.0,
+        "dynamic_weight_update_interval": 10,
+        "cluster_density_alpha": 0.30000000000000004,
+        "dropout": 0.3,
+        "adversarial_lambda": 1.75,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 84,
+        "final_clustering_requested": "hdbscan"
+      }
+    },
+    {
+      "candidate_rank": 10,
+      "candidate_id": "rank_010_trial_0307",
+      "trial": 307,
+      "score_mean": 0.8662335268176363,
+      "params": {
+        "z_dim": 256,
+        "rare_triplet_weight": 0.027855749369781968,
+        "lr": 0.0006426048638634604,
+        "reconstruction_distribution": "nb",
+        "batch_size": 192,
+        "dynamic_weight_momentum": 0.7,
+        "hdbscan_reassign_noise": true,
+        "max_cell_weight": 10.0,
+        "epochs": 100,
+        "rare_triplet_margin": 0.5,
+        "max_triplet_anchors_per_batch": 128,
+        "warmup_epochs": 45,
+        "nb_theta": 24.939573607727244,
+        "density_weight_clip": 3.0,
+        "hdbscan_min_samples": 3,
+        "masked_recon_weight": 0.8,
+        "adversarial_start_epoch": 40,
+        "masking_rate": 0.15,
+        "density_knn_k": 15,
+        "rare_triplet_min_weight": 1.0,
+        "adversarial_batch_weight": 0.029410802603286716,
+        "weight_exponent": 0.2,
+        "min_cell_weight": 0.505,
+        "nb_input_transform": "pearson_residuals",
+        "hidden_layers": "512,256",
+        "mmd_batch_weight": 0.05,
+        "dynamic_weight_update_interval": 20,
+        "cluster_density_alpha": 0.5,
+        "dropout": 0.25,
+        "adversarial_lambda": 1.0,
+        "weight_fusion_mode": "multiplicative",
+        "rare_triplet_start_epoch": 60,
+        "final_clustering_requested": "hdbscan"
+      }
+    },
+    {
+      "candidate_rank": 5,
+      "candidate_id": "rank_005_trial_0297",
+      "trial": 297,
+      "score_mean": 0.8648437126181365,
+      "params": {
+        "z_dim": 256,
+        "rare_triplet_weight": 0.025105912329791077,
+        "lr": 0.0016675634171372901,
+        "reconstruction_distribution": "nb",
+        "batch_size": 384,
+        "dynamic_weight_momentum": 0.5,
+        "hdbscan_reassign_noise": true,
+        "max_cell_weight": 10.0,
+        "epochs": 80,
+        "adversarial_ramp_epochs": 50,
+        "max_triplet_anchors_per_batch": 64,
+        "warmup_epochs": 36,
+        "nb_theta": 103.24058373255063,
+        "density_weight_clip": 8.0,
+        "hdbscan_min_samples": 3,
+        "adversarial_start_epoch": 30,
+        "masking_rate": 0.15,
+        "density_knn_k": 15,
+        "rare_triplet_min_weight": 0.8,
+        "adversarial_batch_weight": 0.05224660582478347,
+        "min_cell_weight": 0.5,
+        "nb_input_transform": "pearson_residuals",
+        "hidden_layers": "512,256",
+        "mmd_batch_weight": 0.05,
+        "dynamic_weight_update_interval": 20,
+        "cluster_density_alpha": 0.2,
+        "dropout": 0.25,
+        "weight_fusion_mode": "multiplicative",
+        "final_clustering_requested": "hdbscan"
+      }
+    },
+    {
+      "candidate_rank": 6,
+      "candidate_id": "rank_006_trial_0298",
+      "trial": 298,
+      "score_mean": 0.8628552998159345,
+      "params": {
+        "z_dim": 256,
+        "rare_triplet_weight": 0.028348968324725887,
+        "lr": 0.0024,
+        "reconstruction_distribution": "nb",
+        "batch_size": 384,
+        "dynamic_weight_momentum": 0.5,
+        "hdbscan_reassign_noise": true,
+        "max_cell_weight": 10.0,
+        "epochs": 100,
+        "adversarial_ramp_epochs": 50,
+        "max_triplet_anchors_per_batch": 64,
+        "nb_theta": 104.8,
+        "density_weight_clip": 8.0,
+        "hdbscan_min_samples": 4,
+        "masked_recon_weight": 0.8,
+        "masking_rate": 0.1,
+        "density_knn_k": 15,
+        "rare_triplet_min_weight": 1.0,
+        "adversarial_batch_weight": 0.05644874845863732,
+        "min_cell_weight": 0.5,
+        "nb_input_transform": "pearson_residuals",
+        "hidden_layers": "512,256",
+        "mmd_batch_weight": 0.05,
+        "dynamic_weight_update_interval": 20,
+        "cluster_density_alpha": 0.30000000000000004,
+        "dropout": 0.3,
+        "adversarial_lambda": 1.5,
+        "weight_fusion_mode": "multiplicative",
+        "final_clustering_requested": "hdbscan"
+      }
+    },
+    {
+      "candidate_rank": 4,
+      "candidate_id": "rank_004_trial_0357",
+      "trial": 357,
+      "score_mean": 0.8595272179505504,
+      "params": {
+        "z_dim": 256,
+        "rare_triplet_weight": 0.06347822637030752,
+        "lr": 0.0008818103983965264,
+        "reconstruction_distribution": "nb",
+        "batch_size": 192,
+        "dynamic_weight_momentum": 0.5,
+        "hdbscan_reassign_noise": true,
+        "max_cell_weight": 15.0,
+        "epochs": 80,
+        "adversarial_ramp_epochs": 55,
+        "max_triplet_anchors_per_batch": 128,
+        "warmup_epochs": 36,
+        "nb_theta": 21.631613251937722,
+        "density_weight_clip": 3.0,
+        "hdbscan_min_samples": 4,
+        "adversarial_start_epoch": 55,
+        "hdbscan_min_cluster_size": 9,
+        "masking_rate": 0.2,
+        "density_knn_k": 15,
+        "adversarial_batch_weight": 0.314,
+        "weight_exponent": 0.1,
+        "min_cell_weight": 0.30000000000000004,
+        "nb_input_transform": "pearson_residuals",
+        "hidden_layers": "512,256",
+        "mmd_batch_weight": 0.05,
+        "dynamic_weight_update_interval": 20,
+        "cluster_density_alpha": 0.6,
+        "dropout": 0.2,
+        "adversarial_lambda": 0.5,
+        "weight_fusion_mode": "multiplicative",
+        "rare_triplet_start_epoch": 46,
+        "final_clustering_requested": "hdbscan"
+      }
+    }
+  ],
+  "selection_rules": {
+    "discrete": "keep values seen at least twice in top-k plus top1 and force_include",
+    "continuous": "use fixed bounds derived from historical top runs, otherwise clip to [min(top1, q10), max(top1, q90)]"
+  },
+  "final_clustering_mode": "mixed"
+}

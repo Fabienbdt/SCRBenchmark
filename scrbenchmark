@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# SCRBenchmark CLI - Command Line Interface for Single-Cell RNA-seq Clustering Benchmark
+#
+# Usage:
+#   ./scrbenchmark run --data <file> --algorithms <algo1,algo2> [options]
+#   ./scrbenchmark list-algorithms
+#   ./scrbenchmark list-params --algorithm <name>
+#   ./scrbenchmark generate-config --output <file>
+#   ./scrbenchmark run --config <config.yaml>
+#
+
+# Get the directory where this script is located.
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ -n "${PYTHON_BIN:-}" ]; then
+    :
+elif [ -x "${SCRIPT_DIR}/.venv/bin/python" ]; then
+    PYTHON_BIN="${SCRIPT_DIR}/.venv/bin/python"
+elif [ -x "${SCRIPT_DIR}/venv/bin/python" ]; then
+    PYTHON_BIN="${SCRIPT_DIR}/venv/bin/python"
+else
+    PYTHON_BIN="python3"
+fi
+
+# Run the CLI
+exec "$PYTHON_BIN" "$SCRIPT_DIR/src/scrbenchmark/cli.py" "$@"

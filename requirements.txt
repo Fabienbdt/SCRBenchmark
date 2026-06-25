@@ -1,0 +1,68 @@
+# SCRBenchmark Requirements
+# Single-Cell RNA-seq Clustering Benchmark Suite
+# Python 3.9+
+
+# Core dependencies
+# Keep numpy<2 to avoid ABI mismatch with compiled wheels in common Linux setups
+# (e.g. "numpy.dtype size changed" when pandas/scipy were built against 1.26).
+numpy>=1.26.0,<2.0
+pandas>=2.2.0,<2.3
+scipy>=1.9.0
+
+# Machine Learning
+scikit-learn>=1.0.0
+torch>=2.0.0
+
+# Single-cell analysis
+scanpy>=1.9.0
+anndata>=0.8.0
+scib-metrics==0.5.1
+scikit-misc>=0.3.1
+
+# Batch correction (scVI-DCT / sysVI)
+scvi-tools>=1.3.0
+
+# Visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+umap-learn>=0.5.0
+
+# GUI
+streamlit>=1.28.0
+
+# Data formats
+h5py>=3.7.0
+
+# Graph-based clustering
+python-igraph>=0.10.0
+leidenalg>=0.9.0
+
+# Density-based clustering (rare cell detection in AE_scRAW)
+hdbscan>=0.8.33
+finch-clust>=0.2.0
+
+# Utilities
+tqdm>=4.65.0
+packaging>=23.0
+torchmetrics>=1.0.0
+
+# Configuration
+pyyaml>=6.0
+
+# Hyperparameter optimization
+optuna>=3.0.0
+optuna-dashboard>=0.10.0
+
+# Development tools
+watchdog>=3.0.0
+pytest>=7.0.0
+
+# LLM-based algorithms
+# Cell2Sentence
+cell2sentence>=1.1.0
+transformers>=4.40.0
+datasets>=2.19.0
+accelerate>=0.29.0
+pip-tools>=7.0.0
+tiktoken
+sentencepiece

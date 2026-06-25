@@ -1,0 +1,14 @@
+dataset_id,path,label_key,batch_key,family,role,enabled,n_labels_expected
+bbag094_zeisel,/data2/fbidet/scRAW_EXPERIMENTAL/data/bbag094_zeisel.h5ad,label,batch,brain,benchmark,true,10
+bbag094_spleen,/data2/fbidet/scRAW_EXPERIMENTAL/data/bbag094_spleen.h5ad,label,batch,immune_organ,benchmark,true,5
+baron_human_pancreas,/data2/fbidet/scRAW_EXPERIMENTAL/data/baron_human_pancreas.h5ad,label,batch,pancreas,benchmark,true,14
+gse112013_human_testis_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/gse112013_human_testis_raw_counts.h5ad,label,batch,testis,benchmark,true,13
+kang_pbmc_gse96583_singlets_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/kang_pbmc_gse96583_singlets_raw_counts.h5ad,Group,confounded_batch,pbmc,benchmark,true,8
+macaque_retina_gse118480_bipolar_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/macaque_retina_gse118480_bipolar_raw_counts.h5ad,Group,batch,retina,benchmark,true,12
+pancreas_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/pancreas_raw_counts_no_smarter.h5ad,cell_type,batch,pancreas,benchmark,true,14
+pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2,/data2/fbidet/scRAW_EXPERIMENTAL/data/pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2.h5ad,cell_type,batch,pancreas,benchmark,true,14
+paul15_bone_marrow_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/paul15_bone_marrow_raw_counts.h5ad,Group,batch,hematopoiesis,benchmark,true,19
+Human_Pancreas_1_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/Human_Pancreas_1_raw_counts.h5ad,Group,batch,pancreas,benchmark,true,14
+Human_Pancreas_2_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/Human_Pancreas_2_raw_counts.h5ad,Group,batch,pancreas,benchmark,true,14
+Mouse_Pancreas_1_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/Mouse_Pancreas_1_raw_counts.h5ad,Group,batch,pancreas,benchmark,true,13
+Tabula_Muris_liver_filtered_raw_counts,/data2/fbidet/scRAW_EXPERIMENTAL/data/Tabula_Muris_liver_filtered_raw_counts.h5ad,Group,batch,liver,benchmark,true,11

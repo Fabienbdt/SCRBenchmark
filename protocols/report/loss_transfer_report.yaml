@@ -1,0 +1,61 @@
+schema_version: 1
+id: loss_transfer_report
+name: Rapport - Loss transfer
+experiment_type: loss_transfer
+description: Weighted-loss transfer protocol from the report on the five selected datasets.
+tags:
+  - report
+  - loss-transfer
+  - weighted-loss
+datasets:
+  - key: baron_human_pancreas
+  - key: bbag094_zeisel
+  - key: bbag094_spleen
+  - key: kang_pbmc_gse96583_singlets_raw_counts
+  - key: paul15_bone_marrow_raw_counts
+split:
+  mode: all
+preprocessing:
+  preset: report_default
+methods:
+  local_algorithms: []
+manual_protocols:
+  enabled: true
+  selected_protocols:
+    - loss_transfer
+  seeds: 42-46
+  scib_n_jobs: 4
+  overwrite: false
+  verbose: true
+  extra_params: ""
+  loss_transfer:
+    methods:
+      - scMAE
+      - scDeepCluster
+      - DESC
+    variants:
+      - baseline
+      - weighted
+      - density_only
+      - kmeans
+      - triplet
+    weight_params: |-
+      warmup_epochs=55
+      rare_triplet_start_epoch=60
+execution:
+  output_dir: results/report_design/loss_transfer
+  seed: 42
+  seeds: 42-46
+  n_repeats: 5
+  device: auto
+metrics:
+  - NMI
+  - ARI
+  - ACC
+  - Silhouette
+sweeps:
+  manual.loss_transfer.weight_params.warmup_epochs:
+    - 30
+    - 55
+  manual.loss_transfer.variants:
+    - [baseline, weighted, density_only, kmeans, triplet]

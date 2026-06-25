@@ -1,0 +1,113 @@
+schema_version: 1
+id: inductive_report_splits
+name: Rapport - Inductive splits
+experiment_type: inductive
+description: Train-on-batches and test-on-held-out-batches protocols used for the inductive report experiments.
+tags:
+  - report
+  - inductive
+split:
+  mode: all
+preprocessing:
+  preset: report_default
+methods:
+  local_algorithms: []
+manual_protocols:
+  enabled: true
+  selected_protocols:
+    - inductive
+  seeds: "42"
+  scib_n_jobs: 4
+  overwrite: false
+  verbose: true
+  extra_params: ""
+  inductive:
+    algorithms:
+      - scraw
+      - scname
+      - sc_mae
+      - scdeepcluster
+      - scaide
+      - pca_harmony
+    preset: stable_generalist
+    trial_config_path: ""
+    baseline_runtime_profile: scrbenchmark-default
+    skip_existing: true
+execution:
+  output_dir: results/report_design/inductive
+  seed: 42
+  n_repeats: 1
+  device: auto
+metrics:
+  - train_NMI
+  - test_NMI
+  - train_ARI
+  - test_ARI
+limitations:
+  - The current inductive runner exposes pca_harmony as the sixth backend; native scVI needs a dedicated runner backend before it can be selected.
+inductive_splits:
+  - dataset_key: baron_human_pancreas
+    name: h234_to_h1
+    split_key: batch
+    train_batches: [human2, human3, human4]
+    test_batches: [human1]
+  - dataset_key: baron_human_pancreas
+    name: h134_to_h2
+    split_key: batch
+    train_batches: [human1, human3, human4]
+    test_batches: [human2]
+  - dataset_key: baron_human_pancreas
+    name: h124_to_h3
+    split_key: batch
+    train_batches: [human1, human2, human4]
+    test_batches: [human3]
+  - dataset_key: baron_human_pancreas
+    name: h123_to_h4
+    split_key: batch
+    train_batches: [human1, human2, human3]
+    test_batches: [human4]
+  - dataset_key: bbag094_spleen
+    name: 3F56_to_3M8
+    split_key: batch
+    train_batches: [3-F-56]
+    test_batches: [3-M-8]
+  - dataset_key: gse112013_human_testis_raw_counts
+    name: donor12_to_donor3
+    split_key: batch
+    train_batches:
+      - Donor1_scRNA-seq_rep1
+      - Donor1_scRNA-seq_rep2
+      - Donor2_scRNA-seq_rep1
+      - Donor2_scRNA-seq_rep2
+    test_batches:
+      - Donor3_scRNA-seq_rep1
+      - Donor3_scRNA-seq_rep2
+  - dataset_key: kang_pbmc_gse96583_singlets_raw_counts
+    name: train_samples_to_donors_1039_107
+    split_key: donor
+    train_split_key: sample
+    test_split_key: donor
+    train_batches:
+      - 1015_ctrl
+      - 1015_stim
+      - 1488_ctrl
+      - 1488_stim
+      - 1256_ctrl
+      - 1256_stim
+      - 1016_ctrl
+      - 1016_stim
+      - 1244_ctrl
+      - 1244_stim
+      - 101_ctrl
+      - 101_stim
+    test_batches: [1039, 107]
+  - dataset_key: macaque_retina_gse118480_bipolar_raw_counts
+    name: m1m2_to_m3m4
+    split_key: macaque_id
+    train_batches: [M1, M2]
+    test_batches: [M3, M4]
+  - dataset_key: pancreas_raw_counts_four_batches_celseq_celseq2_fluidigmc1_smartseq2
+    name: smartseq2_celseq2_to_celseq_fluidigmc1
+    split_key: batch
+    train_batches: [smartseq2, celseq2]
+    test_batches: [celseq, fluidigmc1]

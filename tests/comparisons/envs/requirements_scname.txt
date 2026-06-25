@@ -1,0 +1,15 @@
+# Requirements for original scNAME
+# Python >= 3.8 required
+# From: https://github.com/scNAME (Bioinformatics 2022)
+
+# IMPORTANT: Use Python >= 3.8
+# conda create -n scname_env python=3.8
+
+tensorflow-gpu>=2.2.0
+Keras>=2.3.0
+scanpy>=1.9.1
+scikit-learn>=0.22.2
+h5py>=3.6.0
+numpy>=1.19.0
+scipy>=1.5.0
+pandas>=1.3.0

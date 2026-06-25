@@ -1,0 +1,559 @@
+{
+  "timestamp": "2026-04-13T10:37:01.224923",
+  "source_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/config/generalist_stable_default_v2_source_topk.csv",
+  "top_k_considered": 8,
+  "score_weights": {
+    "ARI": 0.25,
+    "BalancedACC": 0.2,
+    "RareACC": 0.275,
+    "UltraRareACC": 0.275
+  },
+  "frozen_params": {
+    "use_batch_conditioning": true,
+    "masking_apply_weighted": true,
+    "pseudo_label_method": "leiden",
+    "hdbscan_cluster_selection_method": "eom"
+  },
+  "sampled_params": {
+    "final_clustering_requested": {
+      "type": "categorical",
+      "choices": [
+        "best_of_both"
+      ]
+    },
+    "hidden_layers": {
+      "type": "categorical",
+      "choices": [
+        "512,256"
+      ]
+    },
+    "z_dim": {
+      "type": "categorical",
+      "choices": [
+        192,
+        256
+      ]
+    },
+    "dropout": {
+      "type": "categorical",
+      "choices": [
+        0.2,
+        0.25,
+        0.3
+      ]
+    },
+    "epochs": {
+      "type": "categorical",
+      "choices": [
+        80,
+        100
+      ]
+    },
+    "warmup_epochs": {
+      "type": "categorical",
+      "choices": [
+        60,
+        74,
+        84
+      ]
+    },
+    "batch_size": {
+      "type": "categorical",
+      "choices": [
+        192,
+        384
+      ]
+    },
+    "reconstruction_distribution": {
+      "type": "categorical",
+      "choices": [
+        "mse"
+      ]
+    },
+    "nb_input_transform": {
+      "type": "categorical",
+      "choices": [
+        "log1p"
+      ]
+    },
+    "masking_rate": {
+      "type": "categorical",
+      "choices": [
+        0.1,
+        0.15,
+        0.2
+      ]
+    },
+    "masked_recon_weight": {
+      "type": "categorical",
+      "choices": [
+        0.8
+      ]
+    },
+    "weight_exponent": {
+      "type": "categorical",
+      "choices": [
+        0.1,
+        0.2
+      ]
+    },
+    "density_knn_k": {
+      "type": "categorical",
+      "choices": [
+        15
+      ]
+    },
+    "density_weight_clip": {
+      "type": "categorical",
+      "choices": [
+        3.0,
+        8.0
+      ]
+    },
+    "dynamic_weight_update_interval": {
+      "type": "categorical",
+      "choices": [
+        10,
+        20
+      ]
+    },
+    "max_cell_weight": {
+      "type": "categorical",
+      "choices": [
+        8.0,
+        10.0,
+        15.0
+      ]
+    },
+    "weight_fusion_mode": {
+      "type": "categorical",
+      "choices": [
+        "additive"
+      ]
+    },
+    "rare_triplet_start_epoch": {
+      "type": "categorical",
+      "choices": [
+        60,
+        74,
+        84
+      ]
+    },
+    "rare_triplet_margin": {
+      "type": "categorical",
+      "choices": [
+        0.4,
+        0.5
+      ]
+    },
+    "rare_triplet_min_weight": {
+      "type": "categorical",
+      "choices": [
+        1.0,
+        1.2,
+        1.8
+      ]
+    },
+    "max_triplet_anchors_per_batch": {
+      "type": "categorical",
+      "choices": [
+        128
+      ]
+    },
+    "hdbscan_min_cluster_size": {
+      "type": "categorical",
+      "choices": [
+        8,
+        9,
+        10
+      ]
+    },
+    "hdbscan_min_samples": {
+      "type": "categorical",
+      "choices": [
+        3,
+        5,
+        8
+      ]
+    },
+    "hdbscan_reassign_noise": {
+      "type": "categorical",
+      "choices": [
+        false,
+        true
+      ]
+    },
+    "adversarial_lambda": {
+      "type": "categorical",
+      "choices": [
+        0.5,
+        0.75,
+        1.0
+      ]
+    },
+    "adversarial_start_epoch": {
+      "type": "categorical",
+      "choices": [
+        45,
+        55
+      ]
+    },
+    "adversarial_ramp_epochs": {
+      "type": "categorical",
+      "choices": [
+        55,
+        60
+      ]
+    },
+    "mmd_batch_weight": {
+      "type": "categorical",
+      "choices": [
+        0.0,
+        0.05
+      ]
+    },
+    "lr": {
+      "type": "float",
+      "low": 0.00085,
+      "high": 0.00125,
+      "log": true
+    },
+    "nb_theta": {
+      "type": "float",
+      "low": 6.5,
+      "high": 20.5,
+      "log": true
+    },
+    "rare_triplet_weight": {
+      "type": "float",
+      "low": 0.09,
+      "high": 0.23,
+      "log": true
+    },
+    "adversarial_batch_weight": {
+      "type": "float",
+      "low": 0.04,
+      "high": 0.1,
+      "log": true
+    },
+    "cluster_density_alpha": {
+      "type": "float",
+      "low": 0.35,
+      "high": 0.6,
+      "log": false
+    },
+    "dynamic_weight_momentum": {
+      "type": "float",
+      "low": 0.76,
+      "high": 0.85,
+      "log": false
+    },
+    "min_cell_weight": {
+      "type": "float",
+      "low": 0.38,
+      "high": 0.44,
+      "log": false
+    }
+  },
+  "selection_rules": {
+    "strategy": "stability_focused_manual_space",
+    "core_trials": [
+      "trial_0060",
+      "trial_0029",
+      "trial_0026",
+      "trial_0074",
+      "trial_0057"
+    ],
+    "exploration_trials": [
+      "trial_0016",
+      "trial_0023",
+      "trial_0027"
+    ],
+    "notes": [
+      "Freeze auto_hparams and search only for a fixed default-v2 family.",
+      "Keep the search close to the stable Leiden+mse+log1p family.",
+      "Allow limited exploration for rare-focused pressure without reopening the full space."
+    ]
+  },
+  "final_clustering_mode": "best_of_both",
+  "warm_start_candidates": [
+    {
+      "candidate_rank": 0,
+      "candidate_id": "stable_default_v2_consensus",
+      "trial": -1,
+      "score_mean": 0.0,
+      "params": {
+        "final_clustering_requested": "best_of_both",
+        "hidden_layers": "512,256",
+        "z_dim": 192,
+        "dropout": 0.2,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 192,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.1,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.1,
+        "density_knn_k": 15,
+        "density_weight_clip": 8.0,
+        "dynamic_weight_update_interval": 10,
+        "max_cell_weight": 8.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 60,
+        "rare_triplet_margin": 0.4,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 8,
+        "hdbscan_min_samples": 8,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 55,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0010689964738835216,
+        "nb_theta": 11.623582708841571,
+        "rare_triplet_weight": 0.1928616915439295,
+        "adversarial_batch_weight": 0.06848282044120413,
+        "cluster_density_alpha": 0.5135545572653624,
+        "dynamic_weight_momentum": 0.7966299232499916,
+        "min_cell_weight": 0.39770069412392606
+      }
+    },
+    {
+      "candidate_rank": 1,
+      "candidate_id": "trial_0060",
+      "trial": 60,
+      "score_mean": 0.6334160242926075,
+      "params": {
+        "hidden_layers": "512,256",
+        "z_dim": 256,
+        "dropout": 0.3,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 384,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.1,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.1,
+        "density_knn_k": 15,
+        "density_weight_clip": 3.0,
+        "dynamic_weight_update_interval": 20,
+        "max_cell_weight": 10.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 60,
+        "rare_triplet_margin": 0.4,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 8,
+        "hdbscan_min_samples": 8,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 55,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0010882018879642033,
+        "nb_theta": 20.03038299445062,
+        "rare_triplet_weight": 0.2005030550668264,
+        "adversarial_batch_weight": 0.059106192930047874,
+        "cluster_density_alpha": 0.5898109200409181,
+        "dynamic_weight_momentum": 0.7966299232499916,
+        "min_cell_weight": 0.4321784952556028,
+        "use_batch_conditioning": true,
+        "masking_apply_weighted": true,
+        "pseudo_label_method": "leiden",
+        "hdbscan_cluster_selection_method": "eom",
+        "final_clustering_requested": "leiden"
+      }
+    },
+    {
+      "candidate_rank": 2,
+      "candidate_id": "trial_0029",
+      "trial": 29,
+      "score_mean": 0.6285177491321723,
+      "params": {
+        "hidden_layers": "512,256",
+        "z_dim": 192,
+        "dropout": 0.2,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 192,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.2,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.1,
+        "density_knn_k": 15,
+        "density_weight_clip": 8.0,
+        "dynamic_weight_update_interval": 10,
+        "max_cell_weight": 8.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 60,
+        "rare_triplet_margin": 0.5,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 8,
+        "hdbscan_min_samples": 3,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 55,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0010689964738835216,
+        "nb_theta": 8.11358666275998,
+        "rare_triplet_weight": 0.1616147550676756,
+        "adversarial_batch_weight": 0.09090914227269446,
+        "cluster_density_alpha": 0.40102615045123313,
+        "dynamic_weight_momentum": 0.8451394713855289,
+        "min_cell_weight": 0.39770069412392606,
+        "use_batch_conditioning": true,
+        "masking_apply_weighted": true,
+        "pseudo_label_method": "leiden",
+        "hdbscan_cluster_selection_method": "eom",
+        "final_clustering_requested": "leiden"
+      }
+    },
+    {
+      "candidate_rank": 4,
+      "candidate_id": "trial_0026",
+      "trial": 26,
+      "score_mean": 0.6209242963861024,
+      "params": {
+        "hidden_layers": "512,256",
+        "z_dim": 192,
+        "dropout": 0.2,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 192,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.1,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.1,
+        "density_knn_k": 15,
+        "density_weight_clip": 8.0,
+        "dynamic_weight_update_interval": 10,
+        "max_cell_weight": 8.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 60,
+        "rare_triplet_margin": 0.4,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 8,
+        "hdbscan_min_samples": 8,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 55,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0009150001396357359,
+        "nb_theta": 8.764658641702265,
+        "rare_triplet_weight": 0.1928616915439295,
+        "adversarial_batch_weight": 0.04584155262348647,
+        "cluster_density_alpha": 0.5135545572653624,
+        "dynamic_weight_momentum": 0.7953525111893922,
+        "min_cell_weight": 0.40913304591863164,
+        "use_batch_conditioning": true,
+        "masking_apply_weighted": true,
+        "pseudo_label_method": "leiden",
+        "hdbscan_cluster_selection_method": "eom",
+        "final_clustering_requested": "leiden"
+      }
+    },
+    {
+      "candidate_rank": 5,
+      "candidate_id": "trial_0074",
+      "trial": 74,
+      "score_mean": 0.62044312558452,
+      "params": {
+        "hidden_layers": "512,256",
+        "z_dim": 192,
+        "dropout": 0.2,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 192,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.2,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.2,
+        "density_knn_k": 15,
+        "density_weight_clip": 8.0,
+        "dynamic_weight_update_interval": 10,
+        "max_cell_weight": 15.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 84,
+        "rare_triplet_margin": 0.5,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 9,
+        "hdbscan_min_samples": 3,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 60,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0011403363659926611,
+        "nb_theta": 11.623582708841571,
+        "rare_triplet_weight": 0.224099275614866,
+        "adversarial_batch_weight": 0.09199998730099905,
+        "cluster_density_alpha": 0.3603359989478044,
+        "dynamic_weight_momentum": 0.8132676055759039,
+        "min_cell_weight": 0.38937671608333924,
+        "use_batch_conditioning": true,
+        "masking_apply_weighted": true,
+        "pseudo_label_method": "leiden",
+        "hdbscan_cluster_selection_method": "eom",
+        "final_clustering_requested": "leiden"
+      }
+    },
+    {
+      "candidate_rank": 6,
+      "candidate_id": "trial_0057",
+      "trial": 57,
+      "score_mean": 0.6193050799184235,
+      "params": {
+        "hidden_layers": "512,256",
+        "z_dim": 256,
+        "dropout": 0.3,
+        "epochs": 80,
+        "warmup_epochs": 74,
+        "batch_size": 192,
+        "reconstruction_distribution": "mse",
+        "nb_input_transform": "log1p",
+        "masking_rate": 0.1,
+        "masked_recon_weight": 0.8,
+        "weight_exponent": 0.1,
+        "density_knn_k": 15,
+        "density_weight_clip": 3.0,
+        "dynamic_weight_update_interval": 20,
+        "max_cell_weight": 8.0,
+        "weight_fusion_mode": "additive",
+        "rare_triplet_start_epoch": 60,
+        "rare_triplet_margin": 0.4,
+        "rare_triplet_min_weight": 1.0,
+        "max_triplet_anchors_per_batch": 128,
+        "hdbscan_min_cluster_size": 8,
+        "hdbscan_min_samples": 8,
+        "hdbscan_reassign_noise": false,
+        "adversarial_lambda": 0.5,
+        "adversarial_start_epoch": 55,
+        "adversarial_ramp_epochs": 55,
+        "mmd_batch_weight": 0.05,
+        "lr": 0.0010110357726832563,
+        "nb_theta": 11.817079270865793,
+        "rare_triplet_weight": 0.09786074969770793,
+        "adversarial_batch_weight": 0.06848282044120413,
+        "cluster_density_alpha": 0.5814511639419869,
+        "dynamic_weight_momentum": 0.7673577863083607,
+        "min_cell_weight": 0.3947856765751736,
+        "use_batch_conditioning": true,
+        "masking_apply_weighted": true,
+        "pseudo_label_method": "leiden",
+        "hdbscan_cluster_selection_method": "eom",
+        "final_clustering_requested": "leiden"
+      }
+    }
+  ]
+}
