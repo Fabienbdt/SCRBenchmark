@@ -137,6 +137,18 @@ def test_command_template_runner_expands_placeholders(tmp_path):
     assert command[-2:] == ["--param", "Toy:alpha=1"]
 
 
+def test_scraw_command_template_uses_public_preset(tmp_path):
+    spec = get_method_spec("scRAW")
+    args = _runner_args(tmp_path)
+    args.method = "scRAW"
+    args.scraw_preset = "baron"
+
+    command = build_command(spec, args)
+
+    assert "--preset" in command
+    assert command[command.index("--preset") + 1] == "baron"
+
+
 def test_command_template_can_normalize_labels_file(tmp_path):
     import pandas as pd
 

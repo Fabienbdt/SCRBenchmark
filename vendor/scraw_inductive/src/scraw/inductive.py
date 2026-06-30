@@ -57,14 +57,7 @@ def _coerce_config(config: ScRAWConfig | str | Path) -> ScRAWConfig:
         return _copy_config(config)
 
     raw = str(config)
-    if raw.strip().lower() in {
-        "default",
-        "default_scraw",
-        "0017",
-        "17",
-        "stable_generalist",
-        "stable_generalist_stable_generalist",
-    }:
+    if raw.strip().lower() in {"default", "baron"}:
         return resolve_preset_config(raw)
 
     return load_config(Path(raw))
@@ -74,10 +67,10 @@ def _preset_output_name(config: ScRAWConfig | str | Path) -> Optional[str]:
     if isinstance(config, ScRAWConfig):
         return None
     preset_name = str(config).strip().lower()
-    if preset_name in {"default", "default_scraw"}:
+    if preset_name == "default":
         return "default"
-    if preset_name in {"0017", "17", "stable_generalist", "stable_generalist_stable_generalist"}:
-        return "0017"
+    if preset_name == "baron":
+        return "baron"
     return None
 
 

@@ -104,6 +104,14 @@ To reproduce the report, use **Report Reproduction** in Streamlit:
 Use the scripts in this directory directly only for automation, debugging, or
 headless environments. Every script exposes `--help`.
 
+scRAW has exactly two public presets in these scripts:
+
+- `default`: 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
+- `baron`: Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+
+Use `--scraw-preset default|baron` with `run_method.py`; use
+`--preset default|baron` with the inductive scRAW scripts.
+
 To add a new external algorithm, follow the single guide:
 [`../../docs/algorithm_extension_guide.md`](../../docs/algorithm_extension_guide.md).
 

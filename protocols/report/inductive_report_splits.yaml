@@ -29,7 +29,7 @@ manual_protocols:
       - scdeepcluster
       - scaide
       - pca_harmony
-    preset: stable_generalist
+    preset: default
     trial_config_path: ""
     baseline_runtime_profile: scrbenchmark-default
     skip_existing: true

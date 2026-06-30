@@ -21,6 +21,7 @@ STABLE_GENERALIST_CONFIG = Path(
         _repo_root() / "configs" / "stable_generalist_trial_0017.json",
     )
 )
+EXTERNAL_SCRAW_ROOT = Path(os.environ.get("SCRAW_EXTERNAL_ROOT", "/data2/fbidet/scRAW"))
 
 
 def _set_if_present(target: Any, attr: str, overrides: dict[str, Any], key: str) -> None:
@@ -112,26 +113,39 @@ def _apply_stable_generalist_overrides(config: ScRAWConfig, trial_config_path: P
     return config
 
 
+def _load_config_with_external_fallback(root: Path, external_name: str, local_name: str) -> ScRAWConfig:
+    external_path = EXTERNAL_SCRAW_ROOT / "configs" / external_name
+    if external_path.exists():
+        return load_config(external_path)
+    return load_config(root / "configs" / local_name)
+
+
 def resolve_preset_config(
     preset: str,
     *,
     repo_root: str | Path | None = None,
     stable_generalist_config_path: str | Path = STABLE_GENERALIST_CONFIG,
 ) -> ScRAWConfig:
-    """Return a ScRAWConfig for `default` or trial `0017`."""
+    """Return a ScRAWConfig for the two public scRAW presets.
+
+    `default` is the stable trial 0017 configuration. `baron` is the legacy
+    Baron configuration aligned with `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+    """
     root = Path(repo_root).expanduser().resolve() if repo_root is not None else _repo_root()
     preset_name = str(preset or "default").strip().lower()
-    config = load_config(root / "configs" / "default_scraw.json")
-    config.data.data_path = str(root / "data" / "baron_human_pancreas.h5ad")
 
-    if preset_name in {"default", "default_scraw"}:
+    if preset_name == "baron":
+        config = _load_config_with_external_fallback(root, "baron_jobim.json", "default_scraw.json")
+        config.data.data_path = str(root / "data" / "baron_human_pancreas.h5ad")
         return config
 
-    if preset_name in {"0017", "17", "stable_generalist", "stable_generalist_stable_generalist"}:
+    if preset_name == "default":
+        config = _load_config_with_external_fallback(root, "default_scraw.json", "default_scraw.json")
+        config.data.data_path = str(root / "data" / "baron_human_pancreas.h5ad")
         config = _apply_stable_generalist_overrides(
             config,
             trial_config_path=Path(stable_generalist_config_path).expanduser().resolve(),
         )
         return config
 
-    raise ValueError("Unknown preset. Expected one of: default, stable_generalist.")
+    raise ValueError("Unknown preset. Expected one of: default, baron.")

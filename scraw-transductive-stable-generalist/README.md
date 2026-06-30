@@ -43,10 +43,10 @@ From the SCRBenchmark root:
   --gpus 1,2
 ```
 
-The script uses the scRAW `stable_generalist_stable_generalist` preset, seed 42,
-the source campaign hyperparameters, and GPU execution. It reruns training
-because the original transductive checkpoints were not retained in the source
-results.
+The script uses the public scRAW `default` preset, which is the 0017/stable
+configuration, seed 42, the source campaign hyperparameters, and GPU execution.
+It reruns training because the original transductive checkpoints were not
+retained in the source results.
 
 The launcher also sets `CUBLAS_WORKSPACE_CONFIG=:4096:8`, `PYTHONHASHSEED=0`,
 `OMP_NUM_THREADS=1`, and `MKL_NUM_THREADS=1` in each worker to limit GPU

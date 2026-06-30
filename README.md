@@ -231,6 +231,17 @@ The numbered execution order is in
 of figures/tables from the report is in
 [docs/report_reproduction_map.md](docs/report_reproduction_map.md).
 
+### scRAW Presets
+
+SCRBenchmark exposes exactly two public scRAW presets:
+
+- `default`: the 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
+- `baron`: the Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+
+For registered report-method runs, select it with `--scraw-preset default` or
+`--scraw-preset baron` when calling `scripts/reproduction/run_method.py`. For
+inductive scRAW scripts, use `--preset default` or `--preset baron`.
+
 ---
 
 ## Guides

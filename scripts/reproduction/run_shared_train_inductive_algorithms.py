@@ -100,11 +100,11 @@ def parse_args() -> argparse.Namespace:
         default=["scraw", "scname", "sc_mae", "scdeepcluster"],
         choices=["scraw", "scname", "sc_mae", "scdeepcluster", "scaide", "pca_harmony"],
     )
-    parser.add_argument("--preset", default="stable_generalist", choices=["default", "0017", "stable_generalist"])
+    parser.add_argument("--preset", default="default", choices=["default", "baron"])
     parser.add_argument(
         "--trial-config-path",
         default=None,
-        help="Exact trial_config.json path used when resolving preset stable_generalist/0017.",
+        help="Exact trial_config.json path used when resolving the default 0017 scRAW preset.",
     )
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--seed", type=int, default=42)

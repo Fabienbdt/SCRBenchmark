@@ -279,7 +279,7 @@ def add_inductive(rows: list[dict[str, str]], args: argparse.Namespace, specs: M
                     "--algorithms",
                     algorithm,
                     "--preset",
-                    "stable_generalist",
+                    "default",
                     "--device",
                     args.device,
                     "--seed",

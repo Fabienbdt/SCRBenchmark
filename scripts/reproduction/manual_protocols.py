@@ -114,7 +114,7 @@ class ManualProtocolConfig:
     test_split_key: str = ""
     train_batches: tuple[str, ...] = ()
     test_batches: tuple[str, ...] = ()
-    preset: str = "stable_generalist"
+    preset: str = "default"
     trial_config_path: str = ""
     baseline_runtime_profile: str = "scrbenchmark-default"
     skip_existing: bool = False
@@ -471,7 +471,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test-split-key", default="")
     parser.add_argument("--train-batches", default="")
     parser.add_argument("--test-batches", default="")
-    parser.add_argument("--preset", default="stable_generalist", choices=["default", "0017", "stable_generalist"])
+    parser.add_argument("--preset", default="default", choices=["default", "baron"])
     parser.add_argument("--trial-config-path", default="")
     parser.add_argument(
         "--baseline-runtime-profile",

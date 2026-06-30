@@ -198,6 +198,17 @@ Open **Report Reproduction** in the sidebar. The panel contains:
 Each tab writes a planned-job CSV and a shell launcher. The compact figure/table
 map is available in [`report_reproduction_map.md`](report_reproduction_map.md).
 
+### scRAW Presets
+
+SCRBenchmark exposes two public scRAW presets:
+
+- `default`: the 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
+- `baron`: the Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+
+Use `--scraw-preset default|baron` with
+`scripts/reproduction/run_method.py`. Use `--preset default|baron` with the
+inductive scRAW scripts.
+
 ---
 
 ## 6. Extend SCRBenchmark

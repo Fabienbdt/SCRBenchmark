@@ -41,6 +41,28 @@ def test_report_method_commands_repeat_without_output_collision():
     assert "seed_43" in commands[1]
 
 
+def test_scraw_report_method_command_includes_selected_preset():
+    config = customize_benchmark._create_default_config("scRAW Preset Test")
+    config.update(
+        {
+            "uploaded_file_path": "data/stable_generalist/baron_human_pancreas.h5ad",
+            "dataset_key": "baron_human_pancreas",
+            "label_key": "label",
+            "batch_key": "batch",
+            "n_labels": 14,
+            "selected_algorithms": [],
+            "selected_report_methods": ["scRAW"],
+            "scraw_preset": "baron",
+            "output_dir": "results/scraw_preset_test",
+        }
+    )
+
+    commands = customize_benchmark._generate_report_method_commands(config)
+
+    assert len(commands) == 1
+    assert "--scraw-preset baron" in commands[0]
+
+
 def test_loss_transfer_report_preset_is_complete_and_editable():
     configs = customize_benchmark._create_report_preset_configs("loss_transfer_report")
 

@@ -42,6 +42,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-labels", type=int, default=0)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument(
+        "--scraw-preset",
+        choices=["default", "baron"],
+        default="default",
+        help="scRAW preset used by the external scRAW adapter: default is the 0017 configuration.",
+    )
     parser.add_argument("--scib-n-jobs", type=int, default=4)
     parser.add_argument("--python-bin", default=sys.executable)
     parser.add_argument("--n-top-genes", type=int, default=2000)
@@ -146,6 +152,7 @@ def _template_context(spec: MethodSpec, args: argparse.Namespace) -> dict[str, A
         "n_labels": str(int(args.n_labels)),
         "seed": str(int(args.seed)),
         "device": str(args.device),
+        "scraw_preset": str(getattr(args, "scraw_preset", "default") or "default"),
         "python_bin": str(args.python_bin),
         "scib_n_jobs": str(int(args.scib_n_jobs)),
         "n_top_genes": str(int(args.n_top_genes)),

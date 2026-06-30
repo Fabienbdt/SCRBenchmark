@@ -321,6 +321,7 @@ def _set_stratified_split_mode(config: Dict[str, Any], *, train_ratio: float, va
 def _report_methods_config(config: Dict[str, Any], methods: List[str]) -> None:
   config["selected_algorithms"] = []
   config["selected_report_methods"] = _unique_preserve_order(methods)
+  config["scraw_preset"] = "default"
   config["report_method_n_pcs"] = 50
   config["report_method_harmony_max_iter"] = 10
   config["report_method_harmony_nclust"] = 50
@@ -423,7 +424,7 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
         "test_split_key": split.get("test_split_key", ""),
         "train_batches": split["train_batches"],
         "test_batches": split["test_batches"],
-        "preset": "stable_generalist",
+        "preset": "default",
         "trial_config_path": "",
         "baseline_runtime_profile": "scrbenchmark-default",
         "skip_existing": True,
@@ -532,6 +533,9 @@ def _generate_report_method_commands(config: Dict[str, Any]) -> List[str]:
   report_harmony_max_iter = int(config.get('report_method_harmony_max_iter', 10) or 10)
   report_harmony_nclust = int(config.get('report_method_harmony_nclust', 50) or 50)
   report_params = _parse_text_entries(config.get('report_method_params', ''))
+  scraw_preset = str(config.get('scraw_preset', 'default') or 'default')
+  if scraw_preset not in {'default', 'baron'}:
+    scraw_preset = 'default'
 
   commands = []
   for method_name in selected_methods:
@@ -583,6 +587,8 @@ def _generate_report_method_commands(config: Dict[str, Any]) -> List[str]:
         "--harmony-nclust",
         report_harmony_nclust,
       ]
+      if method_name == "scRAW":
+        cmd.extend(["--scraw-preset", scraw_preset])
       for param in report_params:
         cmd.extend(["--param", param])
       commands.append(_join_cmd(cmd))
@@ -685,7 +691,7 @@ def _generate_manual_protocol_commands(config: Dict[str, Any]) -> List[str]:
       test_split_key=str(inductive_cfg.get('test_split_key', '') or ''),
       train_batches=tuple(_parse_text_entries(inductive_cfg.get('train_batches', ''))),
       test_batches=tuple(_parse_text_entries(inductive_cfg.get('test_batches', ''))),
-      preset=str(inductive_cfg.get('preset', 'stable_generalist') or 'stable_generalist'),
+      preset=str(inductive_cfg.get('preset', 'default') or 'default'),
       trial_config_path=str(inductive_cfg.get('trial_config_path', '') or ''),
       baseline_runtime_profile=str(inductive_cfg.get('baseline_runtime_profile', 'scrbenchmark-default') or 'scrbenchmark-default'),
       skip_existing=bool(inductive_cfg.get('skip_existing', False)),
@@ -1326,6 +1332,19 @@ def render_customize_benchmark_page():
         help="These commands use scripts/reproduction/run_method.py and cover the report method registry."
       )
       current_config['selected_report_methods'] = selected_report_methods
+      if "scRAW" in selected_report_methods:
+        current_preset = str(current_config.get('scraw_preset', 'default') or 'default')
+        if current_preset not in ['default', 'baron']:
+          current_preset = 'default'
+        current_config['scraw_preset'] = st.selectbox(
+          "scRAW preset",
+          ['default', 'baron'],
+          index=['default', 'baron'].index(current_preset),
+          key=f"scraw_report_preset_{selected_idx}",
+          help="default uses the 0017 configuration; baron uses the Baron configuration from /data2/fbidet/scRAW.",
+        )
+      else:
+        current_config['scraw_preset'] = str(current_config.get('scraw_preset', 'default') or 'default')
 
       compatible_harmony_bases = [
         method for method in selected_report_methods
@@ -1573,9 +1592,9 @@ def render_customize_benchmark_page():
       with c_i4:
         inductive_cfg['preset'] = st.selectbox(
           "scRAW preset",
-          ['stable_generalist', '0017', 'default'],
-          index=['stable_generalist', '0017', 'default'].index(inductive_cfg.get('preset', 'stable_generalist'))
-          if inductive_cfg.get('preset', 'stable_generalist') in ['stable_generalist', '0017', 'default'] else 0,
+          ['default', 'baron'],
+          index=['default', 'baron'].index(inductive_cfg.get('preset', 'default'))
+          if inductive_cfg.get('preset', 'default') in ['default', 'baron'] else 0,
           key=f"inductive_preset_{selected_idx}",
         )
       with c_i5:
@@ -1961,6 +1980,7 @@ def _create_default_config(name: str) -> Dict[str, Any]:
     'n_labels': 0,
     'selected_algorithms': ['scdeepcluster'],
     'selected_report_methods': [],
+    'scraw_preset': 'default',
     'report_include_harmony_variants': False,
     'report_harmony_variant_methods': [],
     'report_method_params': '',
@@ -2040,7 +2060,7 @@ def _create_default_config(name: str) -> Dict[str, Any]:
         'test_split_key': '',
         'train_batches': '',
         'test_batches': '',
-        'preset': 'stable_generalist',
+        'preset': 'default',
         'trial_config_path': '',
         'baseline_runtime_profile': 'scrbenchmark-default',
         'skip_existing': False

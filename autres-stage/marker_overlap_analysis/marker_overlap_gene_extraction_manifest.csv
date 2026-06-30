@@ -1,0 +1,2 @@
+input,output_prefix,ground_truth_gene_rows,predicted_cluster_gene_rows,cluster_mapping_rows,status
+/data2/fbidet/Rapport_Stage_M2_git/Images/analyse_biologique_scraw_baron_stable_generalist/degs_top100.json,/data2/fbidet/SCRBenchmark/results/report_artifacts/marker_overlap_genes/Rapport_Stage_M2_git,1400,1600,0,extracted

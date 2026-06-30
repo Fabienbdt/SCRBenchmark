@@ -9,13 +9,19 @@ import sys
 from pathlib import Path
 
 # Add external scRAW source directory to Python path
-SCRAW_SOURCE_DIR = Path("/data2/fbidet/scRAW/src")
+SCRAW_ROOT = Path("/data2/fbidet/scRAW")
+SCRAW_SOURCE_DIR = SCRAW_ROOT / "src"
 if SCRAW_SOURCE_DIR.exists():
     sys.path.insert(0, str(SCRAW_SOURCE_DIR))
 else:
     raise RuntimeError(f"Could not find scRAW source directory at {SCRAW_SOURCE_DIR}")
 
-from scraw.config import ScRAWConfig
+SCRAW_PRESET_CONFIGS = {
+    "default": SCRAW_ROOT / "configs" / "default_scraw.json",
+    "baron": SCRAW_ROOT / "configs" / "baron_jobim.json",
+}
+
+from scraw.config import load_config
 from scraw.pipeline import run_pipeline
 
 
@@ -30,14 +36,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--n-labels", type=int, required=True)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument(
+        "--preset",
+        choices=sorted(SCRAW_PRESET_CONFIGS),
+        default="default",
+        help=(
+            "scRAW source configuration to load from /data2/fbidet/scRAW. "
+            "`default` is the 0017/stable configuration; `baron` is the Baron configuration."
+        ),
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
 
-    # Load or instantiate a default ScRAWConfig
-    config = ScRAWConfig()
+    config_path = SCRAW_PRESET_CONFIGS[str(args.preset)]
+    if not config_path.exists():
+        raise FileNotFoundError(f"Missing scRAW preset config: {config_path}")
+
+    config = load_config(config_path)
 
     # Configure path values
     config.data.data_path = str(Path(args.data).expanduser().resolve())

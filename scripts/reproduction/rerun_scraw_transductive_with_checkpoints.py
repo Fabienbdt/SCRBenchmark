@@ -161,6 +161,8 @@ def _load_trial_spec(trial_root: Path) -> dict[str, Any]:
     )
     if not preset_name:
         raise ValueError(f"Unable to resolve preset name from {trial_root}")
+    if preset_name in {"default_v_3", "stable_generalist_stable_generalist"}:
+        preset_name = "default"
 
     seed = int(config_payload.get("execution", {}).get("random_seed", trial_payload.get("seed", 42)))
     algorithm_params = dict(config_payload.get("algorithm_params", {}).get("scraw", {}))

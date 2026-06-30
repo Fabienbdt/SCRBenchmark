@@ -54,8 +54,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset-name", default="", help="Name written to summary.csv.")
     parser.add_argument(
         "--preset",
-        default="stable_generalist",
-        choices=["default", "0017", "stable_generalist"],
+        default="default",
+        choices=["default", "baron"],
     )
     parser.add_argument("--split-key", default="batch")
     parser.add_argument("--label-key", default=None)

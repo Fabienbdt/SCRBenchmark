@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-05-28T16:01:31",
+  "dataset": "/data2/fbidet/SCRBenchmark/data/baron_human_pancreas.h5ad",
+  "label_key": "cell_type",
+  "batch_key": "batch",
+  "logic": {
+    "scope": "Baron human pancreas only",
+    "run_selection": "scRAW uses default/stable_generalist_stable_generalist seed42; other methods use the best Baron paper-logic transductive run by BalancedACC.",
+    "deg": "Gold-standard top100 marker list is computed from true cell types; predicted top100 marker lists are computed per predicted cluster.",
+    "annotation": "Best-mapping uses Hungarian one-to-one assignment; marker-overlap allows many predicted clusters to map to one gold-standard type.",
+    "similarity": "Cosine similarities are sampled from random cell pairs to estimate the high-similarity/over-smoothing region without materializing an O(n^2) matrix."
+  },
+  "parameters": {
+    "only_scraw": true,
+    "n_top_deg": 100,
+    "deg_method": "wilcoxon",
+    "min_cells_per_gene": 3,
+    "target_sum": 10000.0,
+    "similarity_pairs": 500000,
+    "tsne_perplexity": 30.0,
+    "tsne_max_iter": 1000,
+    "random_state": 42
+  },
+  "methods": [
+    {
+      "method_key": "scraw_stable_generalist_default",
+      "display_name": "scRAW stable_generalist/default",
+      "labels_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/00_mis_de_cote/livrables_derives_ou_copies/common8_stable_generalist_weight_exports_20260430/baron_human_pancreas/seed_42/results/labels/labels_scraw_run0.csv",
+      "embeddings_npy": "/data2/fbidet/scRAW_EXPERIMENTAL/results/00_mis_de_cote/livrables_derives_ou_copies/common8_stable_generalist_weight_exports_20260430/baron_human_pancreas/seed_42/results/embeddings/embeddings_scraw_run0.npy",
+      "source_results_csv": "/data2/fbidet/scRAW_EXPERIMENTAL/results/optuna_stable_generalist_search_20260415_161134/phase1/stable_generalist/stage1/runs/stable_generalist_stable_generalist/baron_human_pancreas/seed_42/results/analysis_results.csv",
+      "source_run_id": 0,
+      "source_note": "scRAW default alias aligned to stable_generalist_stable_generalist; labels/embeddings loaded from common8 stable_generalist weight export."
+    }
+  ]
+}
