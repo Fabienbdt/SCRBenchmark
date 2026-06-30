@@ -1075,7 +1075,18 @@ def summarize_results(results: Any) -> Any:
         return pd.DataFrame()
 
     frame = results.copy()
-    preferred = ["NMI", "ARI", "ACC", "Silhouette", "silhouette", "runtime", "runtime_seconds"]
+    preferred = [
+        "NMI",
+        "ARI",
+        "ACC",
+        "BalancedACC",
+        "RareACC",
+        "BalancedRareACC",
+        "Silhouette",
+        "silhouette",
+        "runtime",
+        "runtime_seconds",
+    ]
     metric_cols = [col for col in preferred if col in frame.columns]
     if not metric_cols:
         metric_cols = [

@@ -1032,6 +1032,49 @@ def compute_rare_class_accuracy(
     
     return float(np.mean(matches))
 
+
+def compute_balanced_rare_class_accuracy(
+    labels_true: np.ndarray,
+    labels_pred: np.ndarray,
+    threshold: float = 0.05,
+) -> float:
+    """
+    Compute balanced accuracy restricted to rare ground-truth classes.
+
+    Rare classes are defined by their frequency in ``labels_true``. Predictions
+    are aligned globally first, then the metric averages recall across rare
+    classes so that a rare class with many cells does not dominate the score.
+
+    Args:
+        labels_true: Ground truth labels
+        labels_pred: Predicted labels
+        threshold: Frequency threshold (default 0.05 for 5%)
+
+    Returns:
+        Balanced rare accuracy, or NaN if no rare classes exist.
+    """
+    labels_true = np.array(labels_true)
+    labels_pred = np.array(labels_pred)
+
+    if len(labels_true) != len(labels_pred) or len(labels_true) == 0:
+        return float("nan")
+
+    aligned_pred = align_labels(labels_true, labels_pred)
+    unique_classes, counts = np.unique(labels_true, return_counts=True)
+    rare_classes = unique_classes[(counts / len(labels_true)) < threshold]
+
+    if len(rare_classes) == 0:
+        return float("nan")
+
+    recalls = []
+    for cls in rare_classes:
+        mask = labels_true == cls
+        if np.any(mask):
+            recalls.append(float(np.mean(aligned_pred[mask] == labels_true[mask])))
+
+    return float(np.mean(recalls)) if recalls else float("nan")
+
+
 def compute_class_wise_metrics(labels_true: np.ndarray, labels_pred: np.ndarray) -> Dict[str, Dict[str, float]]:
     """
     Compute per-class metrics (Precision, Recall, F1) to identify discrepancies 
@@ -1193,6 +1236,10 @@ def compute_metrics(labels_true: Optional[np.ndarray],
         rare_acc = compute_rare_class_accuracy(labels_true_filtered, labels_pred_filtered)
         if rare_acc is not None:
             metrics['RareACC'] = rare_acc
+        metrics['BalancedRareACC'] = compute_balanced_rare_class_accuracy(
+            labels_true_filtered,
+            labels_pred_filtered,
+        )
 
         # KNN purity (requires embeddings + labels)
         if embeddings_filtered is not None and len(embeddings_filtered) == len(labels_true_filtered):
@@ -1703,7 +1750,7 @@ def compute_generalization_gap(
             
     # Also compute gaps for additional metrics if available
     extra_metrics = [
-        'F1_Macro', 'BalancedACC', 'RareACC', 'KNN_Purity',
+        'F1_Macro', 'BalancedACC', 'RareACC', 'BalancedRareACC', 'KNN_Purity',
         'NNO_Spearman', 'NNO_FoldEnrichment',
         # scIB / scIB-E metrics
         'Silhouette batch', 'iLISI', 'KBET', 'Graph connectivity',

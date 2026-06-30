@@ -1,32 +1,31 @@
 # Datasets stable_generalist
 
-Placer ici les 13 fichiers `.h5ad` utilises par la reproduction
-stable_generalist.
+Place here the 13 `.h5ad` files used by the stable_generalist reproduction.
 
-Preparation recommandee:
+Recommended preparation:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
 ```
 
-Mode telechargement distant, si les fichiers exacts sont heberges:
+Remote download mode, when the exact files are hosted:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --base-url https://YOUR_HOST/scrbenchmark/stable_generalist/
 ```
 
-Verifier des fichiers deja prepares:
+Verify already prepared files:
 
 ```bash
 python scripts/reproduction/download_datasets.py --verify-only
 ```
 
-Les tailles, SHA256 et dimensions AnnData attendues sont dans
+Expected sizes, SHA256 hashes, and AnnData dimensions are in
 `download_manifest.csv`.
 
-Fichiers attendus:
+Expected files:
 
 - `bbag094_zeisel.h5ad`
 - `bbag094_spleen.h5ad`
@@ -42,7 +41,7 @@ Fichiers attendus:
 - `Mouse_Pancreas_1_raw_counts.h5ad`
 - `Tabula_Muris_liver_filtered_raw_counts.h5ad`
 
-Le planificateur accepte aussi un autre dossier:
+The planner can also use another directory:
 
 ```bash
 python scripts/reproduction/build_stable_generalist_plan.py --data-root /path/to/h5ad_files

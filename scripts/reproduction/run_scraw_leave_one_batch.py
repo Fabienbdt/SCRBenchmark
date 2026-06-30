@@ -38,6 +38,7 @@ SUMMARY_FIELDS = [
     "ARI",
     "NMI",
     "RareACC",
+    "BalancedRareACC",
     "UltraRareACC",
     "output_dir",
 ]
@@ -218,6 +219,7 @@ def main() -> int:
             "ARI": metrics.get("ARI", ""),
             "NMI": metrics.get("NMI", ""),
             "RareACC": metrics.get("RareACC", ""),
+            "BalancedRareACC": metrics.get("BalancedRareACC", ""),
             "UltraRareACC": ultra_rare_acc(out_dir),
             "output_dir": str(out_dir),
         }

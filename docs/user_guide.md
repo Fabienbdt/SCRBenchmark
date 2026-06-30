@@ -1,38 +1,38 @@
-# Guide utilisateur SCRBenchmark
+# SCRBenchmark User Guide
 
-Ce guide explique comment installer SCRBenchmark, preparer les datasets,
-lancer l'interface graphique ou la CLI, reproduire les experiences du rapport
-et trouver le bon guide quand il faut modifier le projet.
+This guide explains how to install SCRBenchmark, prepare datasets, run the
+Streamlit interface or CLI, reproduce report experiments, and find the right
+guide when the project needs to be extended.
 
 ---
 
-## Sommaire
+## Table of Contents
 
-1. [Installation complete](#1-installation-complete)
-2. [Preparation des datasets](#2-preparation-des-datasets)
-3. [Utiliser l'interface Streamlit](#3-utiliser-linterface-streamlit)
-4. [Lancer des benchmarks en CLI](#4-lancer-des-benchmarks-en-cli)
-5. [Reproduire les experiences du rapport](#5-reproduire-les-experiences-du-rapport)
-6. [Etendre SCRBenchmark](#6-etendre-scrbenchmark)
-7. [Depannage](#7-depannage)
+1. [Complete installation](#1-complete-installation)
+2. [Dataset preparation](#2-dataset-preparation)
+3. [Use the Streamlit interface](#3-use-the-streamlit-interface)
+4. [Run CLI benchmarks](#4-run-cli-benchmarks)
+5. [Reproduce report experiments](#5-reproduce-report-experiments)
+6. [Extend SCRBenchmark](#6-extend-scrbenchmark)
+7. [Troubleshooting](#7-troubleshooting)
 
-## Carte rapide
+## Quick Map
 
-| Besoin | Document |
+| Need | Document |
 | --- | --- |
-| Installation rapide, lancement et index des guides | [`../README.md`](../README.md) |
-| Workflow utilisateur, datasets, GUI et CLI | Ce guide |
-| Carte technique fichier par fichier | [`developer_file_guide.md`](developer_file_guide.md) |
-| Ajouter un algorithme externe | [`algorithm_extension_guide.md`](algorithm_extension_guide.md) |
-| Comprendre les YAML `methods/` | [`../methods/README.md`](../methods/README.md) |
-| Ajouter une etape de preprocessing | [`preprocessing_extension_guide.md`](preprocessing_extension_guide.md) |
-| Comprendre les scripts de reproduction | [`../scripts/reproduction/README.md`](../scripts/reproduction/README.md) |
+| Quick install, first run, and guide index | [`../README.md`](../README.md) |
+| User workflow, datasets, GUI, and CLI | This guide |
+| Technical file map | [`developer_file_guide.md`](developer_file_guide.md) |
+| Add an external algorithm | [`algorithm_extension_guide.md`](algorithm_extension_guide.md) |
+| Understand `methods/` YAML files | [`../methods/README.md`](../methods/README.md) |
+| Add a preprocessing step | [`preprocessing_extension_guide.md`](preprocessing_extension_guide.md) |
+| Understand reproduction scripts | [`../scripts/reproduction/README.md`](../scripts/reproduction/README.md) |
 
 ---
 
-## 1. Installation complete
+## 1. Complete Installation
 
-SCRBenchmark demande **Python >= 3.9** et un environnement virtuel propre.
+SCRBenchmark requires **Python >= 3.9** and a clean virtual environment.
 
 ```bash
 cd /data2/fbidet/SCRBenchmark
@@ -42,67 +42,64 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Pour reproduire les experiences lourdes du rapport ou utiliser certaines
-methodes externes avancees:
+To reproduce heavy report experiments or use advanced external methods:
 
 ```bash
 pip install -r requirements-reproduction.txt
 ```
 
-Verification rapide:
+Quick check:
 
 ```bash
 ./scrbenchmark list-algorithms
 ```
 
-Cette commande doit afficher les algorithmes disponibles dans l'environnement.
+This command should list the algorithms available in the environment.
 
 ---
 
-## 2. Preparation des datasets
+## 2. Dataset Preparation
 
-SCRBenchmark utilise principalement des fichiers `.h5ad` compatibles
-AnnData/Scanpy.
+SCRBenchmark mainly uses AnnData/Scanpy-compatible `.h5ad` files.
 
-### Dataset Baron pancreas
+### Baron Pancreas Dataset
 
-Ce dataset sert aux exemples, smoke tests et comparaisons rapides:
+This dataset is used for examples, smoke tests, and quick comparisons:
 
 ```bash
 python scripts/setup/prepare_baron_dataset.py --download
 ```
 
-Le fichier produit est:
+The generated file is:
 
 ```text
 data/baron_human_pancreas.h5ad
 ```
 
-### Campagne stable_generalist
+### stable_generalist Campaign
 
-Pour reproduire les experiences du rapport, SCRBenchmark attend 13 fichiers
-`.h5ad` dans:
+To reproduce the report experiments, SCRBenchmark expects 13 `.h5ad` files in:
 
 ```text
 data/stable_generalist/
 ```
 
-Preparation depuis la racine de donnees locale:
+Preparation from the local data root:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
 ```
 
-Si les fichiers exacts sont heberges a distance:
+If the exact files are hosted remotely:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --base-url https://YOUR_HOST/scrbenchmark/stable_generalist/
 ```
 
-Le script verifie les SHA256, tailles, dimensions AnnData et colonnes
-label/batch attendues. Pour verifier des fichiers deja prepares:
+The script verifies SHA256 hashes, sizes, AnnData dimensions, and expected
+label/batch columns. To verify already prepared files:
 
 ```bash
 python scripts/reproduction/download_datasets.py --verify-only
@@ -110,37 +107,37 @@ python scripts/reproduction/download_datasets.py --verify-only
 
 ---
 
-## 3. Utiliser l'interface Streamlit
+## 3. Use the Streamlit Interface
 
-L'interface graphique est le point d'entree recommande pour explorer les
-donnees, configurer les experiences et comparer les resultats.
+The graphical interface is the recommended entry point to explore data,
+configure experiments, and compare results.
 
 ```bash
 ./run.sh
 ```
 
-Ouvrir ensuite l'URL affichee dans le terminal, souvent:
+Then open the URL displayed in the terminal, often:
 
 ```text
 http://localhost:8501
 ```
 
-Parcours conseille:
+Recommended workflow:
 
-1. `Data Upload`: charger un fichier `.h5ad`.
-2. `Data Split`: choisir le protocole standard ou train/val/test.
-3. `Preprocessing`: configurer filtres, HVG, normalisation, dropout ou batch correction.
-4. `Algorithm Config`: choisir les algorithmes et leurs hyperparametres.
-5. `Analysis`: lancer le benchmark.
-6. `Results Explorer`: comparer NMI, ARI, silhouette, labels et embeddings.
+1. `Data Upload`: load a `.h5ad` file.
+2. `Data Split`: choose the standard protocol or train/val/test.
+3. `Preprocessing`: configure filters, HVG, normalization, dropout, or batch correction.
+4. `Algorithm Config`: choose algorithms and hyperparameters.
+5. `Analysis`: run the benchmark.
+6. `Results Explorer`: compare NMI, ARI, silhouette, labels, and embeddings.
 
 ---
 
-## 4. Lancer des benchmarks en CLI
+## 4. Run CLI Benchmarks
 
-La CLI sert a automatiser des experiences sans passer par l'interface.
+The CLI is useful for automating experiments without the graphical interface.
 
-Exemple simple en mode transductif:
+Simple transductive example:
 
 ```bash
 ./scrbenchmark run \
@@ -155,16 +152,16 @@ Exemple simple en mode transductif:
   --save-labels
 ```
 
-Arguments importants:
+Important arguments:
 
-- `--data`: chemin du fichier `.h5ad`;
-- `--algorithms`: liste d'algorithmes separes par des virgules;
-- `--label-col`: colonne `adata.obs` contenant les labels de reference;
-- `--n-clusters`: nombre de clusters attendu;
-- `--device`: `cpu`, `cuda`, `mps` ou `auto`;
-- `--output`: dossier de sortie.
+- `--data`: path to the `.h5ad` file;
+- `--algorithms`: comma-separated algorithm list;
+- `--label-col`: `adata.obs` column containing reference labels;
+- `--n-clusters`: expected cluster count;
+- `--device`: `cpu`, `cuda`, `mps`, or `auto`;
+- `--output`: output directory.
 
-Commandes utiles:
+Useful commands:
 
 ```bash
 ./scrbenchmark list-algorithms
@@ -173,75 +170,73 @@ Commandes utiles:
 ./scrbenchmark run --config config.yaml
 ```
 
-Apres execution, le dossier de resultats contient notamment:
+After execution, the result directory notably contains:
 
-- `results.csv`: resume des scores et temps d'execution;
-- `labels/`: labels predits par cellule;
-- `embeddings/`: representations latentes si demandees;
-- `config/`: configuration sauvegardee pour la reproductibilite.
+- `results.csv`: score and runtime summary;
+- `labels/`: predicted per-cell labels;
+- `embeddings/`: latent representations when requested;
+- `config/`: saved configuration for reproducibility.
 
 ---
 
-## 5. Reproduire les experiences du rapport
+## 5. Reproduce Report Experiments
 
-Le point d'entree recommande est le panneau Streamlit **Report Reproduction**.
-Il remplace les longues listes de commandes dans la documentation.
+The recommended entry point is the Streamlit **Report Reproduction** panel. It
+replaces long command lists in the documentation.
 
 ```bash
 ./run.sh
 ```
 
-Dans la sidebar, ouvrir **Report Reproduction**. Le panneau contient:
+Open **Report Reproduction** in the sidebar. The panel contains:
 
-- **Traceability**: carte entre figures/tables du rapport et campagnes;
-- **Stable Generalist**: generation du plan principal stable_generalist;
-- **Report Complements**: experiences inductives, loss-transfer et DEG;
-- **Custom Protocols**: variantes configurables sans modifier les scripts.
+- **Traceability**: map between report figures/tables and campaigns;
+- **Stable Generalist**: main stable_generalist plan generation;
+- **Report Complements**: inductive, loss-transfer, and DEG experiments;
+- **Custom Protocols**: configurable variants without changing scripts.
 
-Chaque onglet ecrit un CSV de jobs planifies et un script shell de lancement.
-La carte compacte figure/table est disponible dans
-[`report_reproduction_map.md`](report_reproduction_map.md).
+Each tab writes a planned-job CSV and a shell launcher. The compact figure/table
+map is available in [`report_reproduction_map.md`](report_reproduction_map.md).
 
 ---
 
-## 6. Etendre SCRBenchmark
+## 6. Extend SCRBenchmark
 
-Pour ajouter un algorithme externe, ne modifiez pas
-`src/scrbenchmark/algorithms/`; suivez uniquement
-[`algorithm_extension_guide.md`](algorithm_extension_guide.md). Ce guide couvre
-le dossier de code source externe, le wrapper, le YAML `methods/*.yaml`, la
-validation et le smoke test.
+To add an external algorithm, do not modify `src/scrbenchmark/algorithms/`.
+Follow only [`algorithm_extension_guide.md`](algorithm_extension_guide.md). It
+covers the external source directory, wrapper, `methods/*.yaml`, validation,
+and smoke test.
 
-Pour ajouter une etape de preprocessing, utilisez
+To add a preprocessing step, use
 [`preprocessing_extension_guide.md`](preprocessing_extension_guide.md).
 
-Pour comprendre l'organisation technique du depot, utilisez
-[`developer_file_guide.md`](developer_file_guide.md). Ce document est une carte
-des fichiers, pas une procedure d'ajout d'algorithme.
+To understand the repository organization, use
+[`developer_file_guide.md`](developer_file_guide.md). That document is a file
+map, not an algorithm-integration procedure.
 
 ---
 
-## 7. Depannage
+## 7. Troubleshooting
 
-### Erreur `CUDA out of memory`
+### `CUDA out of memory`
 
-Reduire `batch_size`, utiliser `--device cpu` pour un test rapide, ou diminuer
-le nombre de genes HVG dans le preprocessing.
+Reduce `batch_size`, use `--device cpu` for a quick test, or decrease the HVG
+gene count in preprocessing.
 
-### Un algorithme externe n'apparait pas
+### An External Algorithm Does Not Appear
 
-Verifier que le YAML est dans `methods/`, que `name` correspond a la commande
-`--method`, puis lancer:
+Check that the YAML is in `methods/`, that `name` matches the `--method`
+argument, then run:
 
 ```bash
 python3 scripts/reproduction/run_method.py --list
 ```
 
-Pour une integration externe complete, suivre
+For a complete external integration, follow
 [`algorithm_extension_guide.md`](algorithm_extension_guide.md).
 
-### Erreur sur les comptes bruts
+### Raw Count Error
 
-Les methodes fondees sur des distributions NB/ZINB peuvent exiger des comptes
-bruts non normalises. Verifier que le `.h5ad` conserve les comptes dans
-`adata.X`, `adata.raw` ou une couche comme `adata.layers["original_X"]`.
+Methods based on NB/ZINB distributions may require non-normalized raw counts.
+Check that the `.h5ad` file keeps counts in `adata.X`, `adata.raw`, or a layer
+such as `adata.layers["original_X"]`.

@@ -1,0 +1,72 @@
+{
+  "final_epoch": 119,
+  "rows": [
+    {
+      "epoch": 119,
+      "method": "hdbscan_final",
+      "NMI": 0.5323964726920295,
+      "ARI": 0.28322459070074263,
+      "ACC": 0.41611721611721614,
+      "BalancedACC": 0.36978306045412745,
+      "F1_Macro": 0.28746310551710613,
+      "RareACC": 0.12636165577342048,
+      "UltraRareACC": 0.0,
+      "n_clusters_found": 10,
+      "resolution": null,
+      "selection_metric": "rare_weighted_silhouette_unsupervised",
+      "selection_score": 0.7730318509615385,
+      "rare_weighted_silhouette": 0.7730318509615385,
+      "target_clusters": 8,
+      "target_source": "legacy_estimate_k",
+      "cluster_count_diff": 2,
+      "noise_fraction": 0.002197802197802198,
+      "hdbscan_min_cluster_size": 8,
+      "hdbscan_min_samples": 6,
+      "hdbscan_cluster_selection_method": "eom",
+      "hdbscan_scan_enabled": false
+    },
+    {
+      "epoch": 119,
+      "method": "leiden_target19_final",
+      "NMI": 0.5226599511535821,
+      "ARI": 0.2775284782602483,
+      "ACC": 0.4117216117216117,
+      "BalancedACC": 0.4154964849331334,
+      "F1_Macro": 0.36504557478672445,
+      "RareACC": 0.4226579520697168,
+      "UltraRareACC": 0.0,
+      "n_clusters_found": 18,
+      "resolution": 1.0,
+      "selection_metric": "cluster_count_abs_error_then_silhouette",
+      "selection_score": 0.34783613681793213,
+      "target_clusters": 19
+    }
+  ],
+  "hdbscan_info": {
+    "method": "hdbscan",
+    "scan_enabled": false,
+    "selection_metric": "rare_weighted_silhouette_unsupervised",
+    "selection_score": 0.7730318509615385,
+    "rare_weighted_silhouette": 0.7730318509615385,
+    "silhouette": 0.7775548100471497,
+    "target_clusters": 8,
+    "target_source": "legacy_estimate_k",
+    "n_clusters": 10,
+    "cluster_diff": 2,
+    "noise_fraction": 0.002197802197802198,
+    "min_cluster_size": 8,
+    "min_samples": 6,
+    "cluster_selection_method": "eom",
+    "n_eval_cells": 2730,
+    "candidate_results": []
+  },
+  "leiden_info": {
+    "resolution": 1.0,
+    "n_clusters": 18,
+    "target_clusters": 19,
+    "selection_metric": "cluster_count_abs_error_then_silhouette",
+    "selection_score": 0.34783613681793213,
+    "silhouette": 0.34783613681793213,
+    "ARI_proxy": 0.2775284782602483
+  }
+}

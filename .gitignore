@@ -109,3 +109,13 @@ external/original_code/scAIDE/
 external/original_code/scCAD/
 scripts/analysis/GiniClust/
 scripts/analysis/scCAD/
+
+# ===========================
+# Versioned handoff/reproduction artifacts
+# ===========================
+!autres-stage/**
+!scraw-transductive-stable-generalist/**
+scraw-transductive-stable-generalist/.cache/
+scraw-transductive-stable-generalist/logs/
+scraw-transductive-stable-generalist/launcher.screen.log
+scraw-transductive-stable-generalist/**/__pycache__/

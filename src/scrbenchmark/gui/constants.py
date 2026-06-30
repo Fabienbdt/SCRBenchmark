@@ -55,4 +55,5 @@ METRIC_NAMES = [
   "Silhouette",
   "F1_Macro",
   "BalancedACC",
+  "BalancedRareACC",
 ]

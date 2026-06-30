@@ -1,97 +1,111 @@
-# Scripts de reproduction
+# Reproduction Scripts
 
-Ce dossier contient les scripts bas niveau qui preparent, planifient ou
-lancent les experiences de reproduction SCRBenchmark.
+This directory contains the low-level scripts that prepare, plan, or run
+SCRBenchmark reproduction experiments.
 
-Pour relancer normalement les experiences du rapport, preferer le panneau
-Streamlit **Report Reproduction**. Il genere les plans de jobs et les scripts
-shell sans obliger l'utilisateur a recopier de longues commandes.
+For normal report reproduction, prefer the Streamlit **Report Reproduction**
+panel. It generates job plans and shell launchers without asking users to copy
+long command lines by hand.
 
 ---
 
-## Perimetre
+## Scope
 
-Ce README decrit le role de chaque script. Il n'est pas le guide d'integration
-des algorithmes externes ni le contrat de preprocessing.
+This README explains the role of each script. It is not the external algorithm
+integration guide and it is not the preprocessing contract.
 
-| Besoin | Document |
+| Need | Document |
 | --- | --- |
-| Ajouter un algorithme externe | [`../../docs/algorithm_extension_guide.md`](../../docs/algorithm_extension_guide.md) |
-| Comprendre les YAML `methods/` | [`../../methods/README.md`](../../methods/README.md) |
-| Ajouter un preprocessing | [`../../docs/preprocessing_extension_guide.md`](../../docs/preprocessing_extension_guide.md) |
-| Comprendre les fichiers du depot | [`../../docs/developer_file_guide.md`](../../docs/developer_file_guide.md) |
+| Add an external algorithm | [`../../docs/algorithm_extension_guide.md`](../../docs/algorithm_extension_guide.md) |
+| Understand `methods/` YAML files | [`../../methods/README.md`](../../methods/README.md) |
+| Add preprocessing | [`../../docs/preprocessing_extension_guide.md`](../../docs/preprocessing_extension_guide.md) |
+| Understand repository files | [`../../docs/developer_file_guide.md`](../../docs/developer_file_guide.md) |
 
 ---
 
-## Scripts par tache
+## Scripts By Task
 
-| Tache | Scripts |
+| Task | Scripts |
 | --- | --- |
-| Preparer les datasets du rapport | `download_datasets.py`, `prepare_stable_generalist_data.py` |
-| Construire des CSV de jobs et lanceurs shell | `build_stable_generalist_plan.py`, `build_report_plan.py`, `manual_protocols.py` |
-| Valider ou lancer un algorithme externe enregistre | `validate_method.py`, `run_method.py` |
-| Lancer des familles externes ou legacy | `run_external_method.py`, `run_scaide_inductive_embeddings.py` |
-| Lancer batch correction ou variantes Harmony | `run_batch_baselines.py`, `run_posthoc_harmony.py` |
-| Lancer des protocoles inductifs ou leave-one-batch | `run_scrbenchmark_leave_one_batch.py`, `run_scraw_leave_one_batch.py`, `run_shared_train_inductive_algorithms.py` |
-| Calculer des annotations du rapport | `run_marker_overlap.py` |
+| Prepare report datasets | `download_datasets.py`, `prepare_stable_generalist_data.py` |
+| Build job CSVs and shell launchers | `build_stable_generalist_plan.py`, `build_report_plan.py`, `manual_protocols.py` |
+| Reuse existing scRAW artifacts | `export_existing_scraw_artifacts.py`, `run_scraw_from_weights.py`, `regenerate_scraw_weight_figures.py` |
+| Extract marker-overlap DEG genes | `extract_marker_overlap_genes.py`, `run_marker_overlap.py` |
+| Validate or run a registered external algorithm | `validate_method.py`, `run_method.py` |
+| Run external or legacy method families | `run_external_method.py`, `run_scaide_inductive_embeddings.py` |
+| Run batch correction or Harmony variants | `run_batch_baselines.py`, `run_posthoc_harmony.py` |
+| Run inductive or leave-one-batch protocols | `run_scrbenchmark_leave_one_batch.py`, `run_scraw_leave_one_batch.py`, `run_shared_train_inductive_algorithms.py` |
+| Compute report annotations | `run_marker_overlap.py` |
 
 ---
 
-## Role des scripts
+## Script Roles
 
-- `download_datasets.py`: telecharge ou materialise localement les 13 fichiers
-  `.h5ad` exacts de la campagne stable_generalist, puis verifie SHA256, tailles,
-  dimensions AnnData et colonnes label/batch.
-- `prepare_stable_generalist_data.py`: ancien helper local qui materialise les
-  13 fichiers `.h5ad` par hardlink, symlink ou copie.
-- `build_stable_generalist_plan.py`: lit les tables de reproductibilite
-  stable_generalist et genere `planned_jobs.csv` plus `run_ready_jobs.sh`.
-- `build_report_plan.py`: genere les plans des complements du rapport:
-  protocoles inductifs, loss-transfer et recouvrement DEG.
-- `manual_protocols.py`: cree ou execute des jobs configurables pour
-  loss-transfer, variantes Harmony et splits inductifs.
-- `add_method.py`: helper bas niveau optionnel qui cree un YAML de depart dans
-  `methods/`; le parcours utilisateur reste
+- `download_datasets.py`: downloads or materializes the exact 13 `.h5ad` files
+  used by the stable_generalist campaign, then verifies SHA256 hashes, file
+  sizes, AnnData dimensions, and label/batch columns.
+- `prepare_stable_generalist_data.py`: older local helper that materializes the
+  13 `.h5ad` files by hardlink, symlink, or copy.
+- `build_stable_generalist_plan.py`: reads stable_generalist reproducibility
+  tables and writes `planned_jobs.csv` plus `run_ready_jobs.sh`.
+- `build_report_plan.py`: builds plans for report complements: inductive
+  protocols, loss-transfer, and DEG overlap. By default, the DEG campaign reuses
+  the exact Baron labels from the report (`tsne_coordinates.csv`) when they are
+  available locally.
+- `manual_protocols.py`: creates or runs configurable jobs for loss-transfer,
+  Harmony variants, and inductive splits.
+- `export_existing_scraw_artifacts.py`: inventories and exports already
+  available scRAW cell weights and discovered inductive `autoencoder.pt`
+  checkpoints. It does not rerun experiments.
+- `run_scraw_from_weights.py`: replays scRAW inference from an existing
+  checkpoint and its configuration.
+- `regenerate_scraw_weight_figures.py`: regenerates a cell-weight UMAP from an
+  existing `.h5ad` file and weight CSV.
+- `extract_marker_overlap_genes.py`: converts an existing `degs_top100.json`
+  into CSV files split by gene/cluster type; it does not recompute DEGs.
+- `add_method.py`: optional low-level helper that creates a starter YAML in
+  `methods/`; the user-facing path remains
   [`docs/algorithm_extension_guide.md`](../../docs/algorithm_extension_guide.md).
-- `validate_method.py`: charge une specification `methods/*.yaml`, affiche la
-  commande finale et peut lancer un smoke test avec `--run`.
-- `run_method.py`: lanceur uniforme pilote par `methods/*.yaml`. C'est le point
-  d'entree public pour executer une methode sur un dataset.
-- `run_external_method.py`: lance des integrations externes historiques comme
-  DESC, DeepScena, CellSIUS, GiniClust, scAIDE, scCAD et variantes Harmony.
-- `run_scaide_inductive_embeddings.py`: adaptateur AIDE/scAIDE pour le protocole
-  inductif partage; il attend un interpreteur compatible TensorFlow 1.14 via
+- `validate_method.py`: loads a `methods/*.yaml` specification, prints the
+  final command, and can run a smoke test with `--run`.
+- `run_method.py`: uniform launcher driven by `methods/*.yaml`. This is the
+  public entry point to execute a method on a dataset.
+- `run_external_method.py`: runs historical external integrations such as DESC,
+  DeepScena, CellSIUS, GiniClust, scAIDE, scCAD, and Harmony variants.
+- `run_scaide_inductive_embeddings.py`: AIDE/scAIDE adapter for the shared
+  inductive protocol; it expects a TensorFlow 1.14-compatible interpreter via
   `SCAIDE_PYTHON`.
-- `run_batch_baselines.py`: lance les baselines de batch correction du rapport:
-  Harmony, ComBat, ComBat-seq, Scanorama, PCA+Leiden et scVI.
-- `run_posthoc_harmony.py`: lance scNAME, scMAE ou scVI, applique Harmony sur
-  l'embedding, puis reclusterise pour les lignes `+Harmony`.
-- `run_scrbenchmark_leave_one_batch.py`: lance une execution SCRBenchmark CLI
-  par batch tenu de cote.
-- `run_scraw_leave_one_batch.py`: lance scRAW inductif par batch tenu de cote
-  via `vendor/scraw_inductive`.
-- `run_shared_train_inductive_algorithms.py`: lance le protocole inductif
-  representatif du rapport pour scRAW, scNAME, scMAE, scDeepCluster, scAIDE et
+- `run_batch_baselines.py`: runs the report batch-correction baselines:
+  Harmony, ComBat, ComBat-seq, Scanorama, PCA+Leiden, and scVI.
+- `run_posthoc_harmony.py`: runs scNAME, scMAE, or scVI, applies Harmony to the
+  embedding, and reclusters for `+Harmony` rows.
+- `run_scrbenchmark_leave_one_batch.py`: runs one SCRBenchmark CLI job per
+  held-out batch.
+- `run_scraw_leave_one_batch.py`: runs inductive scRAW per held-out batch via
+  `vendor/scraw_inductive`.
+- `run_shared_train_inductive_algorithms.py`: runs the representative inductive
+  report protocol for scRAW, scNAME, scMAE, scDeepCluster, scAIDE, and
   PCA+Harmony.
-- `run_marker_overlap.py`: calcule le recouvrement DEG top-100 depuis des
-  labels sauvegardes.
+- `run_marker_overlap.py`: computes top-100 DEG overlap from saved labels.
 
-Les anciens executants longs restent dans `vendor/stable_generalist_runners/`.
-Ce dossier expose seulement de petits points d'entree.
+Older long-running executors remain in `vendor/stable_generalist_runners/`.
+This directory exposes only small entry points.
 
 ---
 
-## Flux recommande
+## Recommended Flow
 
-Pour reproduire le rapport, utiliser **Report Reproduction** dans Streamlit:
+To reproduce the report, use **Report Reproduction** in Streamlit:
 
 ```bash
 ./run.sh
 ```
 
-Utiliser directement les scripts de ce dossier seulement pour l'automatisation,
-le debug ou un environnement sans interface graphique. Chaque script expose
-`--help`.
+Use the scripts in this directory directly only for automation, debugging, or
+headless environments. Every script exposes `--help`.
 
-Pour ajouter un nouvel algorithme externe, suivre le guide unique:
+To add a new external algorithm, follow the single guide:
 [`../../docs/algorithm_extension_guide.md`](../../docs/algorithm_extension_guide.md).
+
+The numbered command order for regenerating report figures is in:
+[`../../docs/report_reproduction_steps.md`](../../docs/report_reproduction_steps.md).

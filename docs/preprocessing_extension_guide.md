@@ -1,60 +1,57 @@
-# Ajouter une etape de preprocessing dans SCRBenchmark
+# Add a Preprocessing Step to SCRBenchmark
 
-Ce guide explique comment ajouter une etape de preprocessing sans casser les
-flux existants: interface Streamlit, CLI, protocoles versionnes et benchmarks
-avec splits train/val/test.
+This guide explains how to add a preprocessing step without breaking existing
+flows: Streamlit, CLI, versioned protocols, and train/val/test benchmarks.
 
-Le point le plus important: si une etape apprend des parametres a partir des
-donnees, ces parametres doivent etre appris sur le train uniquement, puis
-reutilises tels quels sur val/test.
+The key rule: if a step learns parameters from data, those parameters must be
+learned on train only, then reused unchanged on validation/test.
 
 ---
 
-## 1. Comprendre les deux chemins de preprocessing
+## 1. Understand the Two Preprocessing Paths
 
-SCRBenchmark a deux chemins principaux:
+SCRBenchmark has two main preprocessing paths:
 
-| Contexte | Fichier principal | Role |
+| Context | Main file | Role |
 | --- | --- | --- |
-| Dataset complet / mode standard | `src/scrbenchmark/utils/data_handler.py` | Charge le fichier, applique le preprocessing sur tout le dataset, puis lance les algorithmes. |
-| Benchmark train/val/test | `src/scrbenchmark/utils/dataset_splitter.py` (`BenchmarkPreprocessor`) | Apprend les parametres de preprocessing sur train, puis transforme train/val/test avec les memes parametres. |
+| Full dataset / standard mode | `src/scrbenchmark/utils/data_handler.py` | Loads the file, applies preprocessing to the full dataset, then runs algorithms. |
+| Train/val/test benchmark | `src/scrbenchmark/utils/dataset_splitter.py` (`BenchmarkPreprocessor`) | Learns preprocessing parameters on train, then transforms train/val/test with the same parameters. |
 
-Une nouvelle etape generale doit donc etre branchee dans les deux chemins. Si
-elle est ajoutee seulement a `DataHandler`, elle peut fonctionner en mode
-standard mais produire une fuite de donnees ou une erreur en mode split.
+A general preprocessing step must therefore be wired into both paths. If it is
+added only to `DataHandler`, it may work in standard mode while causing leakage
+or errors in split mode.
 
 ---
 
-## 2. Choisir le type d'etape
+## 2. Choose the Step Type
 
-Avant de coder, definir ou placer l'etape dans le pipeline:
+Before coding, decide where the step belongs in the pipeline:
 
-| Type d'etape | Placement typique | Exemple |
+| Step type | Typical placement | Example |
 | --- | --- | --- |
-| Filtrage cellules | Avant normalisation | Supprimer les cellules avec trop peu de genes ou trop de mitochondrial. |
-| Filtrage genes | Avant normalisation et HVG | Supprimer les genes exprimes dans trop peu de cellules. |
-| Transformation des comptes bruts | Avant normalisation/log1p | Simulation de dropout, correction de comptes. |
-| Normalisation ou scaling | Autour de `normalize_total`, `log1p`, `scale` | Nouvelle normalisation, transformation stabilisatrice de variance. |
-| Selection de features | Apres normalisation/log1p, avant scaling | Alternative a HVG. |
-| Batch correction sur matrice d'entree | Apres HVG, avant scaling | scVI/sysVI comme preprocessing commun. |
-| Correction post-hoc sur latents | Apres entrainement methode | Variante `+Harmony`, pas une etape de preprocessing commune. |
+| Cell filtering | Before normalization | Remove cells with too few genes or too much mitochondrial signal. |
+| Gene filtering | Before normalization and HVG | Remove genes expressed in too few cells. |
+| Raw-count transformation | Before normalization/log1p | Dropout simulation, count correction. |
+| Normalization or scaling | Around `normalize_total`, `log1p`, `scale` | New normalization, variance-stabilizing transform. |
+| Feature selection | After normalization/log1p, before scaling | Alternative to HVG. |
+| Batch correction on input matrix | After HVG, before scaling | scVI/sysVI as shared preprocessing. |
+| Post-hoc correction on latents | After method training | `+Harmony` variant, not shared preprocessing. |
 
-Regle pratique: si l'etape modifie `adata.X` avant l'entrainement de tous les
-algorithmes, elle appartient au preprocessing commun. Si elle corrige un latent
-produit par une methode precise, l'implementer plutot comme variante de methode
-ou post-processing.
+Practical rule: if the step modifies `adata.X` before all algorithms train, it
+belongs to shared preprocessing. If it corrects a latent representation produced
+by one method, implement it as a method variant or post-processing step instead.
 
 ---
 
-## 3. Declarer les parametres
+## 3. Declare Parameters
 
-Ajouter les parametres par defaut dans:
+Add default parameters in:
 
 ```text
 src/scrbenchmark/core/config.py
 ```
 
-La liste principale est `PREPROCESSING_PARAMS`. Exemple:
+The main list is `PREPROCESSING_PARAMS`. Example:
 
 ```python
 HyperparameterConfig(
@@ -67,7 +64,7 @@ HyperparameterConfig(
 )
 ```
 
-Si l'etape a un seuil:
+If the step has a threshold:
 
 ```python
 HyperparameterConfig(
@@ -83,20 +80,20 @@ HyperparameterConfig(
 )
 ```
 
-Nommer les parametres explicitement:
+Name parameters explicitly:
 
-- `do_<nom_etape>` pour activer/desactiver;
-- `<nom_etape>_<parametre>` pour les options;
-- eviter `enabled`, `threshold`, `mode` sans prefixe clair.
+- `do_<step_name>` to enable/disable;
+- `<step_name>_<parameter>` for options;
+- avoid `enabled`, `threshold`, or `mode` without a clear prefix.
 
 ---
 
-## 4. Mettre la logique dans `utils/`
+## 4. Put the Logic in `utils/`
 
-Creer une fonction dediee dans `src/scrbenchmark/utils/` plutot que de mettre
-la logique scientifique directement dans l'interface.
+Create a dedicated function in `src/scrbenchmark/utils/` instead of putting
+scientific logic directly in the interface.
 
-Exemple:
+Example:
 
 ```text
 src/scrbenchmark/utils/mitochondrial_filter.py
@@ -150,39 +147,39 @@ def filter_high_mito_cells(
     return adata
 ```
 
-Bonnes pratiques:
+Good practices:
 
-- retourner un objet `AnnData` coherent;
-- preserver autant que possible `obs`, `var`, `layers` et `uns`;
-- enregistrer l'etape dans `adata.uns` pour la reproductibilite;
-- eviter de modifier l'objet original si ce n'est pas necessaire;
-- ne jamais utiliser les labels test pour choisir un seuil.
+- return a coherent `AnnData` object;
+- preserve `obs`, `var`, `layers`, and `uns` as much as possible;
+- record the step in `adata.uns` for reproducibility;
+- avoid mutating the original object unless needed;
+- never use test labels to choose a threshold.
 
 ---
 
-## 5. Brancher l'etape dans `DataHandler`
+## 5. Wire the Step Into `DataHandler`
 
-Le mode standard utilise:
+Standard mode uses:
 
 ```text
 src/scrbenchmark/utils/data_handler.py
 ```
 
-La fonction cle est:
+The key function is:
 
 ```python
 DataHandler._preprocess_builtin(self, params)
 ```
 
-Lire les parametres pres des autres toggles:
+Read parameters near the other toggles:
 
 ```python
 do_mito_filter = params.get("do_mito_filter", False)
 max_mito_fraction = params.get("max_mito_fraction", 0.2)
 ```
 
-Puis appeler l'etape au bon endroit. Pour un filtrage cellule fonde sur les
-comptes bruts, le placement naturel est avant normalisation:
+Then call the step at the right place. For cell filtering based on raw counts,
+the natural placement is before normalization:
 
 ```python
 if do_mito_filter:
@@ -194,100 +191,100 @@ if do_mito_filter:
     )
 ```
 
-Apres une etape qui supprime des cellules ou des genes, verifier les objets qui
-dependent des dimensions:
+After a step that removes cells or genes, verify objects that depend on
+dimensions:
 
 - `self.labels`;
 - `adata.obs`;
 - `adata.var`;
 - `layers["original_X"]`;
 - `uns["pre_hvg_counts"]`;
-- matrices utilisees par les algorithmes avec preprocessing interne.
+- matrices used by algorithms with internal preprocessing.
 
 ---
 
-## 6. Brancher l'etape dans `BenchmarkPreprocessor`
+## 6. Wire the Step Into `BenchmarkPreprocessor`
 
-Le mode train/val/test utilise:
+Train/val/test mode uses:
 
 ```text
 src/scrbenchmark/utils/dataset_splitter.py
 ```
 
-Classe importante:
+Important class:
 
 ```python
 BenchmarkPreprocessor
 ```
 
-Methodes a traiter:
+Methods to handle:
 
 ```python
 fit(self, adata_train, params)
 transform(self, adata, params)
 ```
 
-### Cas A: etape sans apprentissage
+### Case A: Step Without Learning
 
-Si l'etape applique une regle fixe donnee par l'utilisateur, par exemple
-`max_mito_fraction=0.2`, appliquer la meme regle dans `fit()` et `transform()`.
+If the step applies a fixed user rule, for example `max_mito_fraction=0.2`,
+apply the same rule in both `fit()` and `transform()`.
 
-Dans `PreprocessingParams`, ajouter:
+In `PreprocessingParams`, add:
 
 ```python
 do_mito_filter: bool = False
 max_mito_fraction: float = 0.2
 ```
 
-Dans `fit()`:
+In `fit()`:
 
 ```python
 self.params.do_mito_filter = bool(params.get("do_mito_filter", False))
 self.params.max_mito_fraction = float(params.get("max_mito_fraction", 0.2))
 ```
 
-Dans `transform()`:
+In `transform()`:
 
 ```python
 if self.params.do_mito_filter:
     # Apply the same fixed threshold to val/test.
 ```
 
-### Cas B: etape avec parametres appris
+### Case B: Step With Learned Parameters
 
-Si l'etape apprend un parametre depuis les donnees, ce parametre doit etre
-appris uniquement dans `fit()` sur le train. `transform()` reutilise ensuite la
-valeur apprise, sans regarder la distribution globale ni le test set.
+If the step learns a parameter from data, learn it only in `fit()` on train.
+`transform()` then reuses the learned value without looking at the global
+distribution or test set.
 
-Exemples:
+Examples:
 
-- selection de genes;
-- moyenne/ecart-type;
-- seuil choisi par percentile;
-- modele de correction entraine.
+- gene selection;
+- mean/standard deviation;
+- percentile-derived threshold;
+- trained correction model.
 
-Stocker les valeurs apprises dans `self.params`:
+Store learned values in `self.params`:
 
 ```python
 self.params.my_selected_genes = selected_genes_from_train
 self.params.my_train_threshold = threshold_from_train
 ```
 
-Puis les reutiliser dans `transform()`.
+Then reuse them in `transform()`.
 
 ---
 
-## 7. Exposer l'option dans Streamlit
+## 7. Expose the Option in Streamlit
 
-### Page Preprocessing
+### Preprocessing Page
 
-Modifier:
+Modify:
 
 ```text
 src/scrbenchmark/gui/preprocessing.py
 ```
 
-Ajouter une checkbox et les parametres associes:
+Add a checkbox and associated parameters:
 
 ```python
 do_mito_filter = st.checkbox(
@@ -307,40 +304,40 @@ if do_mito_filter:
     )
 ```
 
-Ajouter aussi ces parametres aux fonctions qui synchronisent ou comparent
-l'etat de preprocessing:
+Also add these parameters to functions that sync or compare preprocessing
+state:
 
 ```text
 _snapshot_preprocessing_params(...)
 _sync_preprocessing_params_from_widgets(...)
 ```
 
-Cela evite que Streamlit considere un preprocessing deja calcule comme encore
-valide alors que l'utilisateur a change la nouvelle option.
+This prevents Streamlit from treating an already computed preprocessing state as
+still valid after the user changed the new option.
 
-### Page Customize Benchmark
+### Customize Benchmark Page
 
-Modifier aussi:
+Also modify:
 
 ```text
 src/scrbenchmark/gui/customize_benchmark.py
 ```
 
-La configuration de preprocessing y est reproduite pour generer des commandes
-et scripts. Ajouter la meme option dans l'onglet `Preprocessing`, puis les
-valeurs par defaut dans `_create_default_config()`.
+Preprocessing configuration is reproduced there to generate commands and
+scripts. Add the same option in the `Preprocessing` tab, then add defaults in
+`_create_default_config()`.
 
 ---
 
-## 8. Exposer l'option dans la CLI
+## 8. Expose the Option in the CLI
 
-Modifier:
+Modify:
 
 ```text
 src/scrbenchmark/cli.py
 ```
 
-Ajouter les arguments au groupe preprocessing:
+Add arguments to the preprocessing group:
 
 ```python
 preproc_group.add_argument(
@@ -356,7 +353,7 @@ preproc_group.add_argument(
 )
 ```
 
-Puis ajouter les valeurs dans `preprocessing_params`:
+Then add values to `preprocessing_params`:
 
 ```python
 "do_mito_filter": (
@@ -372,14 +369,14 @@ Puis ajouter les valeurs dans `preprocessing_params`:
 ),
 ```
 
-Mettre aussi a jour `generate_default_config()` pour que les fichiers de config
-YAML/JSON generes documentent la nouvelle option.
+Also update `generate_default_config()` so generated YAML/JSON configs document
+the new option.
 
 ---
 
-## 9. Mettre a jour protocoles et methodes externes si besoin
+## 9. Update Protocols and External Methods if Needed
 
-Si l'etape doit etre disponible dans les protocoles versionnes, verifier:
+If the step must be available in versioned protocols, check:
 
 ```text
 protocols/report/*.yaml
@@ -387,65 +384,65 @@ src/scrbenchmark/protocols/registry.py
 src/scrbenchmark/gui/protocol_designer.py
 ```
 
-Pour une option simple, l'ajouter a la section `preprocessing` des YAML est
-generalement suffisant.
+For a simple option, adding it to the YAML `preprocessing` section is usually
+enough.
 
-Si l'etape concerne les algorithmes externes lances via `run_method.py`,
-verifier aussi les placeholders disponibles dans:
+If the step concerns external algorithms launched through `run_method.py`, also
+check placeholders in:
 
 ```text
 scripts/reproduction/run_method.py
 methods/*.yaml
 ```
 
-Ne pas hardcoder l'etape dans un wrapper externe si elle doit rester un choix
-global du benchmark.
+Do not hardcode the step in an external wrapper if it should remain a global
+benchmark choice.
 
 ---
 
-## 10. Mettre a jour la documentation utilisateur
+## 10. Update User Documentation
 
-Ajouter une explication breve dans:
+Add a short explanation in:
 
 ```text
 src/scrbenchmark/gui/documentation.py
 docs/user_guide.md
 ```
 
-La documentation doit repondre a quatre questions:
+The documentation must answer four questions:
 
-1. Que fait l'etape ?
-2. Quand faut-il l'utiliser ?
-3. Ou se situe-t-elle dans le pipeline ?
-4. Quels parametres changent les resultats ?
+1. What does the step do?
+2. When should it be used?
+3. Where does it sit in the pipeline?
+4. Which parameters change results?
 
 ---
 
-## 11. Ajouter des tests
+## 11. Add Tests
 
-Creer un test dedie dans:
+Create a dedicated test in:
 
 ```text
 tests/unit_tests/
 ```
 
-Exemple:
+Example:
 
 ```text
 tests/unit_tests/test_mitochondrial_filter.py
 ```
 
-Tests minimum recommandes:
+Recommended minimum tests:
 
-- l'etape retourne un objet `AnnData` valide;
-- desactiver l'option conserve le comportement par defaut;
-- les dimensions `obs`, `var` et `X` restent coherentes;
-- `adata.uns` contient une trace de l'etape;
-- le mode split utilise les parametres appris sur train, pas sur test;
-- la CLI accepte les nouveaux arguments;
-- `Customize Benchmark` genere les commandes avec les nouveaux parametres.
+- the step returns a valid `AnnData` object;
+- disabling the option preserves default behavior;
+- `obs`, `var`, and `X` dimensions stay coherent;
+- `adata.uns` contains a trace of the step;
+- split mode uses parameters learned on train, not test;
+- the CLI accepts the new arguments;
+- `Customize Benchmark` generates commands with the new parameters.
 
-Commandes utiles:
+Useful commands:
 
 ```bash
 python -m compileall -q src/scrbenchmark
@@ -453,7 +450,7 @@ pytest tests/unit_tests/test_mitochondrial_filter.py
 pytest tests/unit_tests/test_gui_cli_command.py
 ```
 
-Pour une modification coeur importante:
+For a core change:
 
 ```bash
 pytest tests/unit_tests
@@ -461,30 +458,29 @@ pytest tests/unit_tests
 
 ---
 
-## 12. Checklist avant commit
+## 12. Pre-Commit Checklist
 
-- [ ] Les parametres sont declares dans `core/config.py`.
-- [ ] La logique scientifique est dans `utils/`, pas dans l'interface.
-- [ ] `DataHandler` applique l'etape en mode standard.
-- [ ] `BenchmarkPreprocessor` applique l'etape sans fuite train/test.
-- [ ] Streamlit expose l'option dans `Preprocessing`.
-- [ ] `Customize Benchmark` expose l'option et ses valeurs par defaut.
-- [ ] La CLI peut configurer l'etape.
-- [ ] Les protocoles YAML restent compatibles.
-- [ ] Les resultats gardent une trace dans `adata.uns`, les manifests ou la config sauvegardee.
-- [ ] Les tests unitaires passent.
-- [ ] La documentation explique l'ordre de l'etape dans le pipeline.
+- [ ] Parameters are declared in `core/config.py`.
+- [ ] Scientific logic is in `utils/`, not in the interface.
+- [ ] `DataHandler` applies the step in standard mode.
+- [ ] `BenchmarkPreprocessor` applies the step without train/test leakage.
+- [ ] Streamlit exposes the option in `Preprocessing`.
+- [ ] `Customize Benchmark` exposes the option and its defaults.
+- [ ] The CLI can configure the step.
+- [ ] YAML protocols remain compatible.
+- [ ] Results keep a trace in `adata.uns`, manifests, or saved config.
+- [ ] Unit tests pass.
+- [ ] Documentation explains the step order in the pipeline.
 
 ---
 
-## Resume oral
+## Short Explanation
 
-Pour presenter le travail:
+To present the work:
 
-> J'ajoute d'abord les parametres dans la configuration centrale. Ensuite,
-> j'implemente la transformation dans `utils/` sur un objet `AnnData`. Je la
-> branche dans `DataHandler` pour le mode dataset complet et dans
-> `BenchmarkPreprocessor` pour le mode train/val/test, en verifiant que les
-> parametres appris ne voient jamais le test set. Enfin, j'expose l'option dans
-> Streamlit, la CLI et `Customize Benchmark`, puis j'ajoute les tests et une
-> trace de reproductibilite.
+> I first add parameters to the central configuration. Then I implement the
+> transformation in `utils/` on an `AnnData` object. I wire it into
+> `DataHandler` for full-dataset mode and into `BenchmarkPreprocessor` for
+> train/val/test mode, checking that learned parameters never see the test set.
+> Finally, I expose the option in Streamlit, the CLI, and `Customize Benchmark`,
+> then add tests and a reproducibility trace.

@@ -1,25 +1,24 @@
-# Template YAML bas niveau.
-# Pour le guide utilisateur pas a pas d'ajout d'algorithme externe, voir:
+# Low-level YAML template.
+# For the step-by-step user guide to add an external algorithm, see:
 #   docs/algorithm_extension_guide.md
-# Copier ce fichier seulement si vous connaissez deja le contrat YAML.
+# Copy this file only if you already know the YAML contract.
 #
-# Regles pour les methodes auteur:
-# - conserver le coeur algorithmique dans vendor/<method>/ ou external/original_code/<method>/;
-# - utiliser runner.command pour appeler le script auteur avec les placeholders SCRBenchmark;
-# - exposer preprocessing et hyperparametres via les placeholders et {param_args}
-#   au lieu de les hardcoder dans l'integration;
-# - ajouter un petit adaptateur seulement si le script auteur ne peut pas lire
-#   l'entree exportee ou ecrire labels/embeddings dans un fichier reutilisable;
-# - declarer toute modification intentionnelle comme methode experimentale separee.
+# Rules for author methods:
+# - keep the algorithm core in vendor/<method>/ or external/original_code/<method>/;
+# - use runner.command to call the author script with SCRBenchmark placeholders;
+# - expose preprocessing and hyperparameters through placeholders and {param_args}
+#   instead of hardcoding them in the integration;
+# - add a small adapter only if the author script cannot read the exported input
+#   or cannot write labels/embeddings to reusable files;
+# - declare every intentional modification as a separate experimental method.
 #
-# Choix de runner:
-# - command_template: recommande pour les nouvelles methodes externes.
-#   SCRBenchmark remplit {data}, {output}, {n_labels}, {seed}, {device}, etc.
-# - scrbenchmark_cli: methode deja appelable par la CLI SCRBenchmark, mais ce
-#   YAML reste l'entree benchmark/reproduction.
-# - les executants legacy comme external_method ou passthrough_script restent
-#   disponibles pour les anciennes methodes; les nouvelles integrations doivent
-#   preferer command_template.
+# Runner choices:
+# - command_template: recommended for new external methods.
+#   SCRBenchmark fills {data}, {output}, {n_labels}, {seed}, {device}, etc.
+# - scrbenchmark_cli: method already callable by the SCRBenchmark CLI, while this
+#   YAML remains the benchmark/reproduction entry point.
+# - legacy runners such as external_method or passthrough_script remain
+#   available for old methods; new integrations should prefer command_template.
 
 name: my_method
 display_name: My Method
@@ -55,6 +54,6 @@ output:
   labels_file: raw/labels.csv
   labels_column: cluster
   cell_id_column: cell_id
-  # Optionnel, si la methode ecrit des embeddings:
+  # Optional, if the method writes embeddings:
   # latent_file: raw/latent.csv
-notes: "Adapter runner.command et output.* au code auteur."
+notes: "Adapt runner.command and output.* to the author code."

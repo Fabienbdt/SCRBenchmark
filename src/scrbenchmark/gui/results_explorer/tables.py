@@ -226,7 +226,7 @@ def export_publication_ready(agg_df: pd.DataFrame, selected_algos: List[str],
     (agg_df['condition'].isin(selected_conditions))
   ]
 
-  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC']
+  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']
 
   # Find best values per condition/metric
   best_values = {}

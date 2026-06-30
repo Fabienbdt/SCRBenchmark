@@ -1,0 +1,15 @@
+{
+  "0": "B_cell",
+  "1": "T_cell",
+  "2": "activated_stellate",
+  "3": "alpha",
+  "4": "beta",
+  "5": "delta",
+  "6": "ductal",
+  "7": "endothelial",
+  "8": "gamma",
+  "9": "immune_other",
+  "10": "macrophage",
+  "11": "quiescent_stellate",
+  "12": "schwann"
+}

@@ -1,0 +1,2860 @@
+hdbscan_final,leiden_target11_final,true_label
+6,0,hepatocyte
+6,0,hepatocyte
+10,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+14,5,myeloid leukocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+14,3,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+14,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,myeloid leukocyte
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,B cell
+6,0,hepatocyte
+2,9,NK cell
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+10,5,myeloid leukocyte
+2,9,NK cell
+1,2,T cell
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+12,3,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,myeloid leukocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,Kupffer cell
+4,1,myeloid leukocyte
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+0,4,B cell
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+11,5,myeloid leukocyte
+5,10,neutrophil
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+0,4,B cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,T cell
+4,1,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+5,10,neutrophil
+1,2,mature NK T cell
+1,2,mature NK T cell
+6,0,hepatocyte
+11,5,myeloid leukocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+1,2,T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+9,5,myeloid leukocyte
+10,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+12,3,Kupffer cell
+6,0,hepatocyte
+8,5,myeloid leukocyte
+10,5,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+14,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+5,10,neutrophil
+8,5,myeloid leukocyte
+6,0,hepatocyte
+0,4,B cell
+2,9,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+1,2,mature NK T cell
+1,2,T cell
+14,5,myeloid leukocyte
+14,5,myeloid leukocyte
+14,5,myeloid leukocyte
+6,0,hepatocyte
+0,4,B cell
+2,9,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+14,5,myeloid leukocyte
+0,4,B cell
+0,4,B cell
+1,2,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+1,2,myeloid leukocyte
+2,9,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,hepatocyte
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,NK cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+11,5,myeloid leukocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+2,9,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+2,9,mature NK T cell
+12,3,Kupffer cell
+0,4,B cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+2,9,mature NK T cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,myeloid leukocyte
+1,2,T cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+14,5,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,mature NK T cell
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+14,3,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+3,8,hepatocyte
+6,0,hepatocyte
+1,2,T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,hepatocyte
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,6,hepatocyte
+1,2,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+0,4,B cell
+2,9,mature NK T cell
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,T cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+5,10,neutrophil
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+11,5,myeloid leukocyte
+6,0,endothelial cell of hepatic sinusoid
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+2,9,mature NK T cell
+1,2,T cell
+6,0,hepatocyte
+11,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+12,3,Kupffer cell
+5,10,neutrophil
+6,0,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+14,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,myeloid leukocyte
+2,9,NK cell
+2,9,mature NK T cell
+0,4,B cell
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+0,4,B cell
+0,4,B cell
+1,2,T cell
+1,2,T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+1,2,mature NK T cell
+12,3,Kupffer cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+1,2,mature NK T cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+1,2,T cell
+5,10,neutrophil
+0,4,B cell
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,endothelial cell of hepatic sinusoid
+14,3,myeloid leukocyte
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,myeloid leukocyte
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,6,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+1,2,mature NK T cell
+0,4,B cell
+10,5,myeloid leukocyte
+12,3,Kupffer cell
+11,5,myeloid leukocyte
+0,4,B cell
+0,4,B cell
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,hepatocyte
+12,3,Kupffer cell
+1,2,mature NK T cell
+12,3,Kupffer cell
+0,4,B cell
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+2,9,NK cell
+6,0,hepatocyte
+12,3,Kupffer cell
+0,4,B cell
+1,2,T cell
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+14,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+14,5,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,myeloid leukocyte
+9,5,myeloid leukocyte
+6,0,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+2,9,mature NK T cell
+6,0,hepatocyte
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,hepatocyte
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,NK cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,mature NK T cell
+6,0,hepatocyte
+2,9,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+14,3,Kupffer cell
+4,1,hepatocyte
+12,3,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+11,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,T cell
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+0,4,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+2,9,NK cell
+1,2,"CD8-positive, alpha-beta T cell"
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+11,5,myeloid leukocyte
+14,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+2,9,mature NK T cell
+10,5,myeloid leukocyte
+14,3,Kupffer cell
+0,4,B cell
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,myeloid leukocyte
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+12,3,myeloid leukocyte
+12,3,Kupffer cell
+1,2,mature NK T cell
+14,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,mature NK T cell
+2,9,NK cell
+12,3,Kupffer cell
+14,5,myeloid leukocyte
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+6,0,hepatocyte
+0,4,B cell
+2,9,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+1,2,hepatocyte
+6,0,hepatocyte
+1,2,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+6,0,hepatocyte
+8,5,myeloid leukocyte
+6,0,hepatocyte
+5,10,neutrophil
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+9,5,myeloid leukocyte
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+14,3,myeloid leukocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+1,2,T cell
+12,3,myeloid leukocyte
+0,4,B cell
+3,8,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,myeloid leukocyte
+6,0,hepatocyte
+7,7,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+12,3,Kupffer cell
+7,7,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+14,3,myeloid leukocyte
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+13,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+12,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+6,0,hepatocyte
+2,9,NK cell
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+14,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+13,3,Kupffer cell
+6,6,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+14,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+13,3,Kupffer cell
+6,0,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+13,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+14,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+13,3,Kupffer cell
+6,0,hepatocyte
+7,7,hepatocyte
+14,3,Kupffer cell
+6,0,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+13,3,Kupffer cell
+7,7,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+14,3,Kupffer cell
+13,3,Kupffer cell
+13,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+14,3,Kupffer cell
+7,7,hepatocyte
+12,3,Kupffer cell
+13,3,Kupffer cell
+13,3,Kupffer cell
+14,3,Kupffer cell
+7,7,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+7,7,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+0,4,B cell
+1,2,"CD4-positive, alpha-beta T cell"
+9,5,myeloid leukocyte
+10,5,myeloid leukocyte
+0,4,B cell
+12,3,Kupffer cell
+0,4,B cell
+14,3,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+10,5,myeloid leukocyte
+10,5,myeloid leukocyte
+14,3,Kupffer cell
+6,0,hepatocyte
+9,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+2,9,NK cell
+0,4,B cell
+14,3,myeloid leukocyte
+2,9,NK cell
+1,2,"CD4-positive, alpha-beta T cell"
+14,3,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+1,2,T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,hepatocyte
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+0,4,B cell
+14,3,myeloid leukocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+9,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,T cell
+1,2,T cell
+0,4,B cell
+2,9,NK cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+8,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,Kupffer cell
+10,5,myeloid leukocyte
+1,2,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+11,5,myeloid leukocyte
+14,5,myeloid leukocyte
+1,2,T cell
+14,5,myeloid leukocyte
+6,0,hepatocyte
+14,3,myeloid leukocyte
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+2,9,NK cell
+14,5,myeloid leukocyte
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,mature NK T cell
+12,3,Kupffer cell
+1,2,mature NK T cell
+14,3,myeloid leukocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+9,5,myeloid leukocyte
+11,5,myeloid leukocyte
+11,5,myeloid leukocyte
+0,4,B cell
+6,0,hepatocyte
+10,5,myeloid leukocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+2,9,NK cell
+0,4,B cell
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+9,5,myeloid leukocyte
+12,3,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+9,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+11,5,myeloid leukocyte
+6,0,hepatocyte
+11,5,myeloid leukocyte
+9,5,myeloid leukocyte
+10,5,myeloid leukocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+12,3,Kupffer cell
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+12,3,Kupffer cell
+12,3,myeloid leukocyte
+1,2,mature NK T cell
+12,3,Kupffer cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+9,5,myeloid leukocyte
+1,2,T cell
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+9,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,B cell
+1,2,mature NK T cell
+0,4,B cell
+1,2,mature NK T cell
+12,3,hepatocyte
+1,2,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+14,3,myeloid leukocyte
+6,0,hepatocyte
+11,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,T cell
+5,10,neutrophil
+11,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+1,2,T cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+14,5,myeloid leukocyte
+10,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,myeloid leukocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+14,5,myeloid leukocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+0,4,B cell
+11,5,myeloid leukocyte
+1,2,T cell
+1,2,hepatocyte
+9,5,myeloid leukocyte
+1,2,T cell
+11,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+1,2,T cell
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+9,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+11,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+2,9,NK cell
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+2,9,NK cell
+1,2,mature NK T cell
+2,9,NK cell
+12,3,hepatocyte
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+10,5,myeloid leukocyte
+1,2,mature NK T cell
+9,5,myeloid leukocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+1,2,mature NK T cell
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+6,0,hepatocyte
+14,3,myeloid leukocyte
+0,4,B cell
+12,3,myeloid leukocyte
+11,5,myeloid leukocyte
+10,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+8,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+2,9,NK cell
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+14,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+10,5,myeloid leukocyte
+11,5,myeloid leukocyte
+1,2,mature NK T cell
+0,4,B cell
+14,5,myeloid leukocyte
+1,2,mature NK T cell
+14,5,myeloid leukocyte
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+8,5,myeloid leukocyte
+14,3,myeloid leukocyte
+1,2,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,T cell
+6,0,hepatocyte
+0,4,B cell
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+10,5,myeloid leukocyte
+1,2,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+11,5,myeloid leukocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+11,5,myeloid leukocyte
+11,5,myeloid leukocyte
+6,0,hepatocyte
+8,5,myeloid leukocyte
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+8,5,myeloid leukocyte
+8,5,myeloid leukocyte
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+12,3,Kupffer cell
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+12,3,Kupffer cell
+0,4,B cell
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD4-positive, alpha-beta T cell"
+0,4,B cell
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+9,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+11,5,myeloid leukocyte
+6,0,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,"CD8-positive, alpha-beta T cell"
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD4-positive, alpha-beta T cell"
+14,5,myeloid leukocyte
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,mature NK T cell
+1,2,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD8-positive, alpha-beta T cell"
+14,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+12,3,Kupffer cell
+1,2,mature NK T cell
+1,2,"CD8-positive, alpha-beta T cell"
+5,10,neutrophil
+6,0,hepatocyte
+12,3,Kupffer cell
+10,5,myeloid leukocyte
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,T cell
+1,2,myeloid leukocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+12,3,hepatocyte
+6,0,hepatocyte
+1,2,T cell
+0,4,B cell
+6,0,hepatocyte
+1,2,mature NK T cell
+0,4,B cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,"CD8-positive, alpha-beta T cell"
+1,2,hepatocyte
+12,3,Kupffer cell
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+9,5,myeloid leukocyte
+6,0,hepatocyte
+12,3,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+2,9,NK cell
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+2,9,mature NK T cell
+12,3,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+8,5,myeloid leukocyte
+1,2,"CD8-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,"CD4-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+9,5,myeloid leukocyte
+1,2,T cell
+12,3,Kupffer cell
+0,4,B cell
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+9,5,myeloid leukocyte
+6,0,hepatocyte
+1,2,"CD8-positive, alpha-beta T cell"
+12,3,myeloid leukocyte
+1,2,T cell
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD8-positive, alpha-beta T cell"
+10,5,myeloid leukocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+5,10,myeloid leukocyte
+6,0,hepatocyte
+12,3,myeloid leukocyte
+1,2,mature NK T cell
+1,2,mature NK T cell
+1,2,mature NK T cell
+6,0,hepatocyte
+5,10,neutrophil
+10,5,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+6,0,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+9,5,myeloid leukocyte
+1,2,mature NK T cell
+1,2,mature NK T cell
+5,10,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+6,0,hepatocyte
+1,2,mature NK T cell
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+14,5,myeloid leukocyte
+11,5,myeloid leukocyte
+14,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+11,5,myeloid leukocyte
+0,4,B cell
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,mature NK T cell
+12,3,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+8,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,T cell
+1,2,mature NK T cell
+1,2,mature NK T cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+5,10,neutrophil
+1,2,mature NK T cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,T cell
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+14,3,Kupffer cell
+6,0,hepatocyte
+5,10,neutrophil
+5,10,neutrophil
+0,4,B cell
+1,2,T cell
+12,3,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+14,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+1,2,"CD4-positive, alpha-beta T cell"
+1,2,mature NK T cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+14,3,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+1,2,mature NK T cell
+14,5,myeloid leukocyte
+12,3,Kupffer cell
+1,2,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+1,2,mature NK T cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+12,3,Kupffer cell
+1,2,mature NK T cell
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,6,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+12,3,Kupffer cell
+11,5,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+11,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+0,4,B cell
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+1,2,mature NK T cell
+3,8,hepatocyte
+3,8,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+14,3,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,Kupffer cell
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+8,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+7,7,hepatocyte
+6,0,hepatocyte
+8,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,mature NK T cell
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+5,10,neutrophil
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+1,2,mature NK T cell
+3,8,hepatocyte
+1,2,mature NK T cell
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+5,10,neutrophil
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+1,2,mature NK T cell
+6,6,hepatocyte
+14,3,myeloid leukocyte
+3,8,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,6,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+8,5,myeloid leukocyte
+0,4,B cell
+1,2,T cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+8,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,myeloid leukocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+1,2,mature NK T cell
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+14,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,0,endothelial cell of hepatic sinusoid
+7,7,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+1,2,mature NK T cell
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+7,7,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+0,4,B cell
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+0,4,B cell
+1,2,mature NK T cell
+1,2,mature NK T cell
+12,3,Kupffer cell
+6,6,hepatocyte
+3,8,hepatocyte
+2,9,NK cell
+0,4,B cell
+1,2,mature NK T cell
+6,6,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+3,8,hepatocyte
+0,4,B cell
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+0,4,B cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+8,5,myeloid leukocyte
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,6,hepatocyte
+3,8,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+3,8,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+1,2,mature NK T cell
+6,6,hepatocyte
+6,0,hepatocyte
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+6,0,hepatocyte
+6,0,hepatocyte
+3,8,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,"CD4-positive, alpha-beta T cell"
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+11,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,hepatocyte
+0,4,B cell
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+1,2,myeloid leukocyte
+9,5,myeloid leukocyte
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+14,3,Kupffer cell
+0,4,B cell
+0,4,B cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+1,2,myeloid leukocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+5,10,myeloid leukocyte
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+0,4,B cell
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+2,9,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+0,4,B cell
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+6,6,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+0,4,B cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+1,2,mature NK T cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,hepatocyte
+12,3,Kupffer cell
+6,0,hepatocyte
+6,0,hepatocyte
+9,5,myeloid leukocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+5,10,neutrophil
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+2,9,NK cell
+5,10,neutrophil
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+12,3,Kupffer cell
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+6,0,hepatocyte
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+1,2,mature NK T cell
+6,0,hepatocyte
+0,4,B cell
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+0,4,B cell
+6,0,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid
+4,1,endothelial cell of hepatic sinusoid

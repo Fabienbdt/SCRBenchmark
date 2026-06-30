@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchma
 from utils.metrics import (
     compute_nmi, compute_ari, compute_accuracy,
     compute_silhouette, compute_metrics, align_labels,
+    compute_balanced_rare_class_accuracy,
     _filter_noise_samples, NOISE_LABELS
 )
 
@@ -119,6 +120,7 @@ class TestComputeMetrics:
         assert 'NMI' in metrics
         assert 'ARI' in metrics
         assert 'ACC' in metrics
+        assert 'BalancedRareACC' in metrics
         assert 'Silhouette' in metrics
         assert 'n_clusters_found' in metrics
 
@@ -131,6 +133,34 @@ class TestComputeMetrics:
         assert 'ARI' not in metrics
         assert 'ACC' not in metrics
         assert 'Silhouette' in metrics
+
+
+class TestBalancedRareClassAccuracy:
+    """Tests for balanced rare-class accuracy."""
+
+    def test_perfect_permuted_labels(self):
+        labels_true = np.array(["common"] * 95 + ["rare"] * 5)
+        labels_pred = np.array(["x"] * 95 + ["y"] * 5)
+
+        score = compute_balanced_rare_class_accuracy(labels_true, labels_pred, threshold=0.10)
+
+        assert score == pytest.approx(1.0, abs=1e-6)
+
+    def test_balances_multiple_rare_classes(self):
+        labels_true = np.array(["common"] * 90 + ["rare_a"] * 5 + ["rare_b"] * 5)
+        labels_pred = np.array(["c"] * 90 + ["a"] * 5 + ["c"] * 5)
+
+        score = compute_balanced_rare_class_accuracy(labels_true, labels_pred, threshold=0.10)
+
+        assert score == pytest.approx(0.5, abs=1e-6)
+
+    def test_no_rare_class_returns_nan(self):
+        labels_true = np.array(["a"] * 50 + ["b"] * 50)
+        labels_pred = np.array(["x"] * 50 + ["y"] * 50)
+
+        score = compute_balanced_rare_class_accuracy(labels_true, labels_pred, threshold=0.05)
+
+        assert np.isnan(score)
 
 
 class TestAlignLabels:

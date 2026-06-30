@@ -1040,7 +1040,7 @@ def _sort_metrics(metrics: List[str]) -> List[str]:
   """Sort metrics with a preferred order, then alphabetical for the rest."""
   preferred = [
     'NMI', 'ARI', 'ACC', 'UCA', 'Silhouette',
-    'F1_Macro', 'BalancedACC', 'RareACC', 'KNN_Purity',
+    'F1_Macro', 'BalancedACC', 'RareACC', 'BalancedRareACC', 'KNN_Purity',
     'NNO_Spearman', 'NNO_FoldEnrichment',
     'Silhouette batch', 'iLISI', 'KBET', 'Graph connectivity',
     'Isolated labels', 'KMeans NMI', 'KMeans ARI',
@@ -3023,8 +3023,8 @@ def plot_train_vs_test_comparison(all_data: Dict[str, Dict], selected_algos: Lis
   Each point represents an algorithm/condition combination.
   Points on the diagonal indicate good generalization.
   """
-  fig, axes = plt.subplots(1, 5, figsize=(30, 6))
-  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC']
+  fig, axes = plt.subplots(1, 6, figsize=(36, 6))
+  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']
 
   for ax, metric in zip(axes, metrics):
     train_vals = []
@@ -3103,13 +3103,13 @@ def plot_generalization_gap_combined(all_data: Dict[str, Dict], selected_algos: 
                    selected_conditions: List[str],
                    show_cld: bool = False) -> plt.Figure:
   """
-  Creates a combined generalization gap plot with 5 subplots.
+  Creates a combined generalization gap plot with 6 subplots.
 
   Inspired by analyze_2000HVG_results_light.py - plot_generalization_gap().
   Displays a boxplot per metric with algorithms sorted by increasing gap.
   """
   # Collect gap data for all metrics
-  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC']
+  metrics = ['NMI', 'ARI', 'ACC', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']
   gap_data = []
 
   for condition, data in all_data.items():

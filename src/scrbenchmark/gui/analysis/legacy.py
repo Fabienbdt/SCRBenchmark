@@ -370,7 +370,7 @@ def _display_results():
     
     # Row for DataFrame (numeric for progress bars)
     row = {'Algorithm': algo_info.display_name}
-    for metric in ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC']:
+    for metric in ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']:
       if f'{metric}_mean' in stats:
         row[metric] = stats[f'{metric}_mean']
     
@@ -413,6 +413,9 @@ def _display_results():
       "BalancedACC": st.column_config.ProgressColumn(
         "Balanced ACC", min_value=0, max_value=1, format="%.3f"
       ),
+      "BalancedRareACC": st.column_config.ProgressColumn(
+        "Balanced Rare ACC", min_value=0, max_value=1, format="%.3f"
+      ),
     },
     width="stretch"
   )
@@ -426,7 +429,7 @@ def _display_results():
       algo_info = AlgorithmRegistry.get(algo_name).get_info()
       algo_info = AlgorithmRegistry.get(algo_name).get_info()
       row = {'Algorithm': algo_info.display_name}
-      for metric in ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC']:
+      for metric in ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']:
         mean_key = f'{metric}_mean'
         std_key = f'{metric}_std'
         if mean_key in stats:
@@ -446,9 +449,9 @@ def _display_results():
 
   # Best algorithm
   if results.summary:
-    col1, col2, col3, col4, col5, col6 = st.columns(6)
-    metrics = ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC']
-    cols = [col1, col2, col3, col4, col5, col6]
+    col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+    metrics = ['NMI', 'ARI', 'ACC', 'Silhouette', 'F1_Macro', 'BalancedACC', 'BalancedRareACC']
+    cols = [col1, col2, col3, col4, col5, col6, col7]
     
     for i, metric in enumerate(metrics):
       best = results.get_best_algorithm(metric)

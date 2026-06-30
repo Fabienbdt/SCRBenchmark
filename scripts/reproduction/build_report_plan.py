@@ -18,6 +18,16 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_ROOT = REPO_ROOT / "reproducibility" / "stable_generalist"
 DEFAULT_DATASET_TABLE = REFERENCE_ROOT / "stable_generalist_dataset_table.csv"
 DEFAULT_OUTPUT_ROOT = REPO_ROOT / "results" / "report_reproduction"
+DEFAULT_EXISTING_SCRAW_BARON_LABELS = Path(
+    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
+    "presentation_stable_generalist_nonbaron_20260324/"
+    "Exp\u00e9riences/scRAW_default_from_scRAW_seed60_stage_umaps_20260421/"
+    "baron_human_pancreas/seed_60/results/labels/labels_scraw_run0.csv"
+)
+DEFAULT_EXISTING_REPORT_BARON_LABELS = Path(
+    "/data2/fbidet/Rapport_Stage_M2_git/Images/"
+    "analyse_biologique_scraw_baron_stable_generalist/tsne_coordinates.csv"
+)
 
 
 PLAN_FIELDS = [
@@ -163,6 +173,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--campaigns", default="inductive,loss_transfer,deg")
     parser.add_argument("--strict-data", action="store_true")
+    parser.add_argument(
+        "--no-reuse-existing-artifacts",
+        action="store_true",
+        help=(
+            "Always plan source runs, even when local report artifacts already "
+            "exist. By default, the DEG campaign reuses the existing Baron "
+            "scRAW labels when available."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -364,19 +383,61 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
     root = Path(args.output_root).expanduser().resolve() / "deg_marker_overlap" / "baron_human_pancreas"
     scraw_out = root / "scraw_source"
     labels_csv = scraw_out / "results" / "labels" / "labels_scraw_run0.csv"
-    rows.append(
-        _row(
-            campaign="deg",
-            dataset_key=spec.dataset_key,
-            method="scRAW",
-            status="ready",
-            data_file=spec.data_file,
-            output_dir=scraw_out,
-            expected_file=labels_csv,
-            command=_run_method_cmd(args, spec, "scRAW", scraw_out, 42),
-            notes="Source scRAW run for Baron marker-overlap analysis.",
+    true_label_col = ""
+    pred_label_col = ""
+    can_reuse_existing = not bool(getattr(args, "no_reuse_existing_artifacts", False))
+    if can_reuse_existing and DEFAULT_EXISTING_REPORT_BARON_LABELS.exists():
+        labels_csv = DEFAULT_EXISTING_REPORT_BARON_LABELS
+        true_label_col = "true_label"
+        pred_label_col = "predicted_label"
+        rows.append(
+            _row(
+                campaign="deg",
+                dataset_key=spec.dataset_key,
+                method="scRAW",
+                status="reused_existing",
+                data_file=spec.data_file,
+                output_dir=DEFAULT_EXISTING_REPORT_BARON_LABELS.parent,
+                expected_file=labels_csv,
+                command=None,
+                notes=(
+                    "Existing Baron labels from the report annotation table reused; "
+                    "no source model rerun is required for marker-overlap planning."
+                ),
+            )
         )
-    )
+    elif can_reuse_existing and DEFAULT_EXISTING_SCRAW_BARON_LABELS.exists():
+        labels_csv = DEFAULT_EXISTING_SCRAW_BARON_LABELS
+        rows.append(
+            _row(
+                campaign="deg",
+                dataset_key=spec.dataset_key,
+                method="scRAW",
+                status="reused_existing_legacy_default",
+                data_file=spec.data_file,
+                output_dir=DEFAULT_EXISTING_SCRAW_BARON_LABELS.parent.parent.parent,
+                expected_file=labels_csv,
+                command=None,
+                notes=(
+                    "Legacy Baron scRAW default labels are available, but they are "
+                    "not the exact stable_generalist labels used by the report."
+                ),
+            )
+        )
+    else:
+        rows.append(
+            _row(
+                campaign="deg",
+                dataset_key=spec.dataset_key,
+                method="scRAW",
+                status="ready",
+                data_file=spec.data_file,
+                output_dir=scraw_out,
+                expected_file=labels_csv,
+                command=_run_method_cmd(args, spec, "scRAW", scraw_out, 42),
+                notes="Source scRAW run for Baron marker-overlap analysis.",
+            )
+        )
     deg_out = root / "marker_overlap"
     rows.append(
         _row(
@@ -398,6 +459,11 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
                 deg_out,
                 "--label-key",
                 spec.label_key,
+                *(
+                    ["--true-label-col", true_label_col, "--pred-label-col", pred_label_col]
+                    if true_label_col and pred_label_col
+                    else []
+                ),
                 "--n-top-genes",
                 100,
                 "--method",

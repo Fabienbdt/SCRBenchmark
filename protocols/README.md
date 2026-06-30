@@ -1,15 +1,14 @@
-# Registre des protocoles de benchmark
+# Benchmark Protocol Registry
 
-Ce dossier contient des protocoles de benchmark versionnes que l'interface
-Streamlit peut charger depuis **Customize Benchmark**.
+This directory contains versioned benchmark protocols that the Streamlit
+interface can load from **Customize Benchmark**.
 
-Chaque fichier YAML decrit les datasets, la strategie de split, le
-preprocessing, les methodes, les protocoles manuels, les options d'execution,
-les metriques et les sweeps optionnels. Un utilisateur peut copier un protocole
-du rapport, modifier uniquement les champs necessaires, puis le charger dans
-l'interface sans modifier le code Python.
+Each YAML file describes datasets, the split strategy, preprocessing, methods,
+manual protocols, execution options, metrics, and optional sweeps. A user can
+copy a report protocol, edit only the required fields, and load it in the
+interface without changing Python code.
 
-Les presets du rapport sont dans:
+Report presets are in:
 
 ```text
 protocols/report/
@@ -23,6 +22,5 @@ Exemples:
 - `loss_transfer_report.yaml`
 - `inductive_report_splits.yaml`
 
-Avant execution, l'interface valide les chemins de donnees, les colonnes
-AnnData quand c'est possible, les noms de methodes, les ratios de split, les
-seeds et les exigences des protocoles manuels.
+Before execution, the interface validates data paths, AnnData columns when
+possible, method names, split ratios, seeds, and manual protocol requirements.

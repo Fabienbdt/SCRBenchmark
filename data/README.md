@@ -1,40 +1,39 @@
-# Dossier de donnees SCRBenchmark
+# SCRBenchmark Data Directory
 
-Ce dossier contient les donnees utilisees pour benchmarker les algorithmes de
-clustering single-cell RNA-seq.
+This directory contains the data used to benchmark single-cell RNA-seq
+clustering algorithms.
 
-Les gros fichiers `.h5ad` ne sont pas suivis par Git afin de garder le depot
-leger. Le depot fournit donc:
+Large `.h5ad` files are not tracked by Git so the repository stays manageable.
+The repository therefore provides:
 
-1. des donnees brutes suivies par Git quand c'est raisonnable;
-2. des scripts pour reconstruire ou materialiser les datasets prepares;
-3. des manifests pour verifier les fichiers attendus.
+1. small raw files when tracking them is reasonable;
+2. scripts to rebuild or materialize prepared datasets;
+3. manifests to verify the expected files.
 
 ---
 
-## Generer le dataset Baron human pancreas
+## Generate the Baron Human Pancreas Dataset
 
-Le dataset Baron human pancreas est le dataset de test principal. Pour le
-generer:
+The Baron human pancreas dataset is the main test dataset. Generate it with:
 
 ```bash
 python scripts/setup/prepare_baron_dataset.py --download
 ```
 
-Le script cree:
+The script creates:
 
 ```text
 data/baron_human_pancreas.h5ad
 ```
 
-Ce fichier contient environ:
+This file contains approximately:
 
-- 8 500 cellules issues de 4 donneurs pancreas humains;
-- 14 types cellulaires;
-- 20 000 genes;
-- une information de batch/donneur.
+- 8,500 cells from 4 human pancreas donors;
+- 14 cell types;
+- 20,000 genes;
+- batch/donor information.
 
-Structure attendue apres generation:
+Expected structure after generation:
 
 ```text
 data/
@@ -45,46 +44,52 @@ data/
 
 ---
 
-## Datasets stable_generalist
+## stable_generalist Datasets
 
-La reproduction stable_generalist attend 13 fichiers `.h5ad` dans:
+The stable_generalist reproduction expects 13 `.h5ad` files in:
 
 ```text
 data/stable_generalist/
 ```
 
-Commande recommandee si les donnees source sont disponibles localement:
+Recommended command when the source data is available locally:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
 ```
 
-Si les fichiers exacts sont heberges a distance:
+If the exact files are hosted remotely:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
   --base-url https://YOUR_HOST/scrbenchmark/stable_generalist/
 ```
 
-Verifier des fichiers deja prepares:
+Verify already prepared files:
 
 ```bash
 python scripts/reproduction/download_datasets.py --verify-only
 ```
 
-Le script compare les fichiers a `data/stable_generalist/download_manifest.csv`
-avec SHA256, taille, dimensions AnnData et colonnes attendues.
+The script compares files against `data/stable_generalist/download_manifest.csv`
+using SHA256, file size, AnnData dimensions, and expected columns.
 
-La liste des fichiers est documentee dans:
+The file list is documented in:
 
 ```text
 data/stable_generalist/README.md
 ```
 
-Si les fichiers sont stockes ailleurs, passer explicitement le dossier au
-generateur de plan:
+If the files are stored elsewhere, pass the directory explicitly to the plan
+builder:
 
 ```bash
 python scripts/reproduction/build_stable_generalist_plan.py --data-root /path/to/h5ad_files
+```
+
+To add a new dataset to the project, follow the step-by-step guide:
+
+```text
+docs/dataset_integration_guide.md
 ```

@@ -1,54 +1,63 @@
-# Carte de reproduction du rapport
+# Report Reproduction Map
 
-Ce document relie les figures et tables du rapport de stage aux lanceurs
-SCRBenchmark qui permettent de regenerer leurs donnees.
+This document connects internship report figures and tables to the SCRBenchmark
+launchers that regenerate their data.
 
-La carte machine-readable canonique est:
+The canonical machine-readable map is:
 
 ```text
 reproducibility/report_reproduction_map.csv
 ```
 
-Utiliser les labels LaTeX (`fig:...`, `tab:...`) comme identifiants stables.
-Les numeros finaux des figures peuvent changer quand le rapport est edite.
+The exact command order is documented in:
+
+```text
+docs/report_reproduction_steps.md
+```
+
+Use LaTeX labels (`fig:...`, `tab:...`) as stable identifiers. Final figure
+numbers may change when the report is edited.
 
 ---
 
-## Workflow recommande
+## Recommended Workflow
 
-Utiliser le panneau Streamlit **Report Reproduction** comme interface principale
-pour relancer les experiences du rapport. Il est destine a etre livre avec le
-depot et remplace les longues listes de commandes dans la documentation.
+Use the Streamlit **Report Reproduction** panel as the main interface for
+rerunning report experiments. It is intended to ship with the repository and
+replaces long command lists in the documentation.
 
-Dans la sidebar de l'application, ouvrir **Report Reproduction**:
+In the application sidebar, open **Report Reproduction**:
 
-- **Traceability** affiche les correspondances figures/tables relancables;
-- **Stable Generalist** genere le lanceur principal du benchmark du rapport;
-- **Report Complements** genere les lanceurs inductifs, loss-transfer et DEG;
-- **Custom Protocols** permet de creer des variantes sans modifier les lignes
-  de commande a la main.
+- **Traceability** shows runnable figure/table mappings;
+- **Stable Generalist** builds the main report benchmark launcher;
+- **Report Complements** builds inductive, loss-transfer, and DEG launchers;
+- **scRAW Weighting** exposes loss-transfer variants directly;
+- **Generalization** exposes inductive protocols directly;
+- **Biological Interpretation** builds the Baron marker-overlap workflow and
+  reuses the exact Baron report labels (`tsne_coordinates.csv`) when present;
+- **Custom Protocols** creates variants without hand-editing command lines.
 
-Chaque onglet ecrit un CSV de jobs planifies et un lanceur shell, puis affiche
-la commande unique a executer. Les scripts bas niveau restent disponibles pour
-l'automatisation avancee, mais le panneau GUI est l'entree publique documentee.
+Each tab writes a planned-job CSV and shell launcher, then displays the single
+command to execute. Low-level scripts remain available for advanced automation,
+but the GUI panel is the documented public entry point.
 
 ---
 
-## Couverture relancable
+## Runnable Coverage
 
-| Cible du rapport | Famille de lanceur | Datasets | Seeds |
+| Report target | Launcher family | Datasets | Seeds |
 | --- | --- | --- | --- |
-| `fig:scraw_common8_family_top3_plus_scraw` | Onglet Stable Generalist | common-8 | seed de relance 42; table source `n_seeds=1` |
-| `fig:rank_matrix_common8` | Onglet Stable Generalist | common-8 | seed de relance 42 |
-| `tab:scraw_holdout_pancreas_results` | Onglet Stable Generalist | validation externe | seed de relance 42 |
-| `fig:loss_transfer_baseline_vs_best` | Onglet Report Complements | 5 datasets loss-transfer | 42-46 |
-| `fig:inductive_metrics_boxplots_default` | Onglet Report Complements | 6 datasets inductifs representatifs | 42 |
+| `fig:scraw_common8_family_top3_plus_scraw` | Stable Generalist tab | common-8 | rerun seed 42; source table `n_seeds=1` |
+| `fig:rank_matrix_common8` | Stable Generalist tab | common-8 | rerun seed 42 |
+| `tab:scraw_holdout_pancreas_results` | Stable Generalist tab | external validation | rerun seed 42 |
+| `fig:loss_transfer_baseline_vs_best` | Report Complements tab | 5 loss-transfer datasets | 42-46 |
+| `fig:inductive_metrics_boxplots_default` | Report Complements tab | 6 representative inductive datasets | 42 |
 
 ---
 
-## Campagne principale
+## Main Campaign
 
-Cibles couvertes:
+Covered targets:
 
 - `fig:scraw_common8_family_top3_plus_scraw`
 - `fig:rank_matrix_common8`
@@ -56,16 +65,16 @@ Cibles couvertes:
 - `tab:runtime_moyen_algorithmes`
 - `tab:scraw_holdout_pancreas_results`
 
-Utiliser l'onglet **Stable Generalist**. Il expose le dossier de sortie,
-l'interpreteur Python, le device, la seed, les filtres de datasets et les
-filtres de methodes. Le CSV genere contient un job par ligne et le script shell
-genere contient les jobs executables.
+Use the **Stable Generalist** tab. It exposes the output directory, Python
+interpreter, device, seed, dataset filters, and method filters. The generated
+CSV contains one job per row and the generated shell script contains executable
+jobs.
 
 ---
 
-## Complements du rapport
+## Report Complements
 
-Cibles couvertes:
+Covered targets:
 
 - `fig:loss_transfer_baseline_vs_best`
 - `fig:inductive_metrics_boxplots_default`
@@ -73,29 +82,28 @@ Cibles couvertes:
 - `fig:baron_scraw_bio_interpretation`
 - `tab:baron_annotation_comparison`
 
-Utiliser l'onglet **Report Complements** et selectionner les campagnes
-pertinentes: `inductive`, `loss_transfer` et/ou `deg`.
+Use the **Report Complements** tab and select the relevant campaigns:
+`inductive`, `loss_transfer`, and/or `deg`.
 
 ---
 
-## Protocoles personnalises
+## Custom Protocols
 
-Utiliser l'onglet **Custom Protocols** pour des variantes loss-transfer, des
-complements Harmony ou des splits inductifs train/test. Le panneau expose le
-dataset, la colonne de labels, la colonne batch, les seeds, les algorithmes,
-les groupes de split et le chemin du lanceur de sortie.
+Use the **Custom Protocols** tab for loss-transfer variants, Harmony complements,
+or inductive train/test splits. The panel exposes the dataset, label column,
+batch column, seeds, algorithms, split groups, and output launcher path.
 
 ---
 
-## Limites connues
+## Known Limits
 
-Les figures d'ablation et d'importance Optuna sont documentees comme artefacts
-du rapport, mais elles ne sont pas encore exposees via un lanceur SCRBenchmark
-propre. Avant d'annoncer une reproductibilite entierement cle en main, ajouter:
+Ablation and Optuna-importance figures are documented as report artifacts, but
+they are not yet exposed through a clean SCRBenchmark launcher. Before claiming
+fully turnkey reproducibility, add:
 
-- une campagne explicite `ablation_scraw` pour `tab:scraw_ablation` et
+- an explicit `ablation_scraw` campaign for `tab:scraw_ablation` and
   `fig:scraw_ablation_barplot`;
-- un manifest archive ou relancable pour la campagne Optuna de
+- an archived or runnable manifest for the Optuna campaigns behind
   `fig:scraw_hparam_importance_baron`,
-  `fig:scraw_hparam_importance_generalist8` et
+  `fig:scraw_hparam_importance_generalist8`, and
   `fig:scraw_hparam_importance_stable_generalist`.

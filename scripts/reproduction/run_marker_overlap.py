@@ -100,6 +100,34 @@ def write_heatmap(overlap: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
+def write_deg_tables(payload: dict[str, Any], results_dir: Path) -> None:
+    rows: list[dict[str, Any]] = []
+    for source_kind, key in [
+        ("ground_truth", "ground_truth_degs"),
+        ("predicted_cluster", "predicted_cluster_degs"),
+    ]:
+        groups = payload.get(key) or {}
+        for group, genes in sorted(groups.items(), key=lambda item: str(item[0])):
+            for rank, gene in enumerate(genes, start=1):
+                rows.append(
+                    {
+                        "source_kind": source_kind,
+                        "group": str(group),
+                        "rank": rank,
+                        "gene": str(gene),
+                    }
+                )
+    pd.DataFrame(rows).to_csv(results_dir / "marker_overlap_genes_long.csv", index=False)
+
+    mapping = payload.get("cluster_to_type") or {}
+    pd.DataFrame(
+        [
+            {"predicted_cluster": str(cluster), "assigned_cell_type": str(cell_type)}
+            for cluster, cell_type in sorted(mapping.items(), key=lambda item: str(item[0]))
+        ]
+    ).to_csv(results_dir / "cluster_to_type.csv", index=False)
+
+
 def main() -> int:
     import scanpy as sc
     from sklearn.metrics import adjusted_rand_score
@@ -166,6 +194,7 @@ def main() -> int:
         "cluster_to_type": result["cluster_to_type"],
     }
     (results_dir / "degs_top100.json").write_text(json.dumps(deg_payload, indent=2), encoding="utf-8")
+    write_deg_tables(deg_payload, results_dir)
 
     metrics = {
         "n_cells": int(len(true)),

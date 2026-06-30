@@ -7,7 +7,73 @@
 - Reproduction scripts for the experiments in the report;
 - Guides for adding algorithms, reproducible methods, preprocessings, and new protocols.
 
+Author: **Fabien Bidet**.
+
+Copyright: **(c) 2026 Fabien Bidet. All rights reserved.**
+
 ---
+
+## I Want To... -> Read This
+
+| Goal | Document or entry point |
+| --- | --- |
+| Install and run a first benchmark | README, "Recommended 10-minute path" |
+| Regenerate the report figures | [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) |
+| Add an external algorithm | [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) |
+| Add a dataset | [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) |
+| Add a preprocessing step | [docs/preprocessing_extension_guide.md](docs/preprocessing_extension_guide.md) |
+| Understand the repository files | [docs/developer_file_guide.md](docs/developer_file_guide.md) |
+| Understand the reproduction scripts | [scripts/reproduction/README.md](scripts/reproduction/README.md) |
+
+To add an external algorithm, do not modify
+`src/scrbenchmark/algorithms/`; follow only
+[docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md).
+
+---
+
+## Recommended 10-Minute Path
+
+```bash
+cd /data2/fbidet/SCRBenchmark
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Check the installation:
+
+```bash
+./scrbenchmark list-algorithms
+```
+
+Prepare the reproduction datasets if the local source is available:
+
+```bash
+python scripts/reproduction/download_datasets.py \
+  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+```
+
+Run a lightweight first benchmark:
+
+```bash
+./scrbenchmark run \
+  --data data/stable_generalist/baron_human_pancreas.h5ad \
+  --algorithms pca \
+  --param pca:clustering_method=kmeans \
+  --label-col label \
+  --n-clusters 14 \
+  --output results/quickstart_baron_pca
+```
+
+Or open the graphical interface:
+
+```bash
+./run.sh
+```
+
+To reproduce the report with the complete script order, read
+[docs/report_reproduction_steps.md](docs/report_reproduction_steps.md).
 
 ## Installation
 
@@ -156,9 +222,13 @@ Then open `Report Reproduction`. This panel generates the `planned_jobs.csv` fil
 - inductive complements;
 - loss-transfer experiments;
 - Harmony variants;
+- biological interpretation / marker-overlap;
+- export of already available scRAW artifacts through scripts;
 - custom protocols.
 
-The map of figures/tables from the report is in
+The numbered execution order is in
+[docs/report_reproduction_steps.md](docs/report_reproduction_steps.md). The map
+of figures/tables from the report is in
 [docs/report_reproduction_map.md](docs/report_reproduction_map.md).
 
 ---
@@ -168,6 +238,8 @@ The map of figures/tables from the report is in
 | Guide | Target Audience | When to use |
 | --- | --- | --- |
 | [docs/user_guide.md](docs/user_guide.md) | SCRBenchmark User | Understand the workflow: detailed installation, data preparation, GUI, CLI, and report reproduction. |
+| [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) | Reproduction user | Numbered commands to regenerate report figures and reuse existing artifacts when possible. |
+| [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) | Data user | Add a new `.h5ad` dataset to GUI, CLI, manifests, and reproduction plans. |
 | [docs/developer_file_guide.md](docs/developer_file_guide.md) | Developer | Know which file to modify to change the preprocessing, algorithms, interface, metrics, or scripts. |
 | [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) | External Algorithm Developer | Single step-by-step guide: external source code, wrapper, YAML, validation, and smoke test. |
 | [docs/preprocessing_extension_guide.md](docs/preprocessing_extension_guide.md) | Preprocessing Developer | Add a preprocessing step without train/test leakage and without breaking GUI/CLI. |

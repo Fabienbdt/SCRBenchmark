@@ -1,0 +1,35 @@
+SCRBenchmark handoff checklist
+==============================
+
+This file records the internship handoff tasks that were requested for
+SCRBenchmark and the implementation status in this repository.
+
+- Number the script order needed to regenerate report figures, including marker
+  overlap. Done in `docs/report_reproduction_steps.md`.
+
+- Add a detailed guide for integrating a new dataset. Done in
+  `docs/dataset_integration_guide.md`.
+
+- Improve the GUI report-complement section with a dedicated Report
+  Reproduction page, including scRAW weighting/loss-transfer, generalization,
+  and biological interpretation entry points. Implemented in the Streamlit
+  report reproduction components.
+
+- Verify that BalancedRareACC is computed by default through the interface for
+  all models. Covered by metric updates and unit tests.
+
+- Add the author name and copyright to the SCRBenchmark README. Done in
+  `README.md`.
+
+- Extract marker-overlap genes into a separate file when a `degs_top100.json`
+  artifact is available. Implemented in
+  `scripts/reproduction/extract_marker_overlap_genes.py`.
+
+- Recover scRAW model/cell weights where available and provide replay scripts.
+  Existing artifacts are organized under `autres-stage/`, and the transductive
+  stable-generalist rerun with checkpoints is under
+  `scraw-transductive-stable-generalist/`.
+
+- Regenerate scRAW cell-weight figures from existing weights. Implemented in
+  `scripts/reproduction/regenerate_scraw_weight_figures.py` and the
+  transductive rerun artifacts.

@@ -212,6 +212,16 @@ def _render_report_plan_tab() -> None:
       key="report_repro_report_campaigns",
     )
     strict_data = st.checkbox("Mark missing data as blocked", value=False, key="report_repro_report_strict")
+    reuse_existing = st.checkbox(
+      "Reuse existing scRAW Baron labels when available",
+      value=True,
+      key="report_repro_report_reuse_existing",
+      help=(
+        "The DEG/marker-overlap campaign can reuse the existing Baron scRAW "
+        "labels from the report artifact folder instead of planning a new "
+        "source scRAW run."
+      ),
+    )
 
   cmd: list[object] = [
     python_bin,
@@ -227,6 +237,8 @@ def _render_report_plan_tab() -> None:
   ]
   if strict_data:
     cmd.append("--strict-data")
+  if not reuse_existing:
+    cmd.append("--no-reuse-existing-artifacts")
 
   st.code(_quote(cmd), language="bash")
   if st.button("Generate report launcher", type="primary", width="stretch"):
@@ -244,25 +256,30 @@ def _render_report_plan_tab() -> None:
   _show_generated_artifacts(root / "report_planned_jobs.csv", root / "run_ready_report_jobs.sh")
 
 
-def _common_manual_inputs() -> dict[str, object]:
+def _common_manual_inputs(
+  prefix: str = "manual_repro",
+  *,
+  output_default: str = "results/manual_report_protocol",
+  script_default: str = "results/manual_report_protocol/run_jobs.sh",
+) -> dict[str, object]:
   col1, col2, col3 = st.columns(3)
   with col1:
     data = st.text_input(
       "Data",
       value="data/stable_generalist/baron_human_pancreas.h5ad",
-      key="manual_repro_data",
+      key=f"{prefix}_data",
     )
-    dataset_key = st.text_input("Dataset key", value="baron_human_pancreas", key="manual_repro_dataset")
-    label_key = st.text_input("Label key", value="label", key="manual_repro_label")
+    dataset_key = st.text_input("Dataset key", value="baron_human_pancreas", key=f"{prefix}_dataset")
+    label_key = st.text_input("Label key", value="label", key=f"{prefix}_label")
   with col2:
-    batch_key = st.text_input("Batch key", value="batch", key="manual_repro_batch")
-    n_labels = st.number_input("Number of labels", min_value=0, max_value=1000, value=14, key="manual_repro_n_labels")
-    seeds = st.text_input("Seeds", value="42", key="manual_repro_seeds")
+    batch_key = st.text_input("Batch key", value="batch", key=f"{prefix}_batch")
+    n_labels = st.number_input("Number of labels", min_value=0, max_value=1000, value=14, key=f"{prefix}_n_labels")
+    seeds = st.text_input("Seeds", value="42", key=f"{prefix}_seeds")
   with col3:
-    output_root = st.text_input("Output root", value="results/manual_report_protocol", key="manual_repro_output")
-    script = st.text_input("Launcher path", value="results/manual_report_protocol/run_jobs.sh", key="manual_repro_script")
-    python_bin = st.text_input("Python interpreter", value=sys.executable, key="manual_repro_python")
-  device = st.selectbox("Device", ["cuda", "cpu", "auto", "mps"], key="manual_repro_device")
+    output_root = st.text_input("Output root", value=output_default, key=f"{prefix}_output")
+    script = st.text_input("Launcher path", value=script_default, key=f"{prefix}_script")
+    python_bin = st.text_input("Python interpreter", value=sys.executable, key=f"{prefix}_python")
+  device = st.selectbox("Device", ["cuda", "cpu", "auto", "mps"], key=f"{prefix}_device")
   return {
     "data": data,
     "dataset_key": dataset_key,
@@ -277,17 +294,8 @@ def _common_manual_inputs() -> dict[str, object]:
   }
 
 
-def _render_manual_protocol_tab() -> None:
-  st.subheader("Custom Protocol Launcher")
-  st.caption(
-    "Use this tab to design new report-style commands by changing the dataset, "
-    "methods, seeds, or train/test groups. It writes a custom planned-job CSV "
-    "and shell launcher."
-  )
-  protocol = st.selectbox("Protocol", ["loss_transfer", "harmony", "inductive"], key="manual_repro_protocol")
-  common = _common_manual_inputs()
-
-  cmd: list[object] = [
+def _base_manual_protocol_cmd(protocol: str, common: dict[str, object]) -> list[object]:
+  return [
     common["python_bin"],
     "scripts/reproduction/manual_protocols.py",
     "--protocol",
@@ -313,6 +321,172 @@ def _render_manual_protocol_tab() -> None:
     "--script",
     common["script"],
   ]
+
+
+def _show_manual_launcher(cmd: list[object], common: dict[str, object], *, button_label: str, key: str) -> None:
+  st.code(_quote(cmd), language="bash")
+  if st.button(button_label, type="primary", width="stretch", key=key):
+    result = _run_generator(cmd)
+    if result.returncode == 0:
+      st.success("Launcher generated")
+    else:
+      st.error("Launcher generation failed")
+    if result.stdout:
+      st.code(result.stdout, language="text")
+    if result.stderr:
+      st.code(result.stderr, language="text")
+
+  root = _resolve_repo_path(common["output_root"])
+  shell_path = _resolve_repo_path(common["script"])
+  _show_generated_artifacts(root / "manual_protocol_jobs.csv", shell_path)
+
+
+def _render_loss_transfer_tab() -> None:
+  st.subheader("scRAW Weighting Loss Transfer")
+  st.caption(
+    "Generate commands that plug scRAW cell weighting into existing algorithms. "
+    "Use the selectors to choose which implemented methods and weighting variants "
+    "are included."
+  )
+  common = _common_manual_inputs(
+    "loss_transfer_repro",
+    output_default="results/manual_loss_transfer",
+    script_default="results/manual_loss_transfer/run_jobs.sh",
+  )
+  col1, col2 = st.columns(2)
+  with col1:
+    methods = st.multiselect(
+      "Algorithms",
+      ["scMAE", "scDeepCluster", "DESC"],
+      default=["scMAE", "scDeepCluster", "DESC"],
+      key="loss_transfer_repro_methods",
+    )
+  with col2:
+    variants = st.multiselect(
+      "Weighting variants",
+      ["baseline", "weighted", "density_only", "kmeans", "triplet"],
+      default=["baseline", "weighted"],
+      key="loss_transfer_repro_variants",
+    )
+  cmd = _base_manual_protocol_cmd("loss_transfer", common)
+  cmd.extend(["--loss-methods", ",".join(methods), "--loss-variants", ",".join(variants)])
+  _show_manual_launcher(
+    cmd,
+    common,
+    button_label="Generate loss-transfer launcher",
+    key="loss_transfer_repro_generate",
+  )
+
+
+def _render_generalization_tab() -> None:
+  st.subheader("Generalization / Inductive Protocol")
+  st.caption(
+    "Generate train/test-group commands for existing inductive algorithms. "
+    "This is the report complement used to assess generalization across batches."
+  )
+  common = _common_manual_inputs(
+    "generalization_repro",
+    output_default="results/manual_inductive",
+    script_default="results/manual_inductive/run_jobs.sh",
+  )
+  algorithms = st.multiselect(
+    "Algorithms",
+    ["scraw", "scname", "sc_mae", "scdeepcluster", "scaide", "pca_harmony"],
+    default=["scraw", "scname", "sc_mae", "scdeepcluster"],
+    key="generalization_repro_algorithms",
+  )
+  col1, col2, col3 = st.columns(3)
+  with col1:
+    split_key = st.text_input("Split key", value="batch", key="generalization_repro_split_key")
+  with col2:
+    train_batches = st.text_input(
+      "Train groups",
+      value="human1,human2,human3",
+      key="generalization_repro_train",
+    )
+  with col3:
+    test_batches = st.text_input("Test groups", value="human4", key="generalization_repro_test")
+  cmd = _base_manual_protocol_cmd("inductive", common)
+  cmd.extend(
+    [
+      "--inductive-algorithms",
+      ",".join(algorithms),
+      "--split-key",
+      split_key,
+      "--train-batches",
+      train_batches,
+      "--test-batches",
+      test_batches,
+    ]
+  )
+  _show_manual_launcher(
+    cmd,
+    common,
+    button_label="Generate generalization launcher",
+    key="generalization_repro_generate",
+  )
+
+
+def _render_biological_interpretation_tab() -> None:
+  st.subheader("Biological Interpretation / Marker Overlap")
+  st.caption(
+    "Generate the Baron scRAW marker-overlap analysis. Existing scRAW labels "
+    "are reused by default when the local report artifacts are present; this "
+    "avoids rerunning the source model."
+  )
+  col1, col2 = st.columns(2)
+  with col1:
+    output_root = st.text_input("Output root", value="results/report_repro", key="bio_repro_output")
+    python_bin = st.text_input("Python interpreter", value=sys.executable, key="bio_repro_python")
+  with col2:
+    device = st.selectbox("Device", ["cuda", "cpu", "auto", "mps"], key="bio_repro_device")
+    strict_data = st.checkbox("Mark missing data as blocked", value=False, key="bio_repro_strict")
+    reuse_existing = st.checkbox("Reuse existing scRAW Baron labels", value=True, key="bio_repro_reuse_existing")
+
+  cmd: list[object] = [
+    python_bin,
+    "scripts/reproduction/build_report_plan.py",
+    "--output-root",
+    output_root,
+    "--python-bin",
+    python_bin,
+    "--device",
+    device,
+    "--campaigns",
+    "deg",
+  ]
+  if strict_data:
+    cmd.append("--strict-data")
+  if not reuse_existing:
+    cmd.append("--no-reuse-existing-artifacts")
+
+  st.code(_quote(cmd), language="bash")
+  if st.button("Generate marker-overlap launcher", type="primary", width="stretch", key="bio_repro_generate"):
+    result = _run_generator(cmd)
+    if result.returncode == 0:
+      st.success("Plan generated")
+    else:
+      st.error("Plan generation failed")
+    if result.stdout:
+      st.code(result.stdout, language="text")
+    if result.stderr:
+      st.code(result.stderr, language="text")
+
+  root = _resolve_repo_path(output_root)
+  _show_generated_artifacts(root / "report_planned_jobs.csv", root / "run_ready_report_jobs.sh")
+
+
+def _render_manual_protocol_tab() -> None:
+  st.subheader("Custom Protocol Launcher")
+  st.caption(
+    "Use this tab to design new report-style commands by changing the dataset, "
+    "methods, seeds, or train/test groups. It writes a custom planned-job CSV "
+    "and shell launcher."
+  )
+  protocol = st.selectbox("Protocol", ["loss_transfer", "harmony", "inductive"], key="manual_repro_protocol")
+  common = _common_manual_inputs()
+
+  cmd: list[object] = _base_manual_protocol_cmd(protocol, common)
 
   if protocol == "loss_transfer":
     col1, col2 = st.columns(2)
@@ -360,21 +534,7 @@ def _render_manual_protocol_tab() -> None:
       ]
     )
 
-  st.code(_quote(cmd), language="bash")
-  if st.button("Generate custom launcher", type="primary", width="stretch"):
-    result = _run_generator(cmd)
-    if result.returncode == 0:
-      st.success("Launcher generated")
-    else:
-      st.error("Launcher generation failed")
-    if result.stdout:
-      st.code(result.stdout, language="text")
-    if result.stderr:
-      st.code(result.stderr, language="text")
-
-  root = _resolve_repo_path(common["output_root"])
-  shell_path = _resolve_repo_path(common["script"])
-  _show_generated_artifacts(root / "manual_protocol_jobs.csv", shell_path)
+  _show_manual_launcher(cmd, common, button_label="Generate custom launcher", key="manual_repro_generate")
 
 
 def render_report_reproduction_page() -> None:
@@ -394,6 +554,9 @@ def render_report_reproduction_page() -> None:
     "Traceability",
     "Stable Generalist",
     "Report Complements",
+    "scRAW Weighting",
+    "Generalization",
+    "Biological Interpretation",
     "Custom Protocols",
   ])
   with tabs[0]:
@@ -403,4 +566,10 @@ def render_report_reproduction_page() -> None:
   with tabs[2]:
     _render_report_plan_tab()
   with tabs[3]:
+    _render_loss_transfer_tab()
+  with tabs[4]:
+    _render_generalization_tab()
+  with tabs[5]:
+    _render_biological_interpretation_tab()
+  with tabs[6]:
     _render_manual_protocol_tab()
