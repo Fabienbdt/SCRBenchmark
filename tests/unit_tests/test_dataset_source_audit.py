@@ -98,3 +98,47 @@ def test_tabula_source_is_the_exact_dimension_senis_object():
     assert liver["checksum_algorithm"] == "md5"
     assert liver["checksum"] == "05cb7669c7439562faa7170dc6896dce"
     assert liver["url"].endswith("/23872526")
+
+
+def test_maintainer_facing_metadata_and_protocol_names_are_in_english():
+    forbidden = {
+        "Rapport -",
+        "donneur / individu",
+        "pas de batch explicite",
+        "Aucun batch explicite",
+        "Faible",
+        "Fort",
+        "Intermédiaire",
+        "aucune",
+        "echantillon",
+        "sequencage",
+        "imbrique",
+        "condition biologique",
+        "poids faible",
+        "Poids de reconstruction",
+        "jaune vif",
+        "opacite",
+    }
+    checked_files = [
+        PROJECT_ROOT / "src" / "scrbenchmark" / "gui" / "customize_benchmark.py",
+        PROJECT_ROOT
+        / "vendor"
+        / "scraw_dedicated"
+        / "src"
+        / "scraw_dedicated"
+        / "visualization.py",
+        *sorted((PROJECT_ROOT / "protocols" / "report").glob("*.yaml")),
+        PROJECT_ROOT
+        / "reproducibility"
+        / "stable_generalist"
+        / "stable_generalist_dataset_table.csv",
+        PROJECT_ROOT
+        / "scraw-transductive-stable-generalist"
+        / "metadata"
+        / "stable_generalist_dataset_table.csv",
+    ]
+
+    for path in checked_files:
+        content = path.read_text(encoding="utf-8")
+        remaining = sorted(term for term in forbidden if term in content)
+        assert not remaining, (path, remaining)

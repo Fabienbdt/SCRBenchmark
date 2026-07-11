@@ -1,6 +1,6 @@
 schema_version: 1
 id: baron_split_701020
-name: Rapport - Baron split 70-10-20
+name: Report - Baron split 70-10-20
 experiment_type: transductive_split
 description: Baron human pancreas split with 70% train, 10% validation and 20% test.
 tags:
