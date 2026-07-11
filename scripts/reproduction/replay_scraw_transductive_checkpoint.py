@@ -23,8 +23,8 @@ import numpy as np
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-WORKSPACE_ROOT = REPO_ROOT.parent
-SCRAW_ROOT = Path(os.environ.get("SCRAW_EXPERIMENTAL_ROOT", WORKSPACE_ROOT / "scRAW_EXPERIMENTAL"))
+DEFAULT_SCRAW_ROOT = REPO_ROOT / "vendor" / "scraw_dedicated"
+SCRAW_ROOT = Path(os.environ.get("SCRAW_EXPERIMENTAL_ROOT", DEFAULT_SCRAW_ROOT))
 SCRAW_SRC = SCRAW_ROOT / "src"
 if str(SCRAW_SRC) not in sys.path:
     sys.path.insert(0, str(SCRAW_SRC))
@@ -136,7 +136,26 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _resolve_data_path(raw_path: str) -> Path:
+    path = Path(raw_path).expanduser()
+    if path.exists():
+        return path.resolve()
+
+    filename = path.name
+    aliases = {"pancreas_raw_counts.h5ad": "pancreas_raw_counts_no_smarter.h5ad"}
+    candidates = [
+        REPO_ROOT / "data" / "stable_generalist" / aliases.get(filename, filename),
+        REPO_ROOT / "data" / aliases.get(filename, filename),
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate.resolve()
+    return path.resolve()
+
+
 def main() -> int:
+    args = parse_args()
+
     import anndata as ad
     import torch
 
@@ -150,7 +169,6 @@ def main() -> int:
     from scraw_dedicated.preprocessing import preprocess_adata
     from scraw_dedicated.visualization import compute_projection_2d
 
-    args = parse_args()
     checkpoint_path = Path(args.checkpoint).expanduser().resolve()
     config_path = Path(args.config).expanduser().resolve()
     output = Path(args.output).expanduser().resolve()
@@ -164,7 +182,8 @@ def main() -> int:
         raise RuntimeError(f"Invalid checkpoint format: {checkpoint_path}")
 
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    data_path = Path(args.data or checkpoint.get("data_path") or config.get("data", {}).get("file", "")).expanduser().resolve()
+    raw_data_path = str(args.data or checkpoint.get("data_path") or config.get("data", {}).get("file", ""))
+    data_path = _resolve_data_path(raw_data_path)
     if not data_path.exists():
         raise FileNotFoundError(f"Dataset not found: {data_path}")
 

@@ -35,11 +35,19 @@ presentation row metrics. See `validation/accepted_differences.md`.
 
 ## Rerun the 13 Datasets
 
+The following command retrains the 13 models. It is intended for the original
+research workspace and requires the source trial directory passed with
+`--trial-root`, plus the exact datasets. Replaying the versioned checkpoints
+does not require retraining; use the next section instead.
+
 From the SCRBenchmark root:
 
 ```bash
-/data2/fbidet/scrbenchmark_venv/bin/python \
+python \
   scripts/reproduction/rerun_scraw_transductive_with_checkpoints.py \
+  --source-results-table /path/to/stable_generalist_all_results_table.csv \
+  --dataset-table /path/to/stable_generalist_dataset_table.csv \
+  --trial-root /path/to/stable_generalist_trial_0017 \
   --gpus 1,2
 ```
 
@@ -57,18 +65,23 @@ nondeterminism. The final validation remains `validation/metrics_comparison.csv`
 Example for Kang PBMC:
 
 ```bash
-/data2/fbidet/scrbenchmark_venv/bin/python \
+python \
   scripts/reproduction/replay_scraw_transductive_checkpoint.py \
   --checkpoint scraw-transductive-stable-generalist/model_weights/checkpoints/model_kang_pbmc_gse96583_singlets_raw_counts.pt \
   --config scraw-transductive-stable-generalist/runs/kang_pbmc_gse96583_singlets_raw_counts/seed_42/config/config_used.json \
+  --data data/stable_generalist/kang_pbmc_gse96583_singlets_raw_counts.h5ad \
   --output scraw-transductive-stable-generalist/replayed/kang_pbmc_gse96583_singlets_raw_counts \
-  --device cuda
+  --device auto
 ```
 
 Replay reloads the model `state_dict`, recomputes embeddings and final
 clustering, then regenerates per-cell CSV files and the combined UMAP. Final
 cell weights are read from the enriched checkpoint: they are a dynamic training
 artifact, not a direct function of the network alone.
+
+All 13 enriched transductive checkpoints and their matching configurations are
+tracked in this repository. The matching H5AD input is still required because
+the checkpoint stores the model and dynamic weights, not the expression matrix.
 
 Associated scripts:
 

@@ -84,14 +84,18 @@ python scripts/reproduction/export_existing_scraw_artifacts.py \
 
 Current local findings:
 
+- one enriched transductive checkpoint for each of the 13 stable-generalist
+  datasets is versioned under `scraw-transductive-stable-generalist/`, together
+  with matching configurations, outputs, weights, and replay code;
 - seed-60 scRAW cell weights already exist for the 13 datasets in the
   `scRAW_default_from_scRAW_seed60_stage_umaps_20260421` campaign;
 - the exact Baron scRAW labels from the report exist in
   `Rapport_Stage_M2_git/Images/analyse_biologique_scraw_baron_stable_generalist/tsne_coordinates.csv`
   and can be reused for marker-overlap analysis without rerunning the model;
-- `autoencoder.pt` checkpoints exist for several inductive scRAW experiments,
-  but not for all 13 transductive stable-generalist datasets. The datasets
-  without a model checkpoint found in the current local state are
+- separate `scraw_inductive`-format `autoencoder.pt` checkpoints exist for
+  several inductive experiments, but not for every dataset. The datasets
+  without that additional inductive-format bundle in the inspected historical
+  roots are
   `bbag094_zeisel`, `pancreas_raw_counts`, `paul15_bone_marrow_raw_counts`,
   `Human_Pancreas_1_raw_counts`, `Human_Pancreas_2_raw_counts`,
   `Mouse_Pancreas_1_raw_counts`, and `Tabula_Muris_liver_filtered_raw_counts`.
@@ -247,6 +251,20 @@ labels.
 ---
 
 ## 7. Replay scRAW From Available Weights
+
+For one of the 13 versioned enriched transductive checkpoints:
+
+```bash
+python scripts/reproduction/replay_scraw_transductive_checkpoint.py \
+  --checkpoint scraw-transductive-stable-generalist/model_weights/checkpoints/model_DATASET.pt \
+  --config scraw-transductive-stable-generalist/runs/DATASET/seed_42/config/config_used.json \
+  --data data/stable_generalist/DATASET.h5ad \
+  --output results/replay_scraw/DATASET \
+  --device auto
+```
+
+These enriched checkpoints use `scraw_dedicated_final_autoencoder_v1` and must
+be replayed with `replay_scraw_transductive_checkpoint.py`.
 
 For a complete inductive checkpoint:
 

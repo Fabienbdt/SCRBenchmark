@@ -30,6 +30,8 @@ integration guide and it is not the preprocessing contract.
 | Prepare report datasets | `download_datasets.py`, `prepare_stable_generalist_data.py` |
 | Build job CSVs and shell launchers | `build_stable_generalist_plan.py`, `build_report_plan.py`, `manual_protocols.py` |
 | Reuse existing scRAW artifacts | `export_existing_scraw_artifacts.py`, `run_scraw_from_weights.py`, `regenerate_scraw_weight_figures.py` |
+| Replay the 13 versioned transductive scRAW checkpoints | `replay_scraw_transductive_checkpoint.py` |
+| Retrain and replace the transductive checkpoint bundle | `rerun_scraw_transductive_with_checkpoints.py` |
 | Extract marker-overlap DEG genes | `extract_marker_overlap_genes.py`, `run_marker_overlap.py` |
 | Validate or run a registered external algorithm | `validate_method.py`, `run_method.py` |
 | Run external or legacy method families | `run_external_method.py`, `run_scaide_inductive_embeddings.py` |
@@ -61,6 +63,14 @@ integration guide and it is not the preprocessing contract.
   checkpoints. It does not rerun experiments.
 - `run_scraw_from_weights.py`: replays scRAW inference from an existing
   checkpoint and its configuration.
+- `replay_scraw_transductive_checkpoint.py`: replays one of the 13 enriched
+  transductive checkpoints tracked under `scraw-transductive-stable-generalist/`.
+  It restores the final model and dynamic cell weights, then regenerates
+  embeddings, clustering, metrics, per-cell exports, and the combined UMAP.
+- `rerun_scraw_transductive_with_checkpoints.py`: retrains the historical
+  13-dataset campaign and creates the enriched checkpoint bundle. It requires
+  the exact datasets and the original trial metadata supplied through its CLI
+  arguments; it is not required for checkpoint replay.
 - `regenerate_scraw_weight_figures.py`: regenerates a cell-weight UMAP from an
   existing `.h5ad` file and weight CSV.
 - `extract_marker_overlap_genes.py`: converts an existing `degs_top100.json`

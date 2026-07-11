@@ -19,7 +19,8 @@ The scientific context and reported results are available in
 | Run a small benchmark | Ready | Baron can be prepared with the setup script, or any compatible H5AD can be used. |
 | Generate report job plans | Ready | Missing datasets are safely marked `blocked_missing_data`. |
 | Recompute every report experiment | Requires external data | The 13 exact stable_generalist H5AD files are not stored in Git. |
-| Reuse historical weights/checkpoints | Requires optional external artifacts | They can be supplied explicitly; otherwise the corresponding source runs must be recomputed. |
+| Replay the 13 preserved transductive scRAW checkpoints | Ready after dataset acquisition | Checkpoints, configurations, weights, embeddings, results, and replay code are tracked under `scraw-transductive-stable-generalist/`. |
+| Reuse additional inductive checkpoints | Depends on the experiment | Some inductive bundles require external preprocessing-state and centroid artifacts. |
 | Run every legacy external method | Environment-dependent | Some author implementations require legacy runtimes, notably TensorFlow 1.14 for scAIDE. |
 
 The repository is therefore self-contained for understanding scRAW, developing
@@ -62,6 +63,8 @@ The terminal displays the local Streamlit URL, normally
 | `methods/report_methods.yaml` | Declarative `scRAW` registration used by CLI scripts and the interface. |
 | `scripts/reproduction/run_scraw_leave_one_batch.py` | Inductive leave-one-batch execution. |
 | `scripts/reproduction/run_scraw_from_weights.py` | Inference from an existing checkpoint and preprocessing state. |
+| `scraw-transductive-stable-generalist/` | Thirteen enriched transductive checkpoints with matching configs, outputs, validation tables, and replay documentation. |
+| `scripts/reproduction/replay_scraw_transductive_checkpoint.py` | Replay entry point for those enriched transductive checkpoints. |
 
 The two public presets are:
 
@@ -103,6 +106,24 @@ python scripts/reproduction/run_method.py \
 Change the dataset, observation-column names, cluster count, device, and output
 directory for a new experiment. Use `--scraw-preset baron` to select the other
 public preset.
+
+### Replay a preserved report checkpoint
+
+The repository contains one enriched transductive checkpoint for each of the
+13 stable-generalist datasets. For example:
+
+```bash
+python scripts/reproduction/replay_scraw_transductive_checkpoint.py \
+  --checkpoint scraw-transductive-stable-generalist/model_weights/checkpoints/model_kang_pbmc_gse96583_singlets_raw_counts.pt \
+  --config scraw-transductive-stable-generalist/runs/kang_pbmc_gse96583_singlets_raw_counts/seed_42/config/config_used.json \
+  --data data/stable_generalist/kang_pbmc_gse96583_singlets_raw_counts.h5ad \
+  --output results/replayed_scraw/kang_pbmc \
+  --device auto
+```
+
+The checkpoint restores the final model and dynamic cell weights. The matching
+H5AD remains necessary to recompute embeddings, clustering, metrics, and
+per-cell exports.
 
 ## 5. Run scRAW and Other Experiments from Streamlit
 
@@ -192,8 +213,10 @@ seed, dataset checksum, and software commit with the experiment output.
 - Long deep-learning campaigns require substantial CPU/GPU time and disk
   space; small smoke tests do not establish identical performance across all
   hardware.
-- Historical weights, checkpoints, and exact Baron report labels are optional
-  accelerators. Supply their paths explicitly when reusing them.
+- The 13 transductive scRAW checkpoints, matching configurations, cell
+  weights, embeddings, result tables, and replay script are already versioned.
+- Additional inductive preprocessing states, centroid references, or exact
+  Baron report labels may still need to be supplied explicitly.
 - Some legacy author methods need isolated environments that cannot be merged
   into the modern core environment.
 

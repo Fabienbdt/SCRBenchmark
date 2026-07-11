@@ -15,6 +15,7 @@ import build_stable_generalist_plan  # noqa: E402
 import download_datasets  # noqa: E402
 import export_existing_scraw_artifacts  # noqa: E402
 import prepare_stable_generalist_data  # noqa: E402
+import replay_scraw_transductive_checkpoint  # noqa: E402
 
 
 def _write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, object]]) -> None:
@@ -126,6 +127,25 @@ def test_legacy_prepare_dry_run_does_not_create_an_output_tree(tmp_path, monkeyp
 
     assert prepare_stable_generalist_data.main() == 0
     assert not target_root.exists()
+
+
+def test_versioned_scraw_checkpoint_bundle_covers_all_report_datasets():
+    manifest = PROJECT_ROOT / "data" / "stable_generalist" / "download_manifest.csv"
+    with manifest.open("r", encoding="utf-8", newline="") as handle:
+        dataset_keys = [row["dataset_key"] for row in csv.DictReader(handle)]
+
+    bundle = PROJECT_ROOT / "scraw-transductive-stable-generalist"
+    assert len(dataset_keys) == 13
+    assert replay_scraw_transductive_checkpoint.SCRAW_SRC == (
+        PROJECT_ROOT / "vendor" / "scraw_dedicated" / "src"
+    )
+    assert replay_scraw_transductive_checkpoint.SCRAW_SRC.is_dir()
+
+    for dataset_key in dataset_keys:
+        assert (bundle / "model_weights" / "checkpoints" / f"model_{dataset_key}.pt").is_file()
+        assert (
+            bundle / "runs" / dataset_key / "seed_42" / "config" / "config_used.json"
+        ).is_file()
 
 
 def test_stable_plan_blocks_missing_data_by_default(tmp_path):
