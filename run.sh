@@ -33,4 +33,7 @@ EOF
 fi
 
 echo "Launching SCRBenchmark via Streamlit..."
-exec "$PYTHON_BIN" -m streamlit run "$APP_PATH" --server.port 8501 --server.headless false
+exec "$PYTHON_BIN" -m streamlit run "$APP_PATH" \
+  --server.port 8501 \
+  --server.headless false \
+  --server.fileWatcherType none

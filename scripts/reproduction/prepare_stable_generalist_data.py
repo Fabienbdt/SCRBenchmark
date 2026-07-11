@@ -21,14 +21,17 @@ import pandas as pd
 REPO_ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_ROOT = REPO_ROOT / "reproducibility" / "stable_generalist"
 DEFAULT_DATASET_TABLE = REFERENCE_ROOT / "stable_generalist_dataset_table.csv"
-DEFAULT_SOURCE_ROOT = Path("/data2/fbidet/scRAW_EXPERIMENTAL/data")
 DEFAULT_TARGET_ROOT = REPO_ROOT / "data" / "stable_generalist"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset-table", default=str(DEFAULT_DATASET_TABLE))
-    parser.add_argument("--source-root", default=str(DEFAULT_SOURCE_ROOT))
+    parser.add_argument(
+        "--source-root",
+        required=True,
+        help="Directory containing the existing stable_generalist H5AD files.",
+    )
     parser.add_argument("--target-root", default=str(DEFAULT_TARGET_ROOT))
     parser.add_argument("--mode", choices=["hardlink", "symlink", "copy"], default="hardlink")
     parser.add_argument("--overwrite", action="store_true")
@@ -72,7 +75,8 @@ def _same_file_or_size(src: Path, dst: Path) -> bool:
 
 
 def _materialize(src: Path, dst: Path, *, mode: str, overwrite: bool, dry_run: bool) -> str:
-    dst.parent.mkdir(parents=True, exist_ok=True)
+    if not dry_run:
+        dst.parent.mkdir(parents=True, exist_ok=True)
     if dst.exists() or dst.is_symlink():
         if _same_file_or_size(src, dst) and not overwrite:
             return "exists"

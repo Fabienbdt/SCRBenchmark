@@ -35,7 +35,7 @@ guide when the project needs to be extended.
 SCRBenchmark requires **Python >= 3.9** and a clean virtual environment.
 
 ```bash
-cd /data2/fbidet/SCRBenchmark
+cd /path/to/SCRBenchmark
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -88,7 +88,7 @@ Preparation from the local data root:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 If the exact files are hosted remotely:
@@ -170,6 +170,9 @@ Useful commands:
 ./scrbenchmark run --config config.yaml
 ```
 
+The generated configuration uses `data/baron_human_pancreas.h5ad` by default.
+Change `data.file` before execution when using another dataset.
+
 After execution, the result directory notably contains:
 
 - `results.csv`: score and runtime summary;
@@ -202,8 +205,8 @@ map is available in [`report_reproduction_map.md`](report_reproduction_map.md).
 
 SCRBenchmark exposes two public scRAW presets:
 
-- `default`: the 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
-- `baron`: the Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+- `default`: the vendored 0017/stable configuration in `vendor/scraw_inductive/configs/`;
+- `baron`: the vendored Baron-compatible configuration in `vendor/scraw_inductive/configs/`.
 
 Use `--scraw-preset default|baron` with
 `scripts/reproduction/run_method.py`. Use `--preset default|baron` with the

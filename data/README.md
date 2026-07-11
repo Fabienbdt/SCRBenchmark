@@ -56,7 +56,7 @@ Recommended command when the source data is available locally:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 If the exact files are hosted remotely:
@@ -71,6 +71,9 @@ Verify already prepared files:
 ```bash
 python scripts/reproduction/download_datasets.py --verify-only
 ```
+
+This verification is read-only. Use `--report <path.csv>` to save a separate
+verification report without rewriting the source manifest.
 
 The script compares files against `data/stable_generalist/download_manifest.csv`
 using SHA256, file size, AnnData dimensions, and expected columns.

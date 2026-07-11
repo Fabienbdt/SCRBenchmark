@@ -354,4 +354,4 @@ def run_comparison_report():
 
 if __name__ == "__main__":
     run_comparison_report()
-    pytest.main([__file__, "-v"])
+    raise SystemExit(pytest.main([__file__, "-v"]))

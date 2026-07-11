@@ -66,6 +66,24 @@ def _get_scib_benchmarker():
     return _SCIB_BENCHMARKER
 
 
+def _scib_benchmarker_supports_current_sparse_indexing() -> bool:
+    """Return whether scipy sparse matrices accept Benchmarker pandas masks.
+
+    scib-metrics 0.5.1 passes pandas Series masks to scipy sparse matrices.
+    Recent scipy releases reject those masks with ``Series.nonzero`` errors.
+    The direct scib-metrics API below already converts labels to NumPy arrays.
+    """
+    try:
+        import pandas as pd
+        from scipy.sparse import csr_matrix
+
+        probe = csr_matrix(np.eye(2, dtype=np.float32))
+        probe[pd.Series([True, False])]
+    except (AttributeError, TypeError):
+        return False
+    return True
+
+
 def _filter_noise_samples(
     labels_true: np.ndarray,
     labels_pred: np.ndarray,
@@ -581,7 +599,10 @@ def _compute_kbet_per_label_exact(
 ) -> Optional[float]:
     """Stable KBET fallback that avoids the fragile UMAP/numba connectivity path."""
     import pandas as pd
-    import scib_metrics
+    try:
+        import scib_metrics
+    except ImportError:
+        return None
 
     embeddings = np.asarray(embeddings, dtype=np.float32)
     batches = np.asarray(batches)
@@ -674,7 +695,10 @@ def _compute_scib_metrics_direct(
         logger.warning("scIB metrics skipped: embeddings contain %d non-finite values.", n_bad)
         return {}
 
-    import scib_metrics
+    try:
+        import scib_metrics
+    except ImportError:
+        return {}
 
     labels = np.asarray(adata_scib.obs[label_key].to_numpy())
     batches = np.asarray(adata_scib.obs[batch_key].to_numpy())
@@ -816,6 +840,11 @@ def compute_scib_metrics(
     if adata is None or embeddings is None:
         return {}
 
+    disable_env = os.getenv("SCRB_DISABLE_SCIB_METRICS", "").strip().lower()
+    if disable_env in {"1", "true", "yes", "on"}:
+        _get_scib_benchmarker()
+        return {}
+
     if batch_key is None or label_key is None:
         return {}
 
@@ -849,7 +878,10 @@ def compute_scib_metrics(
     adata_scib.obsm[embed_key] = embeddings
 
     Benchmarker = _get_scib_benchmarker()
-    if Benchmarker is not None:
+    benchmarker_compatible = (
+        Benchmarker is not None and _scib_benchmarker_supports_current_sparse_indexing()
+    )
+    if benchmarker_compatible:
         try:
             bm = Benchmarker(
                 adata_scib,
@@ -888,6 +920,11 @@ def compute_scib_metrics(
             logger.warning(f"scIB Benchmarker failed, falling back to direct metric computation: {e}")
             direct_metrics_needed = True
     else:
+        if Benchmarker is not None:
+            logger.info(
+                "Using direct scIB metric APIs because this scipy/scib-metrics "
+                "combination does not support Benchmarker sparse masks."
+            )
         direct_metrics_needed = True
 
     if compute_jaccard:

@@ -46,7 +46,7 @@ def parse_args() -> argparse.Namespace:
         "--scraw-preset",
         choices=["default", "baron"],
         default="default",
-        help="scRAW preset used by the external scRAW adapter: default is the 0017 configuration.",
+        help="scRAW preset used by the vendored adapter: default is the 0017 configuration.",
     )
     parser.add_argument("--scib-n-jobs", type=int, default=4)
     parser.add_argument("--python-bin", default=sys.executable)

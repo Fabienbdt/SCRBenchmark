@@ -69,7 +69,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--scib-n-jobs", type=int, default=4)
     parser.add_argument("--datasets", default="", help="Comma-separated dataset_key subset.")
     parser.add_argument("--methods", default="", help="Comma-separated method subset using display names.")
-    parser.add_argument("--strict-data", action="store_true", help="Mark jobs blocked when the .h5ad file is missing.")
+    parser.add_argument(
+        "--allow-missing-data",
+        action="store_true",
+        help="Generate runnable commands even when their .h5ad input is absent.",
+    )
+    parser.add_argument("--strict-data", action="store_true", help=argparse.SUPPRESS)
     return parser.parse_args()
 
 
@@ -216,7 +221,7 @@ def build_plan(args: argparse.Namespace) -> list[dict[str, str]]:
             output_dir=output_dir,
             selection_expected_n_classes=selected_cluster_count,
         )
-        if args.strict_data and not spec.data_file.exists():
+        if not args.allow_missing_data and not spec.data_file.exists():
             status = "blocked_missing_data"
             notes = f"{notes} Missing data file: {spec.data_file}".strip()
 

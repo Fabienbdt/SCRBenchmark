@@ -72,7 +72,7 @@ class TestMLPArchitecture:
         from algorithms.sc_mae import ScMaeAlgorithm
 
         # Test configuration
-        params = {'hidden_size': 32}
+        params = {'hidden_size': 32, 'latent_dim': 32}
         
         # Build SCRBenchmark Model
         algo = ScMaeAlgorithm(params)
@@ -236,4 +236,4 @@ def run_comparison_report():
 
 if __name__ == "__main__":
     run_comparison_report()
-    pytest.main([__file__, "-v"])
+    raise SystemExit(pytest.main([__file__, "-v"]))

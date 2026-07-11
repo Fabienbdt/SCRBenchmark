@@ -18,18 +18,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 REFERENCE_ROOT = REPO_ROOT / "reproducibility" / "stable_generalist"
 DEFAULT_DATASET_TABLE = REFERENCE_ROOT / "stable_generalist_dataset_table.csv"
 DEFAULT_OUTPUT_ROOT = REPO_ROOT / "results" / "report_reproduction"
-DEFAULT_EXISTING_SCRAW_BARON_LABELS = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
-    "presentation_stable_generalist_nonbaron_20260324/"
-    "Exp\u00e9riences/scRAW_default_from_scRAW_seed60_stage_umaps_20260421/"
-    "baron_human_pancreas/seed_60/results/labels/labels_scraw_run0.csv"
-)
-DEFAULT_EXISTING_REPORT_BARON_LABELS = Path(
-    "/data2/fbidet/Rapport_Stage_M2_git/Images/"
-    "analyse_biologique_scraw_baron_stable_generalist/tsne_coordinates.csv"
-)
-
-
 PLAN_FIELDS = [
     "campaign",
     "job_id",
@@ -172,7 +160,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--python-bin", default=sys.executable)
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--campaigns", default="inductive,loss_transfer,deg")
-    parser.add_argument("--strict-data", action="store_true")
+    parser.add_argument(
+        "--allow-missing-data",
+        action="store_true",
+        help="Generate runnable commands even when their .h5ad input is absent.",
+    )
+    parser.add_argument("--strict-data", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument(
         "--no-reuse-existing-artifacts",
         action="store_true",
@@ -181,6 +174,16 @@ def parse_args() -> argparse.Namespace:
             "exist. By default, the DEG campaign reuses the existing Baron "
             "scRAW labels when available."
         ),
+    )
+    parser.add_argument(
+        "--existing-report-baron-labels",
+        default=None,
+        help="Optional report tsne_coordinates.csv to reuse for the DEG campaign.",
+    )
+    parser.add_argument(
+        "--existing-scraw-baron-labels",
+        default=None,
+        help="Optional legacy labels_scraw_run0.csv to reuse for the DEG campaign.",
     )
     return parser.parse_args()
 
@@ -386,8 +389,16 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
     true_label_col = ""
     pred_label_col = ""
     can_reuse_existing = not bool(getattr(args, "no_reuse_existing_artifacts", False))
-    if can_reuse_existing and DEFAULT_EXISTING_REPORT_BARON_LABELS.exists():
-        labels_csv = DEFAULT_EXISTING_REPORT_BARON_LABELS
+    report_labels_arg = getattr(args, "existing_report_baron_labels", None)
+    scraw_labels_arg = getattr(args, "existing_scraw_baron_labels", None)
+    report_labels = (
+        Path(report_labels_arg).expanduser().resolve() if report_labels_arg else None
+    )
+    scraw_labels = (
+        Path(scraw_labels_arg).expanduser().resolve() if scraw_labels_arg else None
+    )
+    if can_reuse_existing and report_labels is not None and report_labels.is_file():
+        labels_csv = report_labels
         true_label_col = "true_label"
         pred_label_col = "predicted_label"
         rows.append(
@@ -397,7 +408,7 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
                 method="scRAW",
                 status="reused_existing",
                 data_file=spec.data_file,
-                output_dir=DEFAULT_EXISTING_REPORT_BARON_LABELS.parent,
+                output_dir=report_labels.parent,
                 expected_file=labels_csv,
                 command=None,
                 notes=(
@@ -406,8 +417,8 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
                 ),
             )
         )
-    elif can_reuse_existing and DEFAULT_EXISTING_SCRAW_BARON_LABELS.exists():
-        labels_csv = DEFAULT_EXISTING_SCRAW_BARON_LABELS
+    elif can_reuse_existing and scraw_labels is not None and scraw_labels.is_file():
+        labels_csv = scraw_labels
         rows.append(
             _row(
                 campaign="deg",
@@ -415,7 +426,7 @@ def add_deg(rows: list[dict[str, str]], args: argparse.Namespace, specs: Mapping
                 method="scRAW",
                 status="reused_existing_legacy_default",
                 data_file=spec.data_file,
-                output_dir=DEFAULT_EXISTING_SCRAW_BARON_LABELS.parent.parent.parent,
+                output_dir=scraw_labels.parent.parent.parent,
                 expected_file=labels_csv,
                 command=None,
                 notes=(
@@ -527,7 +538,7 @@ def main() -> int:
     if "all" in campaigns or "deg" in campaigns:
         add_deg(rows, args, specs)
 
-    if args.strict_data:
+    if not args.allow_missing_data:
         for row in rows:
             if row["status"] == "ready" and row["data_file"] and not Path(row["data_file"]).exists():
                 row["status"] = "blocked_missing_data"

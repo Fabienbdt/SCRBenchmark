@@ -14,7 +14,7 @@ Usage examples:
 
   # Handoff/local machine fallback: materialize from an existing local source.
   python scripts/reproduction/download_datasets.py \
-      --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+      --source-root /path/to/existing/h5ad/files
 
   # Verify already prepared files only.
   python scripts/reproduction/download_datasets.py --verify-only
@@ -39,11 +39,6 @@ DEFAULT_MANIFEST = REPO_ROOT / "data" / "stable_generalist" / "download_manifest
 DEFAULT_DATASET_TABLE = (
     REPO_ROOT / "reproducibility" / "stable_generalist" / "stable_generalist_dataset_table.csv"
 )
-DEFAULT_REFERENCE_TABLE = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
-    "presentation_stable_generalist_nonbaron_20260324/"
-    "00_source_tables/stable_generalist_dataset_table.csv"
-)
 DEFAULT_TARGET_ROOT = REPO_ROOT / "data" / "stable_generalist"
 
 
@@ -51,7 +46,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
     parser.add_argument("--dataset-table", default=str(DEFAULT_DATASET_TABLE))
-    parser.add_argument("--reference-table", default=str(DEFAULT_REFERENCE_TABLE))
+    parser.add_argument(
+        "--reference-table",
+        default=None,
+        help="Optional independent dataset table to compare with the bundled table.",
+    )
     parser.add_argument("--target-root", default=str(DEFAULT_TARGET_ROOT))
     parser.add_argument(
         "--base-url",
@@ -75,6 +74,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--verify-only", action="store_true")
+    parser.add_argument(
+        "--report",
+        default=None,
+        help=(
+            "Optional path for a generated operation report. Verification and dry-run "
+            "are read-only unless this option is provided."
+        ),
+    )
     parser.add_argument(
         "--skip-h5ad-check",
         action="store_true",
@@ -207,7 +214,8 @@ def _prepare_one(
     skip_h5ad_check: bool,
 ) -> dict[str, Any]:
     target = target_root / row["filename"]
-    target.parent.mkdir(parents=True, exist_ok=True)
+    if not dry_run and not verify_only:
+        target.parent.mkdir(parents=True, exist_ok=True)
 
     action = "exists"
     if not target.exists() and verify_only:
@@ -311,11 +319,13 @@ def main() -> int:
     args = parse_args()
     manifest = Path(args.manifest).expanduser().resolve()
     dataset_table = Path(args.dataset_table).expanduser().resolve()
-    reference_table = Path(args.reference_table).expanduser().resolve()
+    reference_table = (
+        Path(args.reference_table).expanduser().resolve() if args.reference_table else None
+    )
     target_root = Path(args.target_root).expanduser().resolve()
     source_root = Path(args.source_root).expanduser().resolve() if args.source_root else None
 
-    if not args.skip_reference_table_check:
+    if not args.skip_reference_table_check and reference_table is not None:
         verify_reference_table(dataset_table, reference_table)
 
     manifest_rows = read_csv_rows(manifest)
@@ -344,8 +354,8 @@ def main() -> int:
             print(message, flush=True)
             failures.append(message)
 
-    if not args.dry_run:
-        write_manifest(results, target_root / "DOWNLOAD_MANIFEST.csv")
+    if args.report:
+        write_manifest(results, Path(args.report).expanduser().resolve())
 
     if failures:
         print("\nFailures:", file=sys.stderr)

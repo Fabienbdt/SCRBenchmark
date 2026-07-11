@@ -1341,7 +1341,7 @@ def render_customize_benchmark_page():
           ['default', 'baron'],
           index=['default', 'baron'].index(current_preset),
           key=f"scraw_report_preset_{selected_idx}",
-          help="default uses the 0017 configuration; baron uses the Baron configuration from /data2/fbidet/scRAW.",
+          help="default uses the vendored 0017 configuration; baron uses the vendored Baron configuration.",
         )
       else:
         current_config['scraw_preset'] = str(current_config.get('scraw_preset', 'default') or 'default')

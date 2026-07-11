@@ -446,9 +446,11 @@ Useful commands:
 
 ```bash
 python -m compileall -q src/scrbenchmark
-pytest tests/unit_tests/test_mitochondrial_filter.py
 pytest tests/unit_tests/test_gui_cli_command.py
 ```
+
+After creating `tests/unit_tests/test_mitochondrial_filter.py` as part of the
+extension, run it explicitly with `pytest tests/unit_tests/test_mitochondrial_filter.py`.
 
 For a core change:
 

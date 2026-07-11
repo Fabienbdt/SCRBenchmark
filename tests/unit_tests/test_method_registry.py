@@ -149,6 +149,15 @@ def test_scraw_command_template_uses_public_preset(tmp_path):
     assert command[command.index("--preset") + 1] == "baron"
 
 
+def test_scraw_uses_the_vendored_source():
+    spec = get_method_spec("scRAW")
+    source_path = PROJECT_ROOT / str(spec.source["path"])
+
+    assert spec.source["kind"] == "vendored_source"
+    assert source_path == PROJECT_ROOT / "vendor" / "scraw_inductive"
+    assert (source_path / "src" / "scraw" / "pipeline.py").exists()
+
+
 def test_command_template_can_normalize_labels_file(tmp_path):
     import pandas as pd
 

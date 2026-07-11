@@ -21,6 +21,14 @@ PROJECT_ROOT = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "src" / "scrbenchmark"))
 
 
+def require_original_source(filename: str) -> Path:
+    """Skip direct author-code comparisons when that optional source is absent."""
+    source = PROJECT_ROOT / "external" / "original_code" / "scCDCG_authors"
+    if not (source / filename).exists():
+        pytest.skip(f"Optional original scCDCG source is not vendored: {source}")
+    return source
+
+
 class TestSinkhornNormalization:
     """Test Sinkhorn normalization implementation."""
 
@@ -29,7 +37,7 @@ class TestSinkhornNormalization:
         from algorithms.sccdcg import sinkhorn as scr_sinkhorn
 
         # Import original
-        original_path = PROJECT_ROOT / "external" / "original_code" / "scCDCG_authors"
+        original_path = require_original_source("train_scCDCG.py")
         sys.path.insert(0, str(original_path))
         from train_scCDCG import sinkhorn as orig_sinkhorn
 
@@ -56,7 +64,7 @@ class TestClusterAssignment:
         """Compare ClusterAssignment implementations."""
         from algorithms.sccdcg import ClusterAssignment as SCRAssignment
 
-        original_path = PROJECT_ROOT / "external" / "original_code" / "scCDCG_authors"
+        original_path = require_original_source("model.py")
         sys.path.insert(0, str(original_path))
         from model import ClusterAssignment as OrigAssignment
 
@@ -88,7 +96,7 @@ class TestAutoencoder:
         """Compare AE_NN architecture."""
         from algorithms.sccdcg import AE_NN as SCR_AE
 
-        original_path = PROJECT_ROOT / "external" / "original_code" / "scCDCG_authors"
+        original_path = require_original_source("model.py")
         sys.path.insert(0, str(original_path))
         from model import AE_NN as Orig_AE
 
@@ -292,4 +300,4 @@ def run_comparison_report():
 
 if __name__ == "__main__":
     run_comparison_report()
-    pytest.main([__file__, "-v"])
+    raise SystemExit(pytest.main([__file__, "-v"]))

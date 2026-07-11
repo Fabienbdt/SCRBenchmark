@@ -49,9 +49,11 @@ integration guide and it is not the preprocessing contract.
 - `build_stable_generalist_plan.py`: reads stable_generalist reproducibility
   tables and writes `planned_jobs.csv` plus `run_ready_jobs.sh`.
 - `build_report_plan.py`: builds plans for report complements: inductive
-  protocols, loss-transfer, and DEG overlap. By default, the DEG campaign reuses
-  the exact Baron labels from the report (`tsne_coordinates.csv`) when they are
-  available locally.
+  protocols, loss-transfer, and DEG overlap. The DEG campaign can reuse exact
+  Baron report labels when passed with `--existing-report-baron-labels`.
+- Both planners mark missing dataset files as `blocked_missing_data` and omit
+  them from runnable launchers. `--allow-missing-data` is available only for
+  deliberately generating commands whose data will be mounted later.
 - `manual_protocols.py`: creates or runs configurable jobs for loss-transfer,
   Harmony variants, and inductive splits.
 - `export_existing_scraw_artifacts.py`: inventories and exports already
@@ -106,8 +108,8 @@ headless environments. Every script exposes `--help`.
 
 scRAW has exactly two public presets in these scripts:
 
-- `default`: 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
-- `baron`: Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+- `default`: vendored 0017/stable configuration in `vendor/scraw_inductive/configs/`;
+- `baron`: vendored Baron-compatible configuration in `vendor/scraw_inductive/configs/`.
 
 Use `--scraw-preset default|baron` with `run_method.py`; use
 `--preset default|baron` with the inductive scRAW scripts.

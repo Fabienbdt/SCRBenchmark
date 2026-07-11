@@ -6,7 +6,7 @@ Recommended preparation:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 Remote download mode, when the exact files are hosted:
@@ -21,6 +21,9 @@ Verify already prepared files:
 ```bash
 python scripts/reproduction/download_datasets.py --verify-only
 ```
+
+The command is read-only. Pass `--report <path.csv>` if a separate verification
+report should be written.
 
 Expected sizes, SHA256 hashes, and AnnData dimensions are in
 `download_manifest.csv`.

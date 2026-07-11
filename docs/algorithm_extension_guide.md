@@ -63,7 +63,7 @@ and produce the same output files.
 From the repository root:
 
 ```bash
-cd /data2/fbidet/SCRBenchmark
+cd /path/to/SCRBenchmark
 ```
 
 Choose a short lowercase name without spaces. Example:

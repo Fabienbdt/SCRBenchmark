@@ -116,6 +116,7 @@ def main():
     if not args.tests_only:
         run_reports()
 
+    results = {}
     if not args.reports_only:
         results = run_tests()
 
@@ -125,6 +126,8 @@ def main():
     print(" COMPARISON COMPLETE")
     print("=" * 70)
 
+    return 1 if any(int(code) != 0 for code in results.values()) else 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

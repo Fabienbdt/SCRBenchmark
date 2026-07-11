@@ -44,7 +44,7 @@ def generate_synthetic_data(n_cells=300, n_genes=200, n_clusters=5, seed=42):
 
     # Make non-negative (count-like)
     X = np.maximum(X, 0)
-    X = (X * 10).astype(np.float32)
+    X = np.rint(X * 10).astype(np.float32)
 
     return X, labels, n_clusters
 
@@ -55,11 +55,12 @@ class SimpleData:
         self.X = X
         if gene_names is None:
             gene_names = np.array([f'gene_{i}' for i in range(X.shape[1])])
-        self.var_names = type('obj', (object,), {'values': gene_names})()
+        self.var_names = np.asarray(gene_names, dtype=str)
+        self.obs_names = np.asarray([str(i) for i in range(X.shape[0])], dtype=str)
         self.layers = {'original_X': X.copy()}
 
 
-def test_scdeepcluster(X, labels, n_clusters):
+def run_scdeepcluster(X, labels, n_clusters):
     """Test scDeepCluster with minimal epochs."""
     print("\n" + "="*60)
     print("Testing scDeepCluster")
@@ -74,6 +75,7 @@ def test_scdeepcluster(X, labels, n_clusters):
             'maxiter': 10,         # Minimal
             'batch_size': 64,
             'z_dim': 32,
+            'use_ground_truth_k': False,
             'random_state': 42
         })
 
@@ -93,7 +95,7 @@ def test_scdeepcluster(X, labels, n_clusters):
         return {'status': 'error', 'error': str(e)}
 
 
-def test_sccdcg(X, labels, n_clusters):
+def run_sccdcg(X, labels, n_clusters):
     """Test scCDCG with minimal epochs."""
     print("\n" + "="*60)
     print("Testing scCDCG")
@@ -104,8 +106,7 @@ def test_sccdcg(X, labels, n_clusters):
 
         algo = ScCDCGAlgorithm({
             'n_clusters': n_clusters,
-            'pretrain_epochs': 5,  # Minimal
-            'train_epochs': 10,    # Minimal
+            'epochs': 10,          # Minimal, used by both phases
             'random_state': 42
         })
 
@@ -125,18 +126,19 @@ def test_sccdcg(X, labels, n_clusters):
         return {'status': 'error', 'error': str(e)}
 
 
-def test_scmae(X, labels, n_clusters):
+def run_scmae(X, labels, n_clusters):
     """Test scMAE with minimal epochs."""
     print("\n" + "="*60)
     print("Testing scMAE")
     print("="*60)
 
     try:
-        from algorithms.sc_mae import ScMAEAlgorithm
+        from algorithms.sc_mae import ScMaeAlgorithm
 
-        algo = ScMAEAlgorithm({
+        algo = ScMaeAlgorithm({
             'n_clusters': n_clusters,
-            'max_epochs': 10,      # Minimal
+            'epochs': 10,          # Minimal
+            'eval_epoch': 10,
             'masking_rate': 0.5,
             'random_state': 42
         })
@@ -157,7 +159,7 @@ def test_scmae(X, labels, n_clusters):
         return {'status': 'error', 'error': str(e)}
 
 
-def test_scname(X, labels, n_clusters):
+def run_scname(X, labels, n_clusters):
     """Test scNAME with minimal epochs."""
     print("\n" + "="*60)
     print("Testing scNAME")
@@ -169,7 +171,7 @@ def test_scname(X, labels, n_clusters):
         algo = ScNAMEAlgorithm({
             'n_clusters': n_clusters,
             'pretrain_epochs': 5,   # Minimal
-            'finetrain_epochs': 10, # Minimal
+            'finetune_epochs': 10, # Minimal
             'batch_size': 64,
             'random_state': 42
         })
@@ -212,10 +214,10 @@ def main():
     results = {}
 
     # Run all tests
-    results['scdeepcluster'] = test_scdeepcluster(X, labels, n_clusters)
-    results['sccdcg'] = test_sccdcg(X, labels, n_clusters)
-    results['scmae'] = test_scmae(X, labels, n_clusters)
-    results['scname'] = test_scname(X, labels, n_clusters)
+    results['scdeepcluster'] = run_scdeepcluster(X, labels, n_clusters)
+    results['sccdcg'] = run_sccdcg(X, labels, n_clusters)
+    results['scmae'] = run_scmae(X, labels, n_clusters)
+    results['scname'] = run_scname(X, labels, n_clusters)
 
     # Summary
     print("\n" + "="*60)
@@ -233,7 +235,8 @@ def main():
     print("\nNote: Low ARI/NMI values are expected with minimal epochs.")
     print("The goal is to verify that the code runs without errors.")
     print(f"\nCompleted: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    return 1 if any(result['status'] == 'error' for result in results.values()) else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

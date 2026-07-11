@@ -177,7 +177,7 @@ def generate_default_config() -> Dict[str, Any]:
 
     return {
         'data': {
-            'file': '<path/to/your_data.h5ad>',  # Replace with your data file path
+            'file': 'data/baron_human_pancreas.h5ad',
             'format': 'auto',  # auto, h5ad, h5, csv, tsv, mtx
         },
         'preprocessing': {

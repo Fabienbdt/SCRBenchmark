@@ -34,7 +34,7 @@ To add an external algorithm, do not modify
 ## Recommended 10-Minute Path
 
 ```bash
-cd /data2/fbidet/SCRBenchmark
+cd /path/to/SCRBenchmark
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -51,7 +51,7 @@ Prepare the reproduction datasets if the local source is available:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 Run a lightweight first benchmark:
@@ -80,7 +80,7 @@ To reproduce the report with the complete script order, read
 SCRBenchmark requires **Python >= 3.9**. From the root of the repository:
 
 ```bash
-cd /data2/fbidet/SCRBenchmark
+cd /path/to/SCRBenchmark
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
@@ -138,7 +138,7 @@ To materialize these files from your local data root:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 If the exact files are hosted on a release or a web directory:
@@ -208,6 +208,10 @@ Other useful commands:
 ./scrbenchmark run --config config.yaml
 ```
 
+The generated configuration targets `data/baron_human_pancreas.h5ad`, the file
+created by the Baron preparation command above. Change `data.file` when using a
+different dataset.
+
 ### Report Reproduction
 
 The recommended entry point is the Streamlit interface:
@@ -235,8 +239,8 @@ of figures/tables from the report is in
 
 SCRBenchmark exposes exactly two public scRAW presets:
 
-- `default`: the 0017/stable configuration from `/data2/fbidet/scRAW/configs/default_scraw.json`;
-- `baron`: the Baron configuration from `/data2/fbidet/scRAW/configs/baron_jobim.json`.
+- `default`: the vendored 0017/stable configuration in `vendor/scraw_inductive/configs/`;
+- `baron`: the vendored Baron-compatible configuration in `vendor/scraw_inductive/configs/`.
 
 For registered report-method runs, select it with `--scraw-preset default` or
 `--scraw-preset baron` when calling `scripts/reproduction/run_method.py`. For

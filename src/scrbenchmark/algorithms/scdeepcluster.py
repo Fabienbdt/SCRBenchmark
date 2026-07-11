@@ -697,7 +697,7 @@ class ScDeepClusterAlgorithm(BaseAlgorithm):
                 name='use_ground_truth_k',
                 display_name='Use Ground Truth K (Oracle)',
                 param_type=ParamType.BOOLEAN,
-                default=True,
+                default=False,
                 description='⚠️ ORACLE MODE: Use number of clusters from ground truth labels. '
                            'This leaks test information and should NOT be used for fair benchmarking. '
                            'Only use for debugging or when comparing with published results that used this approach.',
@@ -1089,8 +1089,8 @@ class ScDeepClusterAlgorithm(BaseAlgorithm):
 
         # Determine number of clusters
         n_clusters = self.params.get('n_clusters', 0)
-        # NOTE: Default must match get_hyperparameters() definition (default=True)
-        use_ground_truth_k = self.params.get('use_ground_truth_k', True)
+        # Oracle mode must be explicitly enabled; the fair default is unsupervised.
+        use_ground_truth_k = self.params.get('use_ground_truth_k', False)
 
         # Oracle Mode: ONLY if explicitly requested via use_ground_truth_k
         if use_ground_truth_k and labels is not None:

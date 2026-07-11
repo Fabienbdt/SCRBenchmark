@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchma
 from utils.metrics import (
     compute_nmi, compute_ari, compute_accuracy,
     compute_silhouette, compute_metrics, align_labels,
-    compute_balanced_rare_class_accuracy,
+    compute_balanced_rare_class_accuracy, compute_scib_metrics,
     _filter_noise_samples, NOISE_LABELS
 )
 
@@ -99,6 +99,16 @@ class TestComputeSilhouette:
         labels = np.zeros(100, dtype=int)
         score = compute_silhouette(data, labels)
         assert score == 0.0
+
+
+def test_scib_disable_environment_is_respected(monkeypatch):
+    """The documented environment switch must skip both scIB implementations."""
+    monkeypatch.setenv("SCRB_DISABLE_SCIB_METRICS", "1")
+
+    class Data:
+        n_obs = 2
+
+    assert compute_scib_metrics(Data(), np.zeros((2, 2)), "batch", "label") == {}
 
 
 class TestComputeMetrics:

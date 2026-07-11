@@ -4,7 +4,7 @@ This guide gives the command order for regenerating SCRBenchmark report outputs.
 Commands start from the repository root.
 
 ```bash
-cd /data2/fbidet/SCRBenchmark
+cd /path/to/SCRBenchmark
 ```
 
 The goal is to avoid rerunning heavy experiments unnecessarily. Existing
@@ -42,7 +42,7 @@ From the local reference copy:
 
 ```bash
 python scripts/reproduction/download_datasets.py \
-  --source-root /data2/fbidet/scRAW_EXPERIMENTAL/data
+  --source-root /path/to/existing/h5ad/files
 ```
 
 If the exact files are hosted remotely:
@@ -58,11 +58,11 @@ Verify without downloading anything:
 python scripts/reproduction/download_datasets.py --verify-only
 ```
 
-The script compares the manifest against the reference table:
+Verification is read-only. Add `--report results/dataset_verification.csv` only
+when a persistent operation report is desired.
 
-```text
-/data2/fbidet/scRAW_EXPERIMENTAL/results/presentation_stable_generalist_nonbaron_20260324/00_source_tables/stable_generalist_dataset_table.csv
-```
+An independent metadata table can optionally be checked with
+`--reference-table /path/to/stable_generalist_dataset_table.csv`.
 
 ---
 
@@ -71,7 +71,10 @@ The script compares the manifest against the reference table:
 Before rerunning experiments, inventory existing weights and models:
 
 ```bash
-python scripts/reproduction/export_existing_scraw_artifacts.py --dry-run
+python scripts/reproduction/export_existing_scraw_artifacts.py \
+  --weights-root /path/to/scraw_transductive_runs \
+  --model-root /path/to/scraw_inductive_runs \
+  --dry-run
 ```
 
 Current local findings:
@@ -92,6 +95,8 @@ Export existing artifacts without rerunning:
 
 ```bash
 python scripts/reproduction/export_existing_scraw_artifacts.py \
+  --weights-root /path/to/scraw_transductive_runs \
+  --model-root /path/to/scraw_inductive_runs \
   --output-root results/report_artifacts/scraw_existing_artifacts
 ```
 
@@ -114,6 +119,9 @@ python scripts/reproduction/build_stable_generalist_plan.py \
   --device cuda \
   --seed 42
 ```
+
+Missing datasets are marked `blocked_missing_data` and omitted from the shell
+launcher by default. `--allow-missing-data` is an explicit unsafe override.
 
 Run the jobs:
 
@@ -146,6 +154,9 @@ python scripts/reproduction/build_report_plan.py \
   --campaigns inductive,loss_transfer,deg
 ```
 
+As with the stable-generalist planner, missing `.h5ad` inputs are blocked by
+default and never inserted into the runnable launcher.
+
 Run:
 
 ```bash
@@ -168,17 +179,17 @@ Then open `Report Reproduction`:
 
 ## 5. Regenerate Only Baron Marker-Overlap
 
-The planner reuses the exact Baron scRAW report labels by default if the local
-report directory is present. They come from `tsne_coordinates.csv` with
-`true_label` and `predicted_label` columns, so no new source scRAW run is
-planned.
+The planner can reuse the exact Baron scRAW report labels when their path is
+provided. They come from `tsne_coordinates.csv` with `true_label` and
+`predicted_label` columns, so no new source scRAW run is planned.
 
 ```bash
 python scripts/reproduction/build_report_plan.py \
   --output-root results/report_repro \
   --python-bin "$(which python)" \
   --device cuda \
-  --campaigns deg
+  --campaigns deg \
+  --existing-report-baron-labels /path/to/tsne_coordinates.csv
 ```
 
 Run only the generated launcher:
@@ -196,7 +207,8 @@ results/report_repro/deg_marker_overlap/baron_human_pancreas/marker_overlap/resu
 results/report_repro/deg_marker_overlap/baron_human_pancreas/marker_overlap/figures/marker_overlap_heatmap.png
 ```
 
-To force a new source scRAW run, add:
+Omit the existing-label option, or explicitly add the following flag, to force
+a new source scRAW run:
 
 ```bash
 --no-reuse-existing-artifacts

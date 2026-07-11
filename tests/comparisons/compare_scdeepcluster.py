@@ -22,6 +22,14 @@ sys.path.insert(0, str(PROJECT_ROOT / "src" / "scrbenchmark"))
 sys.path.insert(0, str(PROJECT_ROOT / "external" / "original_code" / "scDeepCluster_pytorch"))
 
 
+def require_original_source(filename: str) -> Path:
+    """Skip direct author-code comparisons when that optional source is absent."""
+    source = PROJECT_ROOT / "external" / "original_code" / "scDeepCluster_pytorch"
+    if not (source / filename).exists():
+        pytest.skip(f"Optional original scDeepCluster source is not vendored: {source}")
+    return source
+
+
 class TestZINBLoss:
     """Test that ZINB loss implementations are equivalent."""
 
@@ -31,7 +39,7 @@ class TestZINBLoss:
         from algorithms.scdeepcluster import ZINBLoss as SCRBenchmarkZINB
 
         # Original implementation
-        original_code_path = PROJECT_ROOT / "external" / "original_code" / "scDeepCluster_pytorch"
+        original_code_path = require_original_source("layers.py")
         sys.path.insert(0, str(original_code_path))
         from layers import ZINBLoss as OriginalZINB
 
@@ -79,7 +87,7 @@ class TestNetworkArchitecture:
         """Test that buildNetwork produces identical architectures."""
         from algorithms.scdeepcluster import buildNetwork as scr_build
 
-        original_code_path = PROJECT_ROOT / "external" / "original_code" / "scDeepCluster_pytorch"
+        original_code_path = require_original_source("scDeepCluster.py")
         sys.path.insert(0, str(original_code_path))
         from scDeepCluster import buildNetwork as orig_build
 
@@ -128,7 +136,7 @@ class TestModelComponents:
         """Test soft cluster assignment calculation."""
         from algorithms.scdeepcluster import scDeepCluster as SCRModel
 
-        original_code_path = PROJECT_ROOT / "external" / "original_code" / "scDeepCluster_pytorch"
+        original_code_path = require_original_source("scDeepCluster.py")
         sys.path.insert(0, str(original_code_path))
         from scDeepCluster import scDeepCluster as OrigModel
 
@@ -332,4 +340,4 @@ def run_comparison_report():
 
 if __name__ == "__main__":
     run_comparison_report()
-    pytest.main([__file__, "-v"])
+    raise SystemExit(pytest.main([__file__, "-v"]))

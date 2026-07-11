@@ -1,32 +1,26 @@
 #!/usr/bin/env python3
-"""
-SCRBenchmark adapter to run the external scRAW package at /data2/fbidet/scRAW.
-"""
+"""Run the self-contained vendored scRAW backend through the method registry."""
 from __future__ import annotations
 
 import argparse
 import sys
 from pathlib import Path
 
-# Add external scRAW source directory to Python path
-SCRAW_ROOT = Path("/data2/fbidet/scRAW")
-SCRAW_SOURCE_DIR = SCRAW_ROOT / "src"
-if SCRAW_SOURCE_DIR.exists():
-    sys.path.insert(0, str(SCRAW_SOURCE_DIR))
-else:
-    raise RuntimeError(f"Could not find scRAW source directory at {SCRAW_SOURCE_DIR}")
+REPO_ROOT = Path(__file__).resolve().parents[3]
+SCRAW_SOURCE_DIR = REPO_ROOT / "vendor" / "scraw_inductive" / "src"
+if not SCRAW_SOURCE_DIR.exists():
+    raise RuntimeError(f"Vendored scRAW source directory is missing: {SCRAW_SOURCE_DIR}")
+sys.path.insert(0, str(SCRAW_SOURCE_DIR))
 
-SCRAW_PRESET_CONFIGS = {
-    "default": SCRAW_ROOT / "configs" / "default_scraw.json",
-    "baron": SCRAW_ROOT / "configs" / "baron_jobim.json",
-}
-
-from scraw.config import load_config
 from scraw.pipeline import run_pipeline
+from scraw.presets import resolve_preset_config
+
+
+PUBLIC_PRESETS = ("baron", "default")
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="run scRAW externally")
+    parser = argparse.ArgumentParser(description="run the vendored scRAW backend")
     parser.add_argument("--method", required=True)
     parser.add_argument("--data", required=True)
     parser.add_argument("--output", required=True)
@@ -38,11 +32,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--device", default="cuda")
     parser.add_argument(
         "--preset",
-        choices=sorted(SCRAW_PRESET_CONFIGS),
+        choices=PUBLIC_PRESETS,
         default="default",
         help=(
-            "scRAW source configuration to load from /data2/fbidet/scRAW. "
-            "`default` is the 0017/stable configuration; `baron` is the Baron configuration."
+            "Vendored public preset. `default` is the 0017/stable configuration; "
+            "`baron` is the Baron configuration."
         ),
     )
     return parser.parse_args()
@@ -51,11 +45,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
 
-    config_path = SCRAW_PRESET_CONFIGS[str(args.preset)]
-    if not config_path.exists():
-        raise FileNotFoundError(f"Missing scRAW preset config: {config_path}")
-
-    config = load_config(config_path)
+    config = resolve_preset_config(str(args.preset))
 
     # Configure path values
     config.data.data_path = str(Path(args.data).expanduser().resolve())
@@ -77,7 +67,7 @@ def main() -> int:
     else:
         config.batch_correction.enabled = False
 
-    # Execute the external pipeline
+    # Execute the vendored pipeline.
     run_pipeline(config)
 
     return 0

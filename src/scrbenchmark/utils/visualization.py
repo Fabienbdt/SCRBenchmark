@@ -2819,6 +2819,9 @@ def plot_annotation_sankey(
         plt.tight_layout()
 
         if save_path:
-            fig.savefig(save_path, dpi=150, bbox_inches="tight")
+            fallback_path = save_path
+            if str(fallback_path).lower().endswith(".html"):
+                fallback_path = str(fallback_path)[:-5] + ".png"
+            fig.savefig(fallback_path, dpi=150, bbox_inches="tight")
 
         return fig

@@ -1076,7 +1076,7 @@ class ScDeepClusterScrawWeightedAlgorithm(ScDeepClusterAlgorithm):
             return manual_k
         if int(requested_n_clusters) > 1:
             return int(requested_n_clusters)
-        if bool(self.params.get("use_ground_truth_k", True)) and labels is not None:
+        if bool(self.params.get("use_ground_truth_k", False)) and labels is not None:
             return int(len(np.unique(labels)))
         return 8
 
@@ -1191,7 +1191,7 @@ class ScDeepClusterScrawWeightedAlgorithm(ScDeepClusterAlgorithm):
             n_clusters_for_weights=pretrain_weight_k,
         )
 
-        use_ground_truth_k = self.params.get("use_ground_truth_k", True)
+        use_ground_truth_k = self.params.get("use_ground_truth_k", False)
 
         if use_ground_truth_k and labels is not None:
             n_clusters = len(np.unique(labels))

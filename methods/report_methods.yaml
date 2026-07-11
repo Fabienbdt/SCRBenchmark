@@ -6,11 +6,11 @@ methods:
     family: scraw
     report: true
     core_contract: author_core_unchanged
-    core_status: external_scraw_reproduction
+    core_status: vendored_scraw_reproduction
     source:
-      kind: original_source
-      path: /data2/fbidet/scRAW
-      provenance: external scRAW repository
+      kind: vendored_source
+      path: vendor/scraw_inductive
+      provenance: self-contained scRAW backend vendored in SCRBenchmark
     runner:
       kind: command_template
       command:

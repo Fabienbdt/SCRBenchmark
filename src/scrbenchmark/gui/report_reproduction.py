@@ -155,7 +155,12 @@ def _render_stable_generalist_tab() -> None:
         "a value means generate jobs only for these method names."
       ),
     )
-  strict_data = st.checkbox("Mark missing data as blocked", value=False, key="report_repro_stable_strict")
+  allow_missing_data = st.checkbox(
+    "Generate runnable jobs for missing data",
+    value=False,
+    key="report_repro_stable_allow_missing",
+    help="Unsafe override: by default jobs with missing .h5ad inputs are blocked.",
+  )
 
   cmd: list[object] = [
     python_bin,
@@ -173,8 +178,8 @@ def _render_stable_generalist_tab() -> None:
     cmd.extend(["--datasets", datasets.strip()])
   if methods.strip():
     cmd.extend(["--methods", methods.strip()])
-  if strict_data:
-    cmd.append("--strict-data")
+  if allow_missing_data:
+    cmd.append("--allow-missing-data")
 
   st.code(_quote(cmd), language="bash")
   if st.button("Generate stable-generalist launcher", type="primary", width="stretch"):
@@ -211,16 +216,23 @@ def _render_report_plan_tab() -> None:
       default=["inductive", "loss_transfer", "deg"],
       key="report_repro_report_campaigns",
     )
-    strict_data = st.checkbox("Mark missing data as blocked", value=False, key="report_repro_report_strict")
-    reuse_existing = st.checkbox(
-      "Reuse existing scRAW Baron labels when available",
-      value=True,
-      key="report_repro_report_reuse_existing",
-      help=(
-        "The DEG/marker-overlap campaign can reuse the existing Baron scRAW "
-        "labels from the report artifact folder instead of planning a new "
-        "source scRAW run."
-      ),
+    allow_missing_data = st.checkbox(
+      "Generate runnable jobs for missing data",
+      value=False,
+      key="report_repro_report_allow_missing",
+      help="Unsafe override: by default jobs with missing .h5ad inputs are blocked.",
+    )
+    existing_report_labels = st.text_input(
+      "Existing report Baron labels (optional)",
+      value="",
+      key="report_repro_report_existing_labels",
+      help="Path to a tsne_coordinates.csv with true_label and predicted_label columns.",
+    )
+    existing_scraw_labels = st.text_input(
+      "Legacy scRAW Baron labels (optional)",
+      value="",
+      key="report_repro_report_legacy_labels",
+      help="Fallback path to a labels_scraw_run0.csv artifact.",
     )
 
   cmd: list[object] = [
@@ -235,10 +247,12 @@ def _render_report_plan_tab() -> None:
     "--campaigns",
     ",".join(campaigns) if campaigns else "all",
   ]
-  if strict_data:
-    cmd.append("--strict-data")
-  if not reuse_existing:
-    cmd.append("--no-reuse-existing-artifacts")
+  if allow_missing_data:
+    cmd.append("--allow-missing-data")
+  if existing_report_labels.strip():
+    cmd.extend(["--existing-report-baron-labels", existing_report_labels.strip()])
+  if existing_scraw_labels.strip():
+    cmd.extend(["--existing-scraw-baron-labels", existing_scraw_labels.strip()])
 
   st.code(_quote(cmd), language="bash")
   if st.button("Generate report launcher", type="primary", width="stretch"):
@@ -430,9 +444,8 @@ def _render_generalization_tab() -> None:
 def _render_biological_interpretation_tab() -> None:
   st.subheader("Biological Interpretation / Marker Overlap")
   st.caption(
-    "Generate the Baron scRAW marker-overlap analysis. Existing scRAW labels "
-    "are reused by default when the local report artifacts are present; this "
-    "avoids rerunning the source model."
+    "Generate the Baron scRAW marker-overlap analysis. Provide an existing "
+    "label artifact to avoid rerunning the source model."
   )
   col1, col2 = st.columns(2)
   with col1:
@@ -440,8 +453,24 @@ def _render_biological_interpretation_tab() -> None:
     python_bin = st.text_input("Python interpreter", value=sys.executable, key="bio_repro_python")
   with col2:
     device = st.selectbox("Device", ["cuda", "cpu", "auto", "mps"], key="bio_repro_device")
-    strict_data = st.checkbox("Mark missing data as blocked", value=False, key="bio_repro_strict")
-    reuse_existing = st.checkbox("Reuse existing scRAW Baron labels", value=True, key="bio_repro_reuse_existing")
+    allow_missing_data = st.checkbox(
+      "Generate runnable jobs for missing data",
+      value=False,
+      key="bio_repro_allow_missing",
+      help="Unsafe override: by default jobs with missing .h5ad inputs are blocked.",
+    )
+    existing_report_labels = st.text_input(
+      "Existing report Baron labels (optional)",
+      value="",
+      key="bio_repro_existing_labels",
+      help="Path to a tsne_coordinates.csv with true_label and predicted_label columns.",
+    )
+    existing_scraw_labels = st.text_input(
+      "Legacy scRAW Baron labels (optional)",
+      value="",
+      key="bio_repro_legacy_labels",
+      help="Fallback path to a labels_scraw_run0.csv artifact.",
+    )
 
   cmd: list[object] = [
     python_bin,
@@ -455,10 +484,12 @@ def _render_biological_interpretation_tab() -> None:
     "--campaigns",
     "deg",
   ]
-  if strict_data:
-    cmd.append("--strict-data")
-  if not reuse_existing:
-    cmd.append("--no-reuse-existing-artifacts")
+  if allow_missing_data:
+    cmd.append("--allow-missing-data")
+  if existing_report_labels.strip():
+    cmd.extend(["--existing-report-baron-labels", existing_report_labels.strip()])
+  if existing_scraw_labels.strip():
+    cmd.extend(["--existing-scraw-baron-labels", existing_scraw_labels.strip()])
 
   st.code(_quote(cmd), language="bash")
   if st.button("Generate marker-overlap launcher", type="primary", width="stretch", key="bio_repro_generate"):

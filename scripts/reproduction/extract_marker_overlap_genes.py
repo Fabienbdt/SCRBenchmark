@@ -14,7 +14,6 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "results" / "report_artifacts" / "marker_overlap_genes"
 DEFAULT_SCAN_ROOTS = [
     REPO_ROOT / "results",
-    Path("/data2/fbidet/scRAW_EXPERIMENTAL/results"),
 ]
 
 

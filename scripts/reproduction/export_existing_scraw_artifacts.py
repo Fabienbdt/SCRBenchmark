@@ -14,23 +14,6 @@ from typing import Iterable
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = REPO_ROOT / "data" / "stable_generalist" / "download_manifest.csv"
 DEFAULT_OUTPUT_ROOT = REPO_ROOT / "results" / "report_artifacts" / "scraw_existing_artifacts"
-DEFAULT_WEIGHTS_ROOT = Path(
-    "/data2/fbidet/scRAW_EXPERIMENTAL/results/"
-    "presentation_stable_generalist_nonbaron_20260324/"
-    "Exp\u00e9riences/scRAW_default_from_scRAW_seed60_stage_umaps_20260421"
-)
-DEFAULT_MODEL_ROOTS = [
-    Path(
-        "/data2/fbidet/scRAW_Inductif/results/"
-        "inductive_scraw_stable_generalist_exact_all_datasets_20260507_145430/"
-        "01_scraw_runs"
-    ),
-    Path(
-        "/data2/fbidet/scRAW_Inductif/results/"
-        "inductive_multidataset_top4_representative_20260428/01_new_runs"
-    ),
-]
-
 MANIFEST_FIELDS = [
     "dataset_key",
     "artifact_type",
@@ -45,11 +28,15 @@ MANIFEST_FIELDS = [
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
-    parser.add_argument("--weights-root", default=str(DEFAULT_WEIGHTS_ROOT))
+    parser.add_argument(
+        "--weights-root",
+        required=True,
+        help="Root containing <dataset>/seed_60/results/weights artifacts.",
+    )
     parser.add_argument(
         "--model-root",
         action="append",
-        default=[str(path) for path in DEFAULT_MODEL_ROOTS],
+        default=[],
         help="Root searched for inductive scRAW model artifacts. Can be repeated.",
     )
     parser.add_argument("--output-root", default=str(DEFAULT_OUTPUT_ROOT))
@@ -288,8 +275,11 @@ def main() -> int:
             )
 
     manifest_path = output_root / "scraw_existing_artifacts_manifest.csv"
-    write_manifest(manifest_path, rows)
-    print(f"manifest = {manifest_path}", flush=True)
+    if args.dry_run:
+        print("manifest = skipped (dry-run)", flush=True)
+    else:
+        write_manifest(manifest_path, rows)
+        print(f"manifest = {manifest_path}", flush=True)
     print(f"rows = {len(rows)}", flush=True)
     return 0
 
