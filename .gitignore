@@ -100,6 +100,7 @@ external/original_code/**/.git/
 scripts/analysis/**/.git/
 docs/**/*.pdf
 docs/*.pdf
+!docs/Rapport_Stage_M2_Fabien_Bidet.pdf
 external/original_code/CellSIUS/
 external/original_code/DeepScena/
 external/original_code/GiniClust/

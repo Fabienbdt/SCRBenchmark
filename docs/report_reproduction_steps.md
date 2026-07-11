@@ -3,6 +3,11 @@
 This guide gives the command order for regenerating SCRBenchmark report outputs.
 Commands start from the repository root.
 
+The report being reproduced is
+[`Rapport_Stage_M2_Fabien_Bidet.pdf`](Rapport_Stage_M2_Fabien_Bidet.pdf). New
+maintainers should first read [`handover_guide.md`](handover_guide.md), which
+states the required external datasets and legacy environments.
+
 ```bash
 cd /path/to/SCRBenchmark
 ```

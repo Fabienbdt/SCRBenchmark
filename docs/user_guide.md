@@ -20,6 +20,8 @@ guide when the project needs to be extended.
 
 | Need | Document |
 | --- | --- |
+| Take over the project | [`handover_guide.md`](handover_guide.md) |
+| Read the M2 internship report | [`Rapport_Stage_M2_Fabien_Bidet.pdf`](Rapport_Stage_M2_Fabien_Bidet.pdf) |
 | Quick install, first run, and guide index | [`../README.md`](../README.md) |
 | User workflow, datasets, GUI, and CLI | This guide |
 | Technical file map | [`developer_file_guide.md`](developer_file_guide.md) |

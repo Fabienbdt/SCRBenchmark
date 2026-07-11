@@ -3,6 +3,7 @@
 This guide serves as a map to understand the files that make up SCRBenchmark. It indicates where to look to modify a key value, add a function, integrate an algorithm, or extend the preprocessing without breaking the GUI, CLI, and reproduction flows.
 
 For a complete user manual, see [user_guide.md](user_guide.md).
+For a new-maintainer onboarding path, see [handover_guide.md](handover_guide.md).
 To add an external algorithm step-by-step, see [algorithm_extension_guide.md](algorithm_extension_guide.md).
 To add a preprocessing step-by-step, see [preprocessing_extension_guide.md](preprocessing_extension_guide.md).
 

@@ -11,12 +11,17 @@ Author: **Fabien Bidet**.
 
 Copyright: **(c) 2026 Fabien Bidet. All rights reserved.**
 
+Scientific report: [M2 internship report - Fabien Bidet
+(PDF)](docs/Rapport_Stage_M2_Fabien_Bidet.pdf).
+
 ---
 
 ## I Want To... -> Read This
 
 | Goal | Document or entry point |
 | --- | --- |
+| Take over the whole project | [docs/handover_guide.md](docs/handover_guide.md) |
+| Read the M2 internship report | [docs/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/Rapport_Stage_M2_Fabien_Bidet.pdf) |
 | Install and run a first benchmark | README, "Recommended 10-minute path" |
 | Regenerate the report figures | [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) |
 | Add an external algorithm | [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) |
@@ -252,6 +257,8 @@ inductive scRAW scripts, use `--preset default` or `--preset baron`.
 
 | Guide | Target Audience | When to use |
 | --- | --- | --- |
+| [docs/handover_guide.md](docs/handover_guide.md) | New maintainer / intern | Start here to understand scRAW, SCRBenchmark, the tested workflows, and the external assets required for full report reproduction. |
+| [docs/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/Rapport_Stage_M2_Fabien_Bidet.pdf) | Scientific reader | Read the scientific context, methods, experiments, results, limitations, and appendices. |
 | [docs/user_guide.md](docs/user_guide.md) | SCRBenchmark User | Understand the workflow: detailed installation, data preparation, GUI, CLI, and report reproduction. |
 | [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) | Reproduction user | Numbered commands to regenerate report figures and reuse existing artifacts when possible. |
 | [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) | Data user | Add a new `.h5ad` dataset to GUI, CLI, manifests, and reproduction plans. |
