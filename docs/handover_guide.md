@@ -164,6 +164,11 @@ columns are versioned in
 similarly named but differently preprocessed datasets if exact report numbers
 are required.
 
+The full source audit is [`dataset_sources.md`](dataset_sources.md). It contains
+the public download URLs, distinguishes the report's 10 datasets from the three
+later extensions, and records the Zeisel, pancreas-alias, and Tabula Muris Senis
+provenance caveats. A new maintainer should read it before rebuilding any H5AD.
+
 ## 7. Reproduce the M2 Report
 
 Read these documents in order:

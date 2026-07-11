@@ -27,6 +27,7 @@ Scientific report: [M2 internship report - Fabien Bidet
 | Add an external algorithm | [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) |
 | Add a dataset | [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) |
 | Add a preprocessing step | [docs/preprocessing_extension_guide.md](docs/preprocessing_extension_guide.md) |
+| Redownload or audit report datasets | [docs/dataset_sources.md](docs/dataset_sources.md) |
 | Understand the repository files | [docs/developer_file_guide.md](docs/developer_file_guide.md) |
 | Understand the reproduction scripts | [scripts/reproduction/README.md](scripts/reproduction/README.md) |
 
@@ -156,6 +157,10 @@ python scripts/reproduction/download_datasets.py \
 See [data/README.md](data/README.md) and
 [data/stable_generalist/README.md](data/stable_generalist/README.md) for the
 expected format, list of files, and SHA256 verification.
+
+For the audited public GEO/Figshare/GitHub source URLs, the report-versus-Git
+mapping, and known historical discrepancies, see
+[docs/dataset_sources.md](docs/dataset_sources.md).
 
 ### Minimum expected format
 
