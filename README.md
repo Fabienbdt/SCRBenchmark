@@ -53,21 +53,20 @@ Check the installation:
 ./scrbenchmark list-algorithms
 ```
 
-Prepare the reproduction datasets if the local source is available:
+Prepare the public Baron dataset used by the first benchmark:
 
 ```bash
-python scripts/reproduction/download_datasets.py \
-  --source-root /path/to/existing/h5ad/files
+python scripts/setup/prepare_baron_dataset.py --download
 ```
 
 Run a lightweight first benchmark:
 
 ```bash
 ./scrbenchmark run \
-  --data data/stable_generalist/baron_human_pancreas.h5ad \
+  --data data/baron_human_pancreas.h5ad \
   --algorithms pca \
   --param pca:clustering_method=kmeans \
-  --label-col label \
+  --label-col Group \
   --n-clusters 14 \
   --output results/quickstart_baron_pca
 ```

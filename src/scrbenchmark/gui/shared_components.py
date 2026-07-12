@@ -15,6 +15,28 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.dataset_splitter import get_batch_column
 
+
+def _render_html_table(table, *, hide_index=False):
+  """Render a small table without Streamlit's PyArrow conversion layer.
+
+  Streamlit converts ``st.dataframe`` inputs through PyArrow.  Some macOS ARM
+  combinations of pandas/PyArrow crash at native level while converting a
+  ``Styler`` (there is no Python exception to catch).  The tables in this
+  component are small summary tables, so HTML is both sufficient and safer.
+  DataFrame values are escaped by pandas; callers must configure Styler
+  instances with ``escape="html"`` before passing them here.
+  """
+  if isinstance(table, pd.DataFrame):
+    html = table.to_html(index=not hide_index, escape=True, border=0)
+  else:
+    html = table.to_html()
+
+  st.markdown(
+    f'<div style="max-width:100%;overflow-x:auto">{html}</div>',
+    unsafe_allow_html=True,
+  )
+
+
 def display_batch_and_distribution_info(adata, handler=None, title_prefix=""):
   """
   Display batch/dataset source information and distribution matrix.
@@ -108,7 +130,7 @@ def display_batch_and_distribution_info(adata, handler=None, title_prefix=""):
       st.info(f"Gene coverage: {min_genes:,} - {max_genes:,} / {total_genes:,} total")
     
     # Display table with formatting
-    st.dataframe(
+    _render_html_table(
       stats_df.style.format({
         'N Cells': '{:,}',
         'N Genes Detected': '{:,}',
@@ -117,8 +139,7 @@ def display_batch_and_distribution_info(adata, handler=None, title_prefix=""):
         'Mean Counts': '{:.1f}',
         'Median Counts': '{:.0f}',
         'Sparsity (%)': '{:.2f}%'
-      }),
-      width="stretch"
+      }, escape="html")
     )
     st.caption(
       "**N Genes Detected** = genes with at least one non-zero count across all cells of the batch. "
@@ -185,7 +206,7 @@ def display_batch_and_distribution_info(adata, handler=None, title_prefix=""):
         'Cells': batch_counts.values,
         'Percentage': (batch_counts.values / batch_counts.sum() * 100).round(2)
       })
-      st.dataframe(df, width="stretch", hide_index=True)
+      _render_html_table(df, hide_index=True)
   
   # --- Distribution Matrix (Label vs Batch) ---
   st.markdown("---")
@@ -226,15 +247,16 @@ def display_batch_and_distribution_info(adata, handler=None, title_prefix=""):
       dist_matrix.index = dist_matrix.index.astype(str)
       dist_matrix.columns = dist_matrix.columns.astype(str)
       # Use styling for better readability
-      st.dataframe(
-        dist_matrix.style.background_gradient(cmap="Blues", axis=None),
-        width="stretch"
+      _render_html_table(
+        dist_matrix.style.format(escape="html").background_gradient(
+          cmap="Blues", axis=None
+        )
       )
     else:
       total_dist = adata.obs[label_col].value_counts().to_frame()
       total_dist.columns = ['Cell Count']
       total_dist['Percentage (%)'] = (total_dist['Cell Count'] / total_dist['Cell Count'].sum() * 100).round(2)
-      st.dataframe(total_dist, width="stretch")
+      _render_html_table(total_dist)
     
     with st.expander("Matrix Details"):
       st.markdown("""
