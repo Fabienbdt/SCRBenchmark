@@ -4,7 +4,7 @@ This guide gives the command order for regenerating SCRBenchmark report outputs.
 Commands start from the repository root.
 
 The report being reproduced is
-[`Rapport_Stage_M2_Fabien_Bidet.pdf`](Rapport_Stage_M2_Fabien_Bidet.pdf). New
+[`Rapport_Stage_M2_Fabien_Bidet.pdf`](../paper/Rapport_Stage_M2_Fabien_Bidet.pdf). New
 maintainers should first read [`handover_guide.md`](handover_guide.md), which
 states the required external datasets and legacy environments.
 
@@ -147,7 +147,7 @@ These outputs feed, among others:
 - `tab:scraw_holdout_pancreas_results`.
 
 The complete mapping is in
-[`docs/report_reproduction_map.md`](report_reproduction_map.md).
+[`docs/guide/report_reproduction_map.md`](report_reproduction_map.md).
 
 ---
 

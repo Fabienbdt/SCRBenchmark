@@ -12,7 +12,7 @@ Author: **Fabien Bidet**.
 Copyright: **(c) 2026 Fabien Bidet. All rights reserved.**
 
 Scientific report: [M2 internship report - Fabien Bidet
-(PDF)](docs/Rapport_Stage_M2_Fabien_Bidet.pdf).
+(PDF)](docs/paper/Rapport_Stage_M2_Fabien_Bidet.pdf).
 
 ---
 
@@ -20,19 +20,19 @@ Scientific report: [M2 internship report - Fabien Bidet
 
 | Goal | Document or entry point |
 | --- | --- |
-| Take over the whole project | [docs/handover_guide.md](docs/handover_guide.md) |
-| Read the M2 internship report | [docs/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/Rapport_Stage_M2_Fabien_Bidet.pdf) |
+| Take over the whole project | [docs/guide/handover_guide.md](docs/guide/handover_guide.md) |
+| Read the M2 internship report | [docs/paper/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/paper/Rapport_Stage_M2_Fabien_Bidet.pdf) |
 | Install and run a first benchmark | README, "Recommended 10-minute path" |
-| Regenerate the report figures | [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) |
-| Add an external algorithm | [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) |
-| Add a dataset | [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) |
-| Add a preprocessing step | [docs/preprocessing_extension_guide.md](docs/preprocessing_extension_guide.md) |
-| Understand the repository files | [docs/developer_file_guide.md](docs/developer_file_guide.md) |
+| Regenerate the report figures | [docs/guide/report_reproduction_steps.md](docs/guide/report_reproduction_steps.md) |
+| Add an external algorithm | [docs/guide/algorithm_extension_guide.md](docs/guide/algorithm_extension_guide.md) |
+| Add a dataset | [docs/guide/dataset_integration_guide.md](docs/guide/dataset_integration_guide.md) |
+| Add a preprocessing step | [docs/guide/preprocessing_extension_guide.md](docs/guide/preprocessing_extension_guide.md) |
+| Understand the repository files | [docs/guide/developer_file_guide.md](docs/guide/developer_file_guide.md) |
 | Understand the reproduction scripts | [scripts/reproduction/README.md](scripts/reproduction/README.md) |
 
 To add an external algorithm, do not modify
 `src/scrbenchmark/algorithms/`; follow only
-[docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md).
+[docs/guide/algorithm_extension_guide.md](docs/guide/algorithm_extension_guide.md).
 
 ---
 
@@ -78,7 +78,7 @@ Or open the graphical interface:
 ```
 
 To reproduce the report with the complete script order, read
-[docs/report_reproduction_steps.md](docs/report_reproduction_steps.md).
+[docs/guide/report_reproduction_steps.md](docs/guide/report_reproduction_steps.md).
 
 ## Installation
 
@@ -236,9 +236,9 @@ Then open `Report Reproduction`. This panel generates the `planned_jobs.csv` fil
 - custom protocols.
 
 The numbered execution order is in
-[docs/report_reproduction_steps.md](docs/report_reproduction_steps.md). The map
+[docs/guide/report_reproduction_steps.md](docs/guide/report_reproduction_steps.md). The map
 of figures/tables from the report is in
-[docs/report_reproduction_map.md](docs/report_reproduction_map.md).
+[docs/guide/report_reproduction_map.md](docs/guide/report_reproduction_map.md).
 
 ### scRAW Presets
 
@@ -257,14 +257,14 @@ inductive scRAW scripts, use `--preset default` or `--preset baron`.
 
 | Guide | Target Audience | When to use |
 | --- | --- | --- |
-| [docs/handover_guide.md](docs/handover_guide.md) | New maintainer / intern | Start here to understand scRAW, SCRBenchmark, the tested workflows, and the external assets required for full report reproduction. |
-| [docs/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/Rapport_Stage_M2_Fabien_Bidet.pdf) | Scientific reader | Read the scientific context, methods, experiments, results, limitations, and appendices. |
-| [docs/user_guide.md](docs/user_guide.md) | SCRBenchmark User | Understand the workflow: detailed installation, data preparation, GUI, CLI, and report reproduction. |
-| [docs/report_reproduction_steps.md](docs/report_reproduction_steps.md) | Reproduction user | Numbered commands to regenerate report figures and reuse existing artifacts when possible. |
-| [docs/dataset_integration_guide.md](docs/dataset_integration_guide.md) | Data user | Add a new `.h5ad` dataset to GUI, CLI, manifests, and reproduction plans. |
-| [docs/developer_file_guide.md](docs/developer_file_guide.md) | Developer | Know which file to modify to change the preprocessing, algorithms, interface, metrics, or scripts. |
-| [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md) | External Algorithm Developer | Single step-by-step guide: external source code, wrapper, YAML, validation, and smoke test. |
-| [docs/preprocessing_extension_guide.md](docs/preprocessing_extension_guide.md) | Preprocessing Developer | Add a preprocessing step without train/test leakage and without breaking GUI/CLI. |
+| [docs/guide/handover_guide.md](docs/guide/handover_guide.md) | New maintainer / intern | Start here to understand scRAW, SCRBenchmark, the tested workflows, and the external assets required for full report reproduction. |
+| [docs/paper/Rapport_Stage_M2_Fabien_Bidet.pdf](docs/paper/Rapport_Stage_M2_Fabien_Bidet.pdf) | Scientific reader | Read the scientific context, methods, experiments, results, limitations, and appendices. |
+| [docs/guide/user_guide.md](docs/guide/user_guide.md) | SCRBenchmark User | Understand the workflow: detailed installation, data preparation, GUI, CLI, and report reproduction. |
+| [docs/guide/report_reproduction_steps.md](docs/guide/report_reproduction_steps.md) | Reproduction user | Numbered commands to regenerate report figures and reuse existing artifacts when possible. |
+| [docs/guide/dataset_integration_guide.md](docs/guide/dataset_integration_guide.md) | Data user | Add a new `.h5ad` dataset to GUI, CLI, manifests, and reproduction plans. |
+| [docs/guide/developer_file_guide.md](docs/guide/developer_file_guide.md) | Developer | Know which file to modify to change the preprocessing, algorithms, interface, metrics, or scripts. |
+| [docs/guide/algorithm_extension_guide.md](docs/guide/algorithm_extension_guide.md) | External Algorithm Developer | Single step-by-step guide: external source code, wrapper, YAML, validation, and smoke test. |
+| [docs/guide/preprocessing_extension_guide.md](docs/guide/preprocessing_extension_guide.md) | Preprocessing Developer | Add a preprocessing step without train/test leakage and without breaking GUI/CLI. |
 | [methods/README.md](methods/README.md) | Method Developer | Understand the role of the `methods/` directory and YAML specifications. |
 | [protocols/README.md](protocols/README.md) | Experiment Designer | Understand the format of versioned YAML protocols loadable from Customize Benchmark. |
 | [scripts/reproduction/README.md](scripts/reproduction/README.md) | Reproduction / automation | Choose the correct script to generate plans, run methods, or replay report experiments. |
@@ -280,12 +280,12 @@ Quick entry points:
 - modify standard preprocessing: `src/scrbenchmark/utils/data_handler.py`;
 - modify train/val/test preprocessing: `src/scrbenchmark/utils/dataset_splitter.py`;
 - add an external algorithm: follow only
-  [docs/algorithm_extension_guide.md](docs/algorithm_extension_guide.md);
+  [docs/guide/algorithm_extension_guide.md](docs/guide/algorithm_extension_guide.md);
 - modify the interface: `src/scrbenchmark/gui/`;
 - modify metrics and results: `src/scrbenchmark/utils/metrics.py` and
   `src/scrbenchmark/utils/analysis_runner.py`.
 
-The technical map is [docs/developer_file_guide.md](docs/developer_file_guide.md).
+The technical map is [docs/guide/developer_file_guide.md](docs/guide/developer_file_guide.md).
 
 ---
 
@@ -293,7 +293,8 @@ The technical map is [docs/developer_file_guide.md](docs/developer_file_guide.md
 
 ```text
 src/scrbenchmark/        main code: CLI, GUI, registries, algorithms, utils
-docs/                   technical guides and reproduction maps
+docs/guide/              technical guides and reproduction maps
+docs/paper/              report PDF and manuscript source
 data/                   local data and documented preparation scripts
 methods/                YAML specifications of reproducible methods
 protocols/              versioned YAML protocols

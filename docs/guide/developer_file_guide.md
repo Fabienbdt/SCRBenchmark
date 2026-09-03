@@ -219,7 +219,7 @@ adata.obs["batch"]  batch/donor/dataset, optional but useful
 
 | Goal | Files to look at |
 | --- | --- |
-| Change a preprocessing default | `src/scrbenchmark/core/config.py`; complete procedure in `docs/preprocessing_extension_guide.md`. |
+| Change a preprocessing default | `src/scrbenchmark/core/config.py`; complete procedure in `docs/guide/preprocessing_extension_guide.md`. |
 | Add a CLI option | `src/scrbenchmark/cli.py`, then connect this option to `DataHandler`, `DatasetSplitter` or `AnalysisRunner`. |
 | Add a Streamlit control | Relevant `src/scrbenchmark/gui/*.py` page, often with `widgets.py` and `state_manager.py`. |
 | Modify a metric | `src/scrbenchmark/utils/metrics.py`, then displays in `results_explorer/`. |

@@ -406,7 +406,7 @@ Add a short explanation in:
 
 ```text
 src/scrbenchmark/gui/documentation.py
-docs/user_guide.md
+docs/guide/user_guide.md
 ```
 
 The documentation must answer four questions:

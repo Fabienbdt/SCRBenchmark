@@ -6,7 +6,7 @@ run it, and which external assets are still required for the complete M2 report
 campaign.
 
 The scientific context and reported results are available in
-[`Rapport_Stage_M2_Fabien_Bidet.pdf`](Rapport_Stage_M2_Fabien_Bidet.pdf).
+[`Rapport_Stage_M2_Fabien_Bidet.pdf`](../paper/Rapport_Stage_M2_Fabien_Bidet.pdf).
 
 ## 1. Handover Status
 
@@ -168,13 +168,13 @@ are required.
 
 Read these documents in order:
 
-1. [`Rapport_Stage_M2_Fabien_Bidet.pdf`](Rapport_Stage_M2_Fabien_Bidet.pdf)
+1. [`Rapport_Stage_M2_Fabien_Bidet.pdf`](../paper/Rapport_Stage_M2_Fabien_Bidet.pdf)
    for the scientific question, methods, results, and discussion.
 2. [`report_reproduction_map.md`](report_reproduction_map.md) for the mapping
    between figures/tables and software campaigns.
 3. [`report_reproduction_steps.md`](report_reproduction_steps.md) for the
    numbered execution procedure.
-4. [`../scripts/reproduction/README.md`](../scripts/reproduction/README.md) for
+4. [`../../scripts/reproduction/README.md`](../../scripts/reproduction/README.md) for
    the role of each low-level script.
 
 Once the datasets are verified, generate the plans:

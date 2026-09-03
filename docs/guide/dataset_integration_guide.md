@@ -197,7 +197,7 @@ protocols/
 ```
 
 The protocol format is documented in
-[`../protocols/README.md`](../protocols/README.md).
+[`../../protocols/README.md`](../../protocols/README.md).
 
 ---
 

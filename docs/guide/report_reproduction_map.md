@@ -12,7 +12,7 @@ reproducibility/report_reproduction_map.csv
 The exact command order is documented in:
 
 ```text
-docs/report_reproduction_steps.md
+docs/guide/report_reproduction_steps.md
 ```
 
 Use LaTeX labels (`fig:...`, `tab:...`) as stable identifiers. Final figure
