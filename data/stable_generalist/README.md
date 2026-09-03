@@ -28,6 +28,11 @@ report should be written.
 Expected sizes, SHA256 hashes, and AnnData dimensions are in
 `download_manifest.csv`.
 
+The public upstream-study URLs, report subset, extended subset, and known
+preparation differences are audited in
+[`../../docs/dataset_sources.md`](../../docs/dataset_sources.md). Upstream
+source files are not interchangeable with these checksum-pinned H5AD files.
+
 Expected files:
 
 - `bbag094_zeisel.h5ad`

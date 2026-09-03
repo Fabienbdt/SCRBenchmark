@@ -10,7 +10,7 @@ Sources:
     - Baron et al. 2016 (inDrop)           - GSE84133 (via scrnaseq)
     - Muraro et al. 2016 (CEL-seq2)        - GSE85241 (via scrnaseq)
     - Segerstolpe et al. 2016 (Smart-seq2) - E-MTAB-5061 (via GEO/direct)
-    - Lawlor et al. 2017 (Fluidigm C1)     - GSE86473 (via GEO/direct)
+    - Lawlor et al. 2017 (Fluidigm C1)     - GSE86469 (via GEO/direct)
     - Grün et al. 2016 (CEL-seq)           - GSE81076 (via GEO/direct)
     - Xin et al. 2016 (SMARTer)            - GSE81608 (via GEO/direct)
 

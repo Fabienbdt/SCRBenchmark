@@ -27,6 +27,7 @@ Scientific report: [M2 internship report - Fabien Bidet
 | Add an external algorithm | [docs/guide/algorithm_extension_guide.md](docs/guide/algorithm_extension_guide.md) |
 | Add a dataset | [docs/guide/dataset_integration_guide.md](docs/guide/dataset_integration_guide.md) |
 | Add a preprocessing step | [docs/guide/preprocessing_extension_guide.md](docs/guide/preprocessing_extension_guide.md) |
+| Redownload or audit report datasets | [docs/dataset_sources.md](docs/dataset_sources.md) |
 | Understand the repository files | [docs/guide/developer_file_guide.md](docs/guide/developer_file_guide.md) |
 | Understand the reproduction scripts | [scripts/reproduction/README.md](scripts/reproduction/README.md) |
 
@@ -52,21 +53,20 @@ Check the installation:
 ./scrbenchmark list-algorithms
 ```
 
-Prepare the reproduction datasets if the local source is available:
+Prepare the public Baron dataset used by the first benchmark:
 
 ```bash
-python scripts/reproduction/download_datasets.py \
-  --source-root /path/to/existing/h5ad/files
+python scripts/setup/prepare_baron_dataset.py --download
 ```
 
 Run a lightweight first benchmark:
 
 ```bash
 ./scrbenchmark run \
-  --data data/stable_generalist/baron_human_pancreas.h5ad \
+  --data data/baron_human_pancreas.h5ad \
   --algorithms pca \
   --param pca:clustering_method=kmeans \
-  --label-col label \
+  --label-col Group \
   --n-clusters 14 \
   --output results/quickstart_baron_pca
 ```
@@ -156,6 +156,10 @@ python scripts/reproduction/download_datasets.py \
 See [data/README.md](data/README.md) and
 [data/stable_generalist/README.md](data/stable_generalist/README.md) for the
 expected format, list of files, and SHA256 verification.
+
+For the audited public GEO/Figshare/GitHub source URLs, the report-versus-Git
+mapping, and known historical discrepancies, see
+[docs/dataset_sources.md](docs/dataset_sources.md).
 
 ### Minimum expected format
 

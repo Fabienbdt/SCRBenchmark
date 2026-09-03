@@ -1509,7 +1509,7 @@ def plot_umap_weighted(
 
     ax.set_title(
         title + "\n"
-        "(opacite ∝ poids de reconstruction - rare opaque, commun transparent)",
+        "(opacity ∝ reconstruction weight - rare opaque, common transparent)",
         fontsize=12,
     )
     _style_umap_axes(ax)
@@ -1590,7 +1590,7 @@ def plot_umap_weighted_gradient(
     )
     cbar = fig.colorbar(sc, ax=ax, fraction=0.046, pad=0.04)
     cbar.set_label(
-        "Poids de reconstruction (normalise)\nFaible -> Eleve",
+        "Reconstruction weight (normalized)\nLow -> High",
         rotation=90,
         labelpad=12,
         fontsize=10,
@@ -1619,7 +1619,7 @@ def plot_umap_weighted_gradient(
 
     ax.set_title(
         title + "\n"
-        "(degrade plasma inverse: jaune vif = poids faible, violet fonce = poids eleve)",
+        "(reversed plasma gradient: bright yellow = low weight, dark purple = high weight)",
         fontsize=12,
     )
     _style_umap_axes(ax)

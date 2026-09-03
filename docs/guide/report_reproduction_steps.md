@@ -37,6 +37,10 @@ Quick check:
 
 ## 1. Download or Materialize Datasets
 
+First read [`dataset_sources.md`](dataset_sources.md). It identifies the 10
+report datasets inside the later 13-dataset campaign and records the public
+upstream URLs and historical aliases.
+
 The 13 `stable_generalist` datasets must be in:
 
 ```text
@@ -65,6 +69,17 @@ python scripts/reproduction/download_datasets.py --verify-only
 
 Verification is read-only. Add `--report results/dataset_verification.csv` only
 when a persistent operation report is desired.
+
+If an exact prepared copy is unavailable, list or download the audited public
+source assets with:
+
+```bash
+python scripts/setup/download_report_sources.py --list
+python scripts/setup/download_report_sources.py --all
+```
+
+Reconstructed source data must not be presented as byte-identical to the report
+H5AD until it passes `download_datasets.py --verify-only`.
 
 An independent metadata table can optionally be checked with
 `--reference-table /path/to/stable_generalist_dataset_table.csv`.

@@ -1,6 +1,6 @@
 schema_version: 1
 id: inductive_report_splits
-name: Rapport - Inductive splits
+name: Report - Inductive splits
 experiment_type: inductive
 description: Train-on-batches and test-on-held-out-batches protocols used for the inductive report experiments.
 tags:

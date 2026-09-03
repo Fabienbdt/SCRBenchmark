@@ -358,7 +358,7 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
   all_report_methods = _unique_preserve_order(REPORT_PRIMARY_METHODS + REPORT_HARMONY_METHODS)
 
   if preset_key == "baron_transductive":
-    config = _create_default_config("Rapport - Baron transductive")
+    config = _create_default_config("Report - Baron transductive")
     _apply_dataset_preset(config, "baron_human_pancreas")
     _apply_report_preprocessing_defaults(config)
     _set_standard_mode(config)
@@ -369,7 +369,7 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
     configs.append(config)
 
   elif preset_key == "baron_split_701020":
-    config = _create_default_config("Rapport - Baron split 70-10-20")
+    config = _create_default_config("Report - Baron split 70-10-20")
     _apply_dataset_preset(config, "baron_human_pancreas")
     _apply_report_preprocessing_defaults(config)
     _set_stratified_split_mode(config, train_ratio=0.7, val_ratio=0.1)
@@ -381,9 +381,9 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
 
   elif preset_key == "common8_methods_harmony":
     for dataset_key in COMMON8_DATASET_KEYS:
-      config = _create_default_config(f"Rapport - {dataset_key} methods Harmony")
+      config = _create_default_config(f"Report - {dataset_key} methods Harmony")
       spec = _apply_dataset_preset(config, dataset_key)
-      config["name"] = f"Rapport - {spec['display_name']} methods + Harmony"
+      config["name"] = f"Report - {spec['display_name']} methods + Harmony"
       _apply_report_preprocessing_defaults(config)
       _set_standard_mode(config)
       _report_methods_config(config, all_report_methods)
@@ -394,9 +394,9 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
 
   elif preset_key == "loss_transfer_report":
     for dataset_key in LOSS_TRANSFER_DATASET_KEYS:
-      config = _create_default_config(f"Rapport - {dataset_key} loss transfer")
+      config = _create_default_config(f"Report - {dataset_key} loss transfer")
       spec = _apply_dataset_preset(config, dataset_key)
-      config["name"] = f"Rapport - {spec['display_name']} loss transfer"
+      config["name"] = f"Report - {spec['display_name']} loss transfer"
       _apply_report_preprocessing_defaults(config)
       _set_standard_mode(config)
       protocol_cfg = _manual_protocol_base(config, ["loss_transfer"], "42-46")
@@ -411,9 +411,9 @@ def _create_report_preset_configs(preset_key: str) -> List[Dict[str, Any]]:
 
   elif preset_key == "inductive_report_splits":
     for split in INDUCTIVE_SPLIT_PRESETS:
-      config = _create_default_config(f"Rapport - {split['dataset_key']} inductive {split['name']}")
+      config = _create_default_config(f"Report - {split['dataset_key']} inductive {split['name']}")
       spec = _apply_dataset_preset(config, split["dataset_key"])
-      config["name"] = f"Rapport - {spec['display_name']} inductive {split['name']}"
+      config["name"] = f"Report - {spec['display_name']} inductive {split['name']}"
       _apply_report_preprocessing_defaults(config)
       _set_standard_mode(config)
       protocol_cfg = _manual_protocol_base(config, ["inductive"], "42")

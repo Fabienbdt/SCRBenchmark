@@ -1,6 +1,6 @@
 schema_version: 1
 id: loss_transfer_report
-name: Rapport - Loss transfer
+name: Report - Loss transfer
 experiment_type: loss_transfer
 description: Weighted-loss transfer protocol from the report on the five selected datasets.
 tags:

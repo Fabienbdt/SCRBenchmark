@@ -10,6 +10,12 @@ The repository therefore provides:
 2. scripts to rebuild or materialize prepared datasets;
 3. manifests to verify the expected files.
 
+Public upstream URLs and the audit matching report datasets to repository
+datasets are documented in [`../docs/dataset_sources.md`](../docs/dataset_sources.md).
+Use `scripts/setup/download_report_sources.py` for original public assets and
+`scripts/reproduction/download_datasets.py` for exact prepared H5AD files; the
+two operations have different reproducibility guarantees.
+
 ---
 
 ## Generate the Baron Human Pancreas Dataset

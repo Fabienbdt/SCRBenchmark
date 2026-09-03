@@ -1,6 +1,6 @@
 schema_version: 1
 id: common8_methods_harmony
-name: Rapport - Common-8 methods + Harmony
+name: Report - Common-8 methods + Harmony
 experiment_type: transductive
 description: Report common-8 datasets with the primary methods and Harmony-composed complements.
 tags:
