@@ -9,6 +9,11 @@
 
 Author: **Fabien Bidet**.
 
+SCRBenchmark was developed as part of Fabien Bidet's second-year Master's
+(M2) internship at **LaBRI** (Laboratoire Bordelais de Recherche en
+Informatique). The repository preserves both the maintained software and the
+scientific material required to document and reproduce the internship work.
+
 Copyright: **(c) 2026 Fabien Bidet. All rights reserved.**
 
 Scientific report: [M2 internship report - Fabien Bidet
