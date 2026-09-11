@@ -35,8 +35,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 # =============================================================================
@@ -51,7 +51,9 @@ def get_laplace_matrix(tensor_matrix):
     A = np.array(tensor_matrix)
     D = A.sum(axis=1)
 
-    L_matrix = np.diag(D**(-0.5)).dot(A.dot(np.diag(D**(-0.5))))
+    inverse_sqrt_degree = np.zeros(D.shape, dtype=np.float64)
+    np.power(D, -0.5, out=inverse_sqrt_degree, where=D > 0)
+    L_matrix = inverse_sqrt_degree[:, None] * A * inverse_sqrt_degree[None, :]
     L_matrix = torch.tensor(L_matrix, dtype=torch.float)
     return torch.nan_to_num(L_matrix)
 

@@ -1,7 +1,4 @@
-"""
-Configuration module for scDeepCluster GUI.
-Centralized configuration management with support for hyperparameters.
-"""
+"""Centralized configuration definitions for the dedicated scRAW backend."""
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
@@ -84,7 +81,7 @@ class Config:
     """Main configuration class for the application."""
 
     # Application settings
-    app_name: str = "scDeepCluster Analysis Suite"
+    app_name: str = "scRAW Dedicated"
     version: str = "1.0.0"
 
     # Paths

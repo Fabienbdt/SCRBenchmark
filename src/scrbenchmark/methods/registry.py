@@ -14,7 +14,9 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+from scrbenchmark.paths import resource_root
+
+REPO_ROOT = resource_root()
 DEFAULT_METHODS_DIR = REPO_ROOT / "methods"
 
 

@@ -2,17 +2,14 @@
 
 from __future__ import annotations
 
+import re
 from typing import Iterable, List
-import logging
 
 import numpy as np
 import torch
 import torch.nn as nn
 
 from .config import ModelConfig
-
-
-logger = logging.getLogger(__name__)
 
 
 class _GradientReversalFunction(torch.autograd.Function):
@@ -57,7 +54,7 @@ def parse_hidden_layers(raw: Iterable[int] | str | None) -> List[int]:
 
 
 def resolve_device(requested: str) -> torch.device:
-    """Resolve `auto|cpu|cuda|mps` into a concrete torch device."""
+    """Resolve an explicit CPU/CUDA/MPS request into a concrete torch device."""
     requested = str(requested or "auto").strip().lower()
 
     if requested == "auto":
@@ -68,22 +65,46 @@ def resolve_device(requested: str) -> torch.device:
             return torch.device("mps")
         return torch.device("cpu")
 
-    if requested == "cuda":
-        if torch.cuda.is_available():
-            return torch.device("cuda")
-        raise RuntimeError(
-            "CUDA was requested but is unavailable to PyTorch. "
-            "Run from an environment with GPU access or use device='cpu' explicitly."
+    if requested == "cpu":
+        return torch.device("cpu")
+
+    cuda_match = re.fullmatch(r"cuda(?::(\d+))?", requested)
+    if cuda_match is not None:
+        if not torch.cuda.is_available():
+            raise RuntimeError(
+                f"{requested.upper()} was requested but CUDA is unavailable to PyTorch. "
+                "Run from an environment with GPU access or use device='cpu' explicitly."
+            )
+        raw_index = cuda_match.group(1)
+        if raw_index is not None:
+            index = int(raw_index)
+            device_count = int(torch.cuda.device_count())
+            if index >= device_count:
+                raise ValueError(
+                    f"CUDA device index {index} is unavailable; PyTorch reports "
+                    f"{device_count} CUDA device(s)."
+                )
+            return torch.device(f"cuda:{index}")
+        return torch.device("cuda")
+
+    if requested.startswith("cuda"):
+        raise ValueError(
+            f"Invalid CUDA device {requested!r}; use 'cuda' or an indexed device such as 'cuda:0'."
         )
 
     if requested == "mps":
         mps_backend = getattr(torch.backends, "mps", None)
         if mps_backend is not None and mps_backend.is_available():
             return torch.device("mps")
-        logger.warning("MPS requested but unavailable. Falling back to CPU.")
-        return torch.device("cpu")
+        raise RuntimeError(
+            "MPS was requested but is unavailable to PyTorch. "
+            "Use device='cpu' explicitly on systems without Apple Metal support."
+        )
 
-    return torch.device("cpu")
+    raise ValueError(
+        f"Unsupported device {requested!r}; expected one of 'auto', 'cpu', 'cuda', "
+        "'cuda:<index>', or 'mps'."
+    )
 
 
 class MLPAutoencoder(nn.Module):

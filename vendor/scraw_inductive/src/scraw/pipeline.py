@@ -21,7 +21,7 @@ from .plots import (
     plot_loss_history,
     save_figure,
 )
-from .preprocessing import preprocess_adata
+from .preprocessing import fit_preprocess_adata, save_preprocessing_state
 from .trainer import ScRAWTrainer, TrainingResult
 
 
@@ -47,8 +47,15 @@ def _as_jsonable(value: Any) -> Any:
 
 def _detect_label_key(adata: Any, configured_key: Optional[str]) -> Optional[str]:
     """Resolve the biological label column used for evaluation/plots."""
-    if configured_key and configured_key in adata.obs.columns:
-        return configured_key
+    explicit_key = str(configured_key).strip() if configured_key is not None else ""
+    if explicit_key:
+        if explicit_key in adata.obs.columns:
+            return explicit_key
+        available = ", ".join(str(column) for column in adata.obs.columns) or "<none>"
+        raise ValueError(
+            f"Configured label key {explicit_key!r} was not found in adata.obs. "
+            f"Available columns: {available}. Set data.label_key to null to enable auto-detection."
+        )
 
     for candidate in [
         "Group",
@@ -67,8 +74,16 @@ def _detect_label_key(adata: Any, configured_key: Optional[str]) -> Optional[str
 
 def _detect_batch_key(adata: Any, preferred: Optional[str]) -> Optional[str]:
     """Resolve the batch column used by the adversarial branch."""
-    if preferred and preferred in adata.obs.columns:
-        return preferred
+    explicit_key = str(preferred).strip() if preferred is not None else ""
+    if explicit_key:
+        if explicit_key in adata.obs.columns:
+            return explicit_key
+        available = ", ".join(str(column) for column in adata.obs.columns) or "<none>"
+        raise ValueError(
+            f"Configured batch key {explicit_key!r} was not found in adata.obs. "
+            f"Available columns: {available}. Set batch_correction.key to null to enable "
+            "auto-detection, or disable batch correction."
+        )
 
     for candidate in [
         "batch",
@@ -109,22 +124,51 @@ def _save_metrics_csv(metrics: Dict[str, Any], path: Path) -> None:
     pd.DataFrame([flat_metrics]).to_csv(path, index=False)
 
 
-def _save_arrays(result: TrainingResult, output_dir: Path) -> None:
-    """Persist the main numpy outputs for later inspection."""
+def _validated_obs_names(obs_names: Any, expected_length: int) -> np.ndarray:
+    """Convert observation identifiers to strings and validate row alignment."""
+    values = np.asarray([str(value) for value in obs_names], dtype=str)
+    if len(values) != int(expected_length):
+        raise ValueError(
+            f"obs_names contains {len(values)} entries, expected {int(expected_length)}."
+        )
+    return values
+
+
+def _save_arrays(result: TrainingResult, output_dir: Path, obs_names: Any) -> None:
+    """Persist aligned training arrays and a human-readable per-cell mapping."""
+    names = _validated_obs_names(obs_names, len(result.labels))
     np.save(output_dir / "embeddings.npy", np.asarray(result.embeddings, dtype=np.float32))
     np.save(output_dir / "final_labels.npy", np.asarray(result.labels, dtype=np.int64))
     np.save(output_dir / "pseudo_labels.npy", np.asarray(result.pseudo_labels, dtype=np.int64))
     np.save(output_dir / "cell_weights.npy", np.asarray(result.cell_weights, dtype=np.float32))
+    np.save(output_dir / "obs_names.npy", names)
+    pd.DataFrame(
+        {
+            "cell_id": names,
+            "predicted_label": np.asarray(result.labels, dtype=np.int64),
+            "pseudo_label": np.asarray(result.pseudo_labels, dtype=np.int64),
+            "scraw_reconstruction_weight": np.asarray(result.cell_weights, dtype=np.float32),
+        }
+    ).to_csv(output_dir / "cell_assignments.csv", index=False)
 
 
 def _save_inference_arrays(
     embeddings: np.ndarray,
     labels: np.ndarray,
     output_dir: Path,
+    obs_names: Any,
 ) -> None:
-    """Persist inference-only arrays for checkpoint replay diagnostics."""
+    """Persist aligned inference arrays for checkpoint replay diagnostics."""
+    names = _validated_obs_names(obs_names, len(labels))
     np.save(output_dir / "embeddings.npy", np.asarray(embeddings, dtype=np.float32))
     np.save(output_dir / "final_labels.npy", np.asarray(labels, dtype=np.int64))
+    np.save(output_dir / "obs_names.npy", names)
+    pd.DataFrame(
+        {
+            "cell_id": names,
+            "predicted_label": np.asarray(labels, dtype=np.int64),
+        }
+    ).to_csv(output_dir / "cell_assignments.csv", index=False)
 
 
 def _save_figures(
@@ -216,7 +260,7 @@ def _load_checkpoint_model(
 
 
 def run_pipeline(config: ScRAWConfig | str | Path) -> Dict[str, Any]:
-    """Run the default scRAW pipeline from a config object or JSON file."""
+    """Run the default scRAW pipeline from a config object or JSON/YAML file."""
     if not isinstance(config, ScRAWConfig):
         config = load_config(config)
 
@@ -226,17 +270,20 @@ def run_pipeline(config: ScRAWConfig | str | Path) -> Dict[str, Any]:
     import scanpy as sc
 
     adata = sc.read_h5ad(Path(config.data.data_path).expanduser().resolve())
-    adata_proc = preprocess_adata(adata, config.preprocessing)
+    adata_proc, preprocessing_state = fit_preprocess_adata(adata, config.preprocessing)
+    obs_names = _validated_obs_names(adata_proc.obs_names, int(adata_proc.n_obs))
     label_key = _detect_label_key(adata_proc, config.data.label_key)
     true_labels = (
         None
         if label_key is None
         else np.asarray(adata_proc.obs[label_key].astype(str).to_numpy(), dtype=object)
     )
-    batch_key = _detect_batch_key(
-        adata_proc,
-        preferred=str(config.batch_correction.key or "").strip() or None,
-    )
+    batch_key = None
+    if bool(config.batch_correction.enabled):
+        batch_key = _detect_batch_key(
+            adata_proc,
+            preferred=str(config.batch_correction.key or "").strip() or None,
+        )
     batch_ids = (
         None
         if batch_key is None
@@ -272,7 +319,11 @@ def run_pipeline(config: ScRAWConfig | str | Path) -> Dict[str, Any]:
         encoding="utf-8",
     )
     _save_metrics_csv(metrics, output_paths["results"] / "analysis_results.csv")
-    _save_arrays(result, output_paths["results"])
+    _save_arrays(result, output_paths["results"], obs_names)
+    save_preprocessing_state(
+        preprocessing_state,
+        output_paths["models"] / "preprocessing_state.npz",
+    )
 
     if bool(config.outputs.save_model):
         torch.save(result.model.state_dict(), output_paths["models"] / "autoencoder.pt")
@@ -294,6 +345,7 @@ def run_pipeline(config: ScRAWConfig | str | Path) -> Dict[str, Any]:
         "labels": result.labels,
         "pseudo_labels": result.pseudo_labels,
         "cell_weights": result.cell_weights,
+        "obs_names": obs_names,
         "loss_history": result.loss_history,
         "output_dir": str(output_dir),
     }
@@ -305,6 +357,7 @@ def run_inference_from_checkpoint(
     output_dir: Optional[str | Path] = None,
     data_path: Optional[str | Path] = None,
     device: Optional[str] = None,
+    label_key: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Replay preprocessing, encoding, clustering, and metrics from saved weights only."""
     if isinstance(config, ScRAWConfig):
@@ -318,6 +371,8 @@ def run_inference_from_checkpoint(
         config.data.data_path = str(data_path)
     if device is not None:
         config.runtime.device = str(device)
+    if label_key is not None:
+        config.data.label_key = str(label_key).strip() or None
 
     resolved_output_dir = Path(config.data.output_dir).expanduser().resolve()
     output_paths = _prepare_output_dirs(resolved_output_dir)
@@ -326,17 +381,20 @@ def run_inference_from_checkpoint(
     import scanpy as sc
 
     adata = sc.read_h5ad(Path(config.data.data_path).expanduser().resolve())
-    adata_proc = preprocess_adata(adata, config.preprocessing)
-    label_key = _detect_label_key(adata_proc, config.data.label_key)
+    adata_proc, preprocessing_state = fit_preprocess_adata(adata, config.preprocessing)
+    obs_names = _validated_obs_names(adata_proc.obs_names, int(adata_proc.n_obs))
+    resolved_label_key = _detect_label_key(adata_proc, config.data.label_key)
     true_labels = (
         None
-        if label_key is None
-        else np.asarray(adata_proc.obs[label_key].astype(str).to_numpy(), dtype=object)
+        if resolved_label_key is None
+        else np.asarray(adata_proc.obs[resolved_label_key].astype(str).to_numpy(), dtype=object)
     )
-    batch_key = _detect_batch_key(
-        adata_proc,
-        preferred=str(config.batch_correction.key or "").strip() or None,
-    )
+    batch_key = None
+    if bool(config.batch_correction.enabled):
+        batch_key = _detect_batch_key(
+            adata_proc,
+            preferred=str(config.batch_correction.key or "").strip() or None,
+        )
     X_proc = np.asarray(adata_proc.X, dtype=np.float32)
 
     trainer = ScRAWTrainer(config)
@@ -368,7 +426,7 @@ def run_inference_from_checkpoint(
     summary = {
         "mode": "inference_only",
         "checkpoint_path": str(resolved_checkpoint_path),
-        "label_key": label_key,
+        "label_key": resolved_label_key,
         "batch_key": batch_key,
         "n_cells": int(adata_proc.n_obs),
         "n_genes": int(adata_proc.n_vars),
@@ -386,7 +444,16 @@ def run_inference_from_checkpoint(
         encoding="utf-8",
     )
     _save_metrics_csv(metrics, output_paths["results"] / "analysis_results.csv")
-    _save_inference_arrays(embeddings, final_labels, output_paths["results"])
+    _save_inference_arrays(
+        embeddings,
+        final_labels,
+        output_paths["results"],
+        obs_names,
+    )
+    save_preprocessing_state(
+        preprocessing_state,
+        output_paths["models"] / "preprocessing_state.npz",
+    )
 
     if bool(config.outputs.save_figures):
         _save_inference_figures(
@@ -400,11 +467,12 @@ def run_inference_from_checkpoint(
     return {
         "config": config_used,
         "checkpoint_path": str(resolved_checkpoint_path),
-        "label_key": label_key,
+        "label_key": resolved_label_key,
         "batch_key": batch_key,
         "metrics": metrics,
         "embeddings": embeddings,
         "labels": final_labels,
+        "obs_names": obs_names,
         "output_dir": str(resolved_output_dir),
         "mode": "inference_only",
     }

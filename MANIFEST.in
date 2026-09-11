@@ -1,0 +1,14 @@
+include requirements*.txt CONTRIBUTING.md THIRD_PARTY.md CHANGELOG.md
+recursive-include constraints *.txt
+recursive-include methods *.yaml *.md
+recursive-include protocols *.yaml *.md
+recursive-include reproducibility *.csv *.json *.yaml *.md
+recursive-include scripts/reproduction *.py *.json *.yaml *.md
+recursive-include vendor/scraw_inductive *.py *.json *.yaml *.md
+recursive-include vendor/scraw_dedicated *.py *.json *.yaml *.md
+recursive-include vendor/stable_generalist_runners *.py *.json *.yaml *.md
+recursive-include docs/guide *.md
+global-exclude *.py[cod] .DS_Store
+recursive-include data README.md
+include data/report_sources/source_manifest.csv data/stable_generalist/download_manifest.csv
+recursive-include scripts/setup *.py *.md

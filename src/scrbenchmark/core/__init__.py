@@ -1,4 +1,4 @@
-# Core module for scDeepCluster GUI
+# Core contracts for SCRBenchmark.
 from .config import Config, HyperparameterConfig
 from .algorithm_registry import AlgorithmRegistry, BaseAlgorithm
 

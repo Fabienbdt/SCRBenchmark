@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 
 @pytest.fixture
@@ -51,9 +50,24 @@ def sample_embeddings_well_separated():
 
 
 @pytest.fixture
-def synthetic_data_path():
-    """Path to synthetic test data."""
-    path = Path(__file__).parent.parent / "synthetic_test_data.h5ad"
-    if not path.exists():
-        pytest.skip(f"Synthetic data not found at {path}")
+def synthetic_data_path(tmp_path):
+    """Create a deterministic H5AD file for DataHandler tests."""
+    import anndata as ad
+    import pandas as pd
+
+    rng = np.random.default_rng(42)
+    n_cells, n_genes = 24, 32
+    counts = rng.poisson(2.0, size=(n_cells, n_genes)).astype(np.float32) + 1.0
+    labels = np.repeat(["type_a", "type_b", "type_c"], n_cells // 3)
+
+    obs = pd.DataFrame(
+        {
+            "Group": labels,
+            "batch": np.tile(["batch_1", "batch_2"], n_cells // 2),
+        },
+        index=[f"cell_{index}" for index in range(n_cells)],
+    )
+    var = pd.DataFrame(index=[f"gene_{index}" for index in range(n_genes)])
+    path = tmp_path / "synthetic_test_data.h5ad"
+    ad.AnnData(X=counts, obs=obs, var=var).write_h5ad(path)
     return path

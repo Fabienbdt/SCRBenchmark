@@ -6,9 +6,8 @@ import numpy as np
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
-from utils.statistics import generate_cld, compute_significance_groups
+from scrbenchmark.utils.statistics import generate_cld, compute_significance_groups
 
 
 def _pair_pvalue(pvals, a, b):

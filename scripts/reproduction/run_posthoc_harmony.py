@@ -85,7 +85,8 @@ def base_param_args(args: argparse.Namespace, algo: str) -> list[str]:
 def run_scrbenchmark_base(args: argparse.Namespace, algo: str, base_dir: Path) -> tuple[Path, Path]:
     cmd = [
         str(args.python_bin),
-        str(REPO_ROOT / "src" / "scrbenchmark" / "cli.py"),
+        "-m",
+        "scrbenchmark",
         "run",
         "--data",
         str(Path(args.data).expanduser().resolve()),

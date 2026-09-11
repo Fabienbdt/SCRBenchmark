@@ -36,7 +36,7 @@ class TestZINBLoss:
     def test_zinb_loss_identical_output(self):
         """Compare ZINB loss calculation between implementations."""
         # Import both implementations
-        from algorithms.scdeepcluster import ZINBLoss as SCRBenchmarkZINB
+        from scrbenchmark.algorithms.scdeepcluster import ZINBLoss as SCRBenchmarkZINB
 
         # Original implementation
         original_code_path = require_original_source("layers.py")
@@ -85,7 +85,7 @@ class TestNetworkArchitecture:
 
     def test_build_network_identical(self):
         """Test that buildNetwork produces identical architectures."""
-        from algorithms.scdeepcluster import buildNetwork as scr_build
+        from scrbenchmark.algorithms.scdeepcluster import buildNetwork as scr_build
 
         original_code_path = require_original_source("scDeepCluster.py")
         sys.path.insert(0, str(original_code_path))
@@ -134,7 +134,7 @@ class TestModelComponents:
 
     def test_soft_assign_identical(self):
         """Test soft cluster assignment calculation."""
-        from algorithms.scdeepcluster import scDeepCluster as SCRModel
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster as SCRModel
 
         original_code_path = require_original_source("scDeepCluster.py")
         sys.path.insert(0, str(original_code_path))
@@ -222,7 +222,7 @@ class TestFullTraining:
 
     def test_clustering_consistency(self, synthetic_data):
         """Test that both implementations produce similar clustering on same data."""
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
         from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
         X = synthetic_data['X']
@@ -266,7 +266,7 @@ class TestEmbeddingConsistency:
 
     def test_embedding_reproducibility(self):
         """Test that same seed produces identical embeddings."""
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
 
         np.random.seed(42)
         X = np.random.randint(0, 100, size=(100, 50)).astype(np.float32)

@@ -34,7 +34,7 @@ class TestSinkhornNormalization:
 
     def test_sinkhorn_identical(self):
         """Compare Sinkhorn implementations."""
-        from algorithms.sccdcg import sinkhorn as scr_sinkhorn
+        from scrbenchmark.algorithms.sccdcg import sinkhorn as scr_sinkhorn
 
         # Import original
         original_path = require_original_source("train_scCDCG.py")
@@ -62,7 +62,7 @@ class TestClusterAssignment:
 
     def test_cluster_assignment_identical(self):
         """Compare ClusterAssignment implementations."""
-        from algorithms.sccdcg import ClusterAssignment as SCRAssignment
+        from scrbenchmark.algorithms.sccdcg import ClusterAssignment as SCRAssignment
 
         original_path = require_original_source("model.py")
         sys.path.insert(0, str(original_path))
@@ -94,7 +94,7 @@ class TestAutoencoder:
 
     def test_ae_architecture_identical(self):
         """Compare AE_NN architecture."""
-        from algorithms.sccdcg import AE_NN as SCR_AE
+        from scrbenchmark.algorithms.sccdcg import AE_NN as SCR_AE
 
         original_path = require_original_source("model.py")
         sys.path.insert(0, str(original_path))
@@ -220,7 +220,7 @@ class TestFullPipeline:
 
     def test_sccdcg_training(self, synthetic_data):
         """Test scCDCG training on synthetic data."""
-        from algorithms.sccdcg import ScCDCGAlgorithm
+        from scrbenchmark.algorithms.sccdcg import ScCDCGAlgorithm
         from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
         X = synthetic_data['X']

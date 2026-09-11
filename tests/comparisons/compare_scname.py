@@ -94,7 +94,7 @@ class TestZINBLoss:
         y = torch.poisson(torch.ones(batch_size, n_genes) * 3)
 
         # ZINB loss calculation (from SCRBenchmark)
-        from algorithms.scname import ZINBLoss
+        from scrbenchmark.algorithms.scname import ZINBLoss
 
         loss_fn = ZINBLoss()
         # forward(pi, theta, y_true, y_pred)
@@ -149,7 +149,7 @@ class TestArchitecture:
         # Original scNAME encoder:
         # Input -> GaussianNoise -> [Dense + Noise + Activation] * n -> Latent
 
-        from algorithms.scname import ScNAMEAutoencoder
+        from scrbenchmark.algorithms.scname import ScNAMEAutoencoder
 
         input_dim = 1000
         # dims = [input_dim, hidden..., latent]
@@ -170,7 +170,7 @@ class TestArchitecture:
         # - disp (softplus, dispersion)
         # - mean (exp, mean)
 
-        from algorithms.scname import ScNAMEAutoencoder
+        from scrbenchmark.algorithms.scname import ScNAMEAutoencoder
 
         dims = [1000, 64, 32] # input/output, hidden, latent
         model = ScNAMEAutoencoder(dims)
@@ -266,7 +266,7 @@ class TestFullPipeline:
 
     def test_scname_training(self, synthetic_data):
         """Test scNAME training on synthetic data."""
-        from algorithms.scname import ScNAMEAlgorithm
+        from scrbenchmark.algorithms.scname import ScNAMEAlgorithm
         from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
         X = synthetic_data['X']

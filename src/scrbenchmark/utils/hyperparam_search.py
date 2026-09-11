@@ -14,7 +14,7 @@ import random
 import numpy as np
 import pandas as pd
 
-from core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
 from .metrics import compute_metrics, compute_error_analysis
 
 logger = logging.getLogger(__name__)

@@ -10,8 +10,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 @AlgorithmRegistry.register
@@ -152,7 +152,7 @@ class PCAKMeansAlgorithm(BaseAlgorithm):
         """
         from sklearn.decomposition import PCA
         from sklearn.cluster import KMeans
-        from utils.pca_utils import get_pca_with_auto_components
+        from scrbenchmark.utils.pca_utils import get_pca_with_auto_components
 
         # Get data matrix (optionally use raw data)
         use_raw_data = self.params.get('use_raw_data', False)

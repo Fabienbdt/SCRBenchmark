@@ -178,8 +178,8 @@ class ScrawLossWeightMixin:
             residual_clip=float(self._param("pearson_residual_clip", 10.0)),
         )
 
-        # Facteurs de taille cellule:
-        # s_i = lib_size_i / median(lib_size_j > 0), puis clipping robuste.
+        # Cell-specific size factors:
+        # s_i = lib_size_i / median(lib_size_j > 0), followed by robust clipping.
         raw_library_size = counts.sum(axis=1, dtype=np.float32)
         positive_lib = raw_library_size[raw_library_size > 0]
         lib_median = float(np.median(positive_lib)) if positive_lib.size > 0 else 1.0

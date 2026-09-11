@@ -23,12 +23,12 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from core.algorithm_registry import AlgorithmRegistry
-from core.config import HyperparameterConfig
-from utils.analysis_runner import AnalysisRunner
-from utils.data_handler import DataHandler
-import utils.visualization as viz
-from gui.widgets import render_param_input as render_param_input_widget
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig
+from scrbenchmark.utils.analysis_runner import AnalysisRunner
+from scrbenchmark.utils.data_handler import DataHandler
+import scrbenchmark.utils.visualization as viz
+from scrbenchmark.gui.widgets import render_param_input as render_param_input_widget
 
 
 def _algo_display_name(algo_name: str) -> str:
@@ -301,7 +301,7 @@ def render_umap_generator_page() -> None:
       ".h5ad file path (optional if selected via Finder)",
       value=data_path_default,
       key="umap_gen_data_path",
-      help="Exemple: data/Pancreas_RawCount_DCTCorr_Processed.h5ad"
+      help="Example: data/Pancreas_RawCount_DCTCorr_Processed.h5ad"
     )
 
     uploaded_h5ad = st.file_uploader(

@@ -1,17 +1,21 @@
 # Algorithm Comparison Tests
 
-This folder contains comparison tests between SCRBenchmark implementations and the original author implementations.
+This folder contains component checks, smoke tests, and optional comparisons
+between SCRBenchmark implementations and original author implementations.
 
 ## Overview
 
-| Algorithm | Python | Original Framework | SCRBenchmark Framework | Status |
-|-----------|--------|--------------------|------------------------|--------|
-| scDeepCluster | 3.9* | PyTorch 1.8 | PyTorch | IDENTICAL |
-| scCDCG | **3.7** | PyTorch 1.12 | PyTorch | IDENTICAL |
-| scMAE | **3.10** | PyTorch Lightning | PyTorch | IDENTICAL (methodology) |
-| scNAME | >=3.8 | TensorFlow >=2.2 | PyTorch | IDENTICAL (methodology) |
+| Algorithm | Python | Original Framework | SCRBenchmark Framework | Check scope |
+|-----------|--------|--------------------|------------------------|-------------|
+| scDeepCluster | 3.9* | PyTorch 1.8 | PyTorch | Direct checks when optional source is available; otherwise partial |
+| scCDCG | **3.7** | PyTorch 1.12 | PyTorch | Direct checks when optional source is available; otherwise partial |
+| scMAE | **3.10** | PyTorch Lightning | PyTorch | Methodology and smoke checks, not a formal equivalence proof |
+| scNAME | >=3.8 | TensorFlow >=2.2 | PyTorch | Cross-framework methodology and smoke checks only |
 
 IMPORTANT: Python versions in bold are explicitly required by the original authors.
+
+A skipped test that requires original author source provides no evidence of direct
+equivalence. Always review both the pass and skip counts before interpreting a run.
 
 ## Folder Structure
 
@@ -33,6 +37,10 @@ tests/comparisons/
 ```
 
 ## Usage
+
+The repository-level `pytest -q` command intentionally runs only
+`tests/unit_tests/`. Comparison files use the `compare_*.py` naming convention
+and must be invoked explicitly with one of the commands in this README.
 
 ### Run all tests
 
@@ -87,6 +95,15 @@ cd tests/comparisons/envs
 
 # Or a specific environment
 ./setup_environments.sh scname
+```
+
+Existing `env_<algorithm>` environments are preserved by default. To replace
+one, pass `--replace`; this explicitly removes the matching Conda environment
+before recreating it:
+
+```bash
+./setup_environments.sh --replace scname
+./setup_environments.sh --replace all
 ```
 
 ### Activate an environment

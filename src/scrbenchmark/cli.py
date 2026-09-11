@@ -50,21 +50,11 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def setup_path():
-    """Add project root to path."""
-    project_root = Path(__file__).parent
-    if str(project_root) not in sys.path:
-        sys.path.insert(0, str(project_root))
-
-
-setup_path()
-
-
 def load_algorithms():
     """Import and register available algorithms without hard-failing on one bad dependency."""
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
     try:
-        import algorithms  # noqa: F401 - triggers module-level auto-registration
+        from scrbenchmark import algorithms  # noqa: F401 - triggers module-level auto-registration
     except Exception as exc:
         logger.warning(
             "Partial algorithm loading due to import error: %s. "
@@ -145,20 +135,8 @@ def parse_param_string(param_str: str) -> tuple:
 
 def load_config_file(config_path: str) -> Dict[str, Any]:
     """Load configuration from YAML or JSON file."""
-    path = Path(config_path)
-
-    if not path.exists():
-        raise FileNotFoundError(f"Config file not found: {config_path}")
-
-    with open(path, 'r') as f:
-        if path.suffix in ['.yaml', '.yml']:
-            try:
-                import yaml
-                return yaml.safe_load(f)
-            except ImportError:
-                raise ImportError("PyYAML is required for YAML config files. Install with: pip install pyyaml")
-        else:
-            return json.load(f)
+    from scrbenchmark.configuration import load_run_config
+    return load_run_config(config_path)
 
 
 def generate_default_config() -> Dict[str, Any]:
@@ -166,7 +144,7 @@ def generate_default_config() -> Dict[str, Any]:
     algos = get_available_algorithms()
 
     # Get preprocessing params
-    from core.config import PREPROCESSING_PARAMS
+    from scrbenchmark.core.config import PREPROCESSING_PARAMS
     preprocessing = {p.name: p.default for p in PREPROCESSING_PARAMS}
 
     # Get default params for each algorithm
@@ -557,7 +535,11 @@ def run_analysis(args: argparse.Namespace) -> int:
     # Load config from file if provided
     if args.config:
         logger.info(f"Loading configuration from {args.config}")
-        config = load_config_file(args.config)
+        try:
+            config = load_config_file(args.config)
+        except ValueError as exc:
+            logger.error("Invalid configuration: %s", exc)
+            return 1
     else:
         config = {}
 
@@ -977,6 +959,9 @@ def run_analysis(args: argparse.Namespace) -> int:
 
     # Execution settings
     n_repeats = args.n_repeats if args.n_repeats is not None else exec_config.get('n_repeats', 1)
+    if isinstance(n_repeats, bool) or not isinstance(n_repeats, int) or n_repeats < 1:
+        logger.error("--n-repeats / execution.n_repeats must be a positive integer.")
+        return 1
     random_seed = args.seed if args.seed is not None else exec_config.get('random_seed', 42)
     compute_scib_metrics = (
         False if getattr(args, 'no_scib_metrics', False)
@@ -1010,10 +995,11 @@ def run_analysis(args: argparse.Namespace) -> int:
     np.random.seed(random_seed)
 
     # Import required modules
-    from utils.data_handler import DataHandler
-    from utils.analysis_runner import AnalysisRunner
-    from utils.dataset_splitter import DatasetSplitter, BenchmarkPreprocessor
-    import utils.visualization as viz
+    from scrbenchmark.utils.data_handler import DataHandler
+    from scrbenchmark.utils.analysis_runner import AnalysisRunner
+    from scrbenchmark.utils.dataset_splitter import DatasetSplitter, BenchmarkPreprocessor
+    from scrbenchmark.execution import write_run_status
+    import scrbenchmark.utils.visualization as viz
 
     # Create output directory structure
     output_path = Path(output_dir)
@@ -1056,6 +1042,8 @@ def run_analysis(args: argparse.Namespace) -> int:
     data_handler = DataHandler()
     try:
         data_handler.load(data_file)
+        if args.label_col is not None:
+            data_handler.set_label_column(args.label_col)
     except Exception as e:
         logger.error(f"Failed to load data: {e}")
         return 1
@@ -1065,7 +1053,7 @@ def run_analysis(args: argparse.Namespace) -> int:
 
     # Exclude specified batches (e.g., 'smarter' which has RPKM instead of raw counts)
     if hasattr(args, 'exclude_batches') and args.exclude_batches:
-        from utils.dataset_splitter import get_batch_column
+        from scrbenchmark.utils.dataset_splitter import get_batch_column
         adata = data_handler.get_data()
         batch_col = get_batch_column(adata)
         
@@ -1122,7 +1110,7 @@ def run_analysis(args: argparse.Namespace) -> int:
     if preprocessing_params.get('do_batch_correction', False):
         batch_key = preprocessing_params.get('batch_correction_batch_key', 'auto')
         if batch_key == 'auto':
-            from utils.dataset_splitter import get_batch_column
+            from scrbenchmark.utils.dataset_splitter import get_batch_column
             adata = data_handler.get_data()
             detected_batch_key = get_batch_column(adata)
             if detected_batch_key:
@@ -1170,7 +1158,7 @@ def run_analysis(args: argparse.Namespace) -> int:
              batch_col = args.stratify_by  # Using stratify-by as batch col reuse
              if not batch_col:
                  # try to auto-detect batch
-                 from utils.dataset_splitter import get_batch_column
+                 from scrbenchmark.utils.dataset_splitter import get_batch_column
                  batch_col = get_batch_column(adata_raw)
 
              if batch_col:
@@ -1372,7 +1360,7 @@ def run_analysis(args: argparse.Namespace) -> int:
         print("-" * 60)
         
         runner = AnalysisRunner(output_dir=results_dir)
-        from utils.analysis_runner import BenchmarkComparisonResult
+        from scrbenchmark.utils.analysis_runner import BenchmarkComparisonResult
         import numpy as np
         
         def progress_callback(message: str, progress: float = None):
@@ -1382,7 +1370,7 @@ def run_analysis(args: argparse.Namespace) -> int:
         inductive_algos = []
         transductive_algos = []
         
-        from core.algorithm_registry import AlgorithmRegistry
+        from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
         for algo_name in algorithms:
             algo_class = AlgorithmRegistry.get(algo_name)
             if algo_class:
@@ -1464,6 +1452,7 @@ def run_analysis(args: argparse.Namespace) -> int:
 
         if not all_benchmark_results:
             logger.error("No benchmark results generated.")
+            write_run_status(config_dir, algorithms, n_repeats, [])
             return 1
 
         # Create combined result object
@@ -1471,6 +1460,7 @@ def run_analysis(args: argparse.Namespace) -> int:
             results=all_benchmark_results,
             summary=runner._compute_benchmark_summary(all_benchmark_results)
         )
+        benchmark_exit_code = write_run_status(config_dir, algorithms, n_repeats, results.results, final=False)
 
         try:
 
@@ -1907,7 +1897,7 @@ def run_analysis(args: argparse.Namespace) -> int:
             # Save benchmark summary and detailed CSV (UI parity)
             try:
                 import pandas as pd
-                from core.algorithm_registry import AlgorithmRegistry
+                from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
 
                 summary_rows = []
                 for algo_name, stats in results.summary.items():
@@ -2023,13 +2013,13 @@ def run_analysis(args: argparse.Namespace) -> int:
                         'mode': 'benchmark',
                         'data_file': str(data_file),
                         'output_dir': str(output_dir),
-                        'status': 'completed',
+                        'status': 'partial_failure' if benchmark_exit_code else 'completed',
                         'split_info': split_result.split_info,
                     },
                 )
             except Exception as e:
                 logger.warning(f"Could not save completed hyperparameter snapshot: {e}")
-            return 0
+            return write_run_status(config_dir, algorithms, n_repeats, results.results)
             
         except Exception as e:
             logger.error(f"Benchmark failed: {e}")
@@ -2043,7 +2033,15 @@ def run_analysis(args: argparse.Namespace) -> int:
         # Preprocess data
         if not preprocessing_params.get('skip', False):
             logger.info("Preprocessing data (Global)...")
-            data_handler.preprocess(preprocessing_params)
+            try:
+                data_handler.preprocess(preprocessing_params)
+            except ValueError as exc:
+                logger.error("Preprocessing failed: %s", exc)
+                failures = [
+                    {'algorithm': name, 'run_id': run_id, 'error': str(exc)}
+                    for name in algorithms for run_id in range(n_repeats)
+                ]
+                return write_run_status(config_dir, algorithms, n_repeats, [], failures)
             info = data_handler.get_info()
             logger.info(f"After preprocessing: {info['n_cells']} cells, {info['n_genes']} genes")
         else:
@@ -2052,7 +2050,7 @@ def run_analysis(args: argparse.Namespace) -> int:
         # Apply batch balancing if requested (standard mode)
         balance_standard = getattr(args, 'balance_batches_standard', False)
         if balance_standard:
-            from utils.dataset_splitter import DatasetSplitter, get_batch_column
+            from scrbenchmark.utils.dataset_splitter import DatasetSplitter, get_batch_column
 
             adata = data_handler.get_data()
             original_n_cells = adata.n_obs
@@ -2133,6 +2131,14 @@ def run_analysis(args: argparse.Namespace) -> int:
             return 1
     
         # Print results
+        exit_code = write_run_status(
+            config_dir, algorithms, n_repeats, comparison_result.results, comparison_result.failures, final=False
+        )
+        if not comparison_result.results:
+            logger.error("Analysis failed: no algorithm produced results. See config/run_status.json.")
+            return 1
+        if exit_code:
+            logger.error("Analysis partially failed. See config/run_status.json for missing runs.")
         print("\n" + "=" * 60)
         print("RESULTS SUMMARY")
         print("=" * 60)
@@ -2339,7 +2345,7 @@ def run_analysis(args: argparse.Namespace) -> int:
                 # --- Marker-Overlap Annotation + Sankey ---
                 try:
                     if gt_labels is not None and len(gt_labels) == len(pred_labels):
-                        from utils.metrics import marker_overlap_annotation
+                        from scrbenchmark.utils.metrics import marker_overlap_annotation
                         logger.info(f"Computing marker-overlap annotation for {result.algorithm_name}...")
 
                         overlap_result = marker_overlap_annotation(
@@ -2442,7 +2448,10 @@ def run_analysis(args: argparse.Namespace) -> int:
             for result in comparison_result.results:
                 safe_algo = result.algorithm_name.replace(' ', '_').replace('/', '_')
                 labels_file = labels_dir / f"labels_{safe_algo}_run{result.run_id}.csv"
-                labels_df = {'predicted_label': result.labels}
+                cell_ids = result.extra_info.get('cell_ids', adata.obs_names)
+                if len(cell_ids) != len(result.labels):
+                    raise ValueError("Cannot export labels: cell identifiers are not aligned with predictions.")
+                labels_df = {'cell_id': list(cell_ids), 'predicted_label': result.labels}
                 if result.true_labels is not None:
                     if reverse_label_map is not None:
                         # Decode integer labels back to original cell type names
@@ -2648,13 +2657,15 @@ def run_analysis(args: argparse.Namespace) -> int:
                     'mode': 'standard',
                     'data_file': str(data_file),
                     'output_dir': str(output_dir),
-                    'status': 'completed',
+                    'status': 'partial_failure' if exit_code else 'completed',
                 },
             )
         except Exception as e:
             logger.warning(f"Could not save completed hyperparameter snapshot: {e}")
 
-        return 0
+        return write_run_status(
+            config_dir, algorithms, n_repeats, comparison_result.results, comparison_result.failures
+        )
 
 
 def cmd_list_algorithms(args: argparse.Namespace) -> int:
@@ -2712,7 +2723,7 @@ def cmd_generate_config(args: argparse.Namespace) -> int:
 
 def cmd_info(args: argparse.Namespace) -> int:
     """Show information about a data file."""
-    from utils.data_handler import DataHandler
+    from scrbenchmark.utils.data_handler import DataHandler
 
     if not args.data:
         logger.error("Please specify a data file with --data")
@@ -2749,7 +2760,7 @@ def cmd_info(args: argparse.Namespace) -> int:
 
 def cmd_preprocess(args: argparse.Namespace) -> int:
     """Preprocess data and save to a new file."""
-    from utils.data_handler import DataHandler
+    from scrbenchmark.utils.data_handler import DataHandler
     import anndata as ad
 
     if not args.data:
@@ -2854,6 +2865,9 @@ Examples:
     )
 
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    demo_parser = subparsers.add_parser('demo', help='Create a small synthetic H5AD dataset')
+    demo_parser.add_argument('--output', required=True, help='Destination H5AD file (must not exist)')
+    demo_parser.add_argument('--seed', type=int, default=42)
 
     # -------------------------------------------------------------------------
     # run command
@@ -3164,7 +3178,15 @@ Examples:
         args.verbose = False
 
     # Dispatch to command handlers
-    if args.command == 'run':
+    if args.command == 'demo':
+        from scrbenchmark.demo import create_demo_dataset
+        try:
+            print(create_demo_dataset(args.output, args.seed))
+            return 0
+        except (OSError, ValueError) as exc:
+            logger.error("Could not create demo dataset: %s", exc)
+            return 1
+    elif args.command == 'run':
         return run_analysis(args)
     elif args.command == 'list-algorithms':
         return cmd_list_algorithms(args)

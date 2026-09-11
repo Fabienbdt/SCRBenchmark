@@ -1,7 +1,7 @@
 import numpy as np
 
-from algorithms.sc_mae_scraw_weighted import ScMaeScrawWeightedAlgorithm
-from algorithms.scdeepcluster_scraw_weighted import ScDeepClusterScrawWeighted
+from scrbenchmark.algorithms.sc_mae_scraw_weighted import ScMaeScrawWeightedAlgorithm
+from scrbenchmark.algorithms.scdeepcluster_scraw_weighted import ScDeepClusterScrawWeighted
 
 
 def test_scmae_density_only_skips_reconstruction_pseudo_labels(monkeypatch):

@@ -8,12 +8,11 @@ import sys
 import numpy as np
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 ad = pytest.importorskip("anndata")
 pytest.importorskip("scanpy")
 
-from utils.dataset_splitter import BenchmarkPreprocessor
+from scrbenchmark.utils.dataset_splitter import BenchmarkPreprocessor
 
 
 def _make_adata(matrix: np.ndarray):

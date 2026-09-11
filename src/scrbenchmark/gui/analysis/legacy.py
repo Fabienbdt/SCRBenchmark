@@ -13,15 +13,14 @@ import json
 import seaborn as sns
 
 # Add package root to path (legacy.py moved into gui/analysis/)
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from core.algorithm_registry import AlgorithmRegistry
-from utils.metrics import align_labels
-from utils.analysis_runner import AnalysisRunner, BenchmarkComparisonResult
-from utils.dataset_splitter import DatasetSplitter, get_batch_column
-import utils.visualization as viz
-from gui.algorithm_config import _generate_cli_command
-from gui.widgets import check_prerequisites, detect_batch_column, display_error
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.utils.metrics import align_labels
+from scrbenchmark.utils.analysis_runner import AnalysisRunner, BenchmarkComparisonResult
+from scrbenchmark.utils.dataset_splitter import DatasetSplitter, get_batch_column
+import scrbenchmark.utils.visualization as viz
+from scrbenchmark.gui.algorithm_config import _generate_cli_command
+from scrbenchmark.gui.widgets import check_prerequisites, detect_batch_column, display_error
 
 
 def render_analysis_page():
@@ -262,7 +261,7 @@ def _run_analysis(handler, n_repeats: int, random_seed: int, compute_scib_metric
     # Apply batch balancing if enabled
     balance_settings = st.session_state.get('balance_settings_standard', {})
     if balance_settings:
-      from utils.dataset_splitter import DatasetSplitter
+      from scrbenchmark.utils.dataset_splitter import DatasetSplitter
 
       status_text.text("Balancing batches...")
       progress_bar.progress(0.05)
@@ -352,6 +351,8 @@ def _display_results():
 
   st.markdown("---")
   st.subheader("Results")
+  for failure in getattr(results, 'failures', []):
+    st.error(f"{failure['algorithm']} (run {failure['run_id']}): {failure['error']}")
 
   # Check if we have any results
   if not results.results:
@@ -500,7 +501,7 @@ def _display_results():
   if has_loss:
     with st.expander("Training Loss Curves"):
       try:
-        import utils.visualization as viz
+        import scrbenchmark.utils.visualization as viz
         import matplotlib.pyplot as plt_loss
 
         # Group by algorithm (show first run only to keep compact)
@@ -608,7 +609,7 @@ def _build_explorer_payload_from_current_results(results):
   if not hasattr(results, "results") or not results.results:
     return None, None, None, [], []
 
-  from gui import results_explorer as rex
+  from scrbenchmark.gui import results_explorer as rex
 
   condition_name = "run_analysis_current"
   runner = st.session_state.get("analysis_runner")
@@ -1615,7 +1616,7 @@ def _render_group_inspector(results):
   # Compute marker genes
   if st.button("Find Marker Genes", key="analyze_genes_btn", type="primary"):
     with st.spinner(f"Computing differential expression for Cluster {selected_cluster} (Wilcoxon)..."):
-      from utils.statistics import compute_marker_genes
+      from scrbenchmark.utils.statistics import compute_marker_genes
       
       try:
         # Run DE analysis
@@ -1639,7 +1640,7 @@ def _render_group_inspector(results):
         if st.checkbox("Show DotPlot (Top 5 markers for ALL clusters)", value=False):
           with st.spinner("Preparing DotPlot for all clusters..."):
             # We need top markers for ALL groups to make a good dotplot
-            from utils.statistics import compute_marker_genes
+            from scrbenchmark.utils.statistics import compute_marker_genes
             marker_dict = {}
             for cluster in unique_clusters:
               # Faster if we just get top 5
@@ -1739,7 +1740,7 @@ def _render_batch_gene_inspector(results):
     return
 
   # Auto-detect batch column
-  from utils.dataset_splitter import get_batch_column
+  from scrbenchmark.utils.dataset_splitter import get_batch_column
   batch_col = get_batch_column(adata)
   
   if not batch_col:
@@ -1799,7 +1800,7 @@ def _render_batch_gene_inspector(results):
   # Compute button
   if st.button("Compute Top Genes by Batch", key="analyze_batch_genes_btn", type="primary"):
     with st.spinner(f"Computing top {n_genes} genes for each batch..."):
-      from utils.statistics import compute_highly_expressed_genes_by_group
+      from scrbenchmark.utils.statistics import compute_highly_expressed_genes_by_group
       
       try:
         genes_by_batch = compute_highly_expressed_genes_by_group(
@@ -2009,7 +2010,7 @@ def _render_celltype_gene_inspector(results):
     st.caption(f"{n_celltypes} cell type(s) detected")
   
   # Batch filtering option
-  from utils.dataset_splitter import get_batch_column
+  from scrbenchmark.utils.dataset_splitter import get_batch_column
   batch_col = get_batch_column(adata)
   
   filter_by_batch = False
@@ -2059,7 +2060,7 @@ def _render_celltype_gene_inspector(results):
   # Compute button
   if st.button("Compute Top Genes by Cell Type", key="analyze_celltype_genes_btn", type="primary"):
     with st.spinner(f"Computing top {n_genes} genes for each cell type..."):
-      from utils.statistics import compute_highly_expressed_genes_by_group
+      from scrbenchmark.utils.statistics import compute_highly_expressed_genes_by_group
       
       try:
         # Filter by batch if selected
@@ -2398,7 +2399,7 @@ def _render_umap(results):
         st.warning("No ground truth available. Defaulting to Cluster.")
         plot_labels = np.asarray(base_result.labels)
     else: # Batch
-      from utils.dataset_splitter import get_batch_column
+      from scrbenchmark.utils.dataset_splitter import get_batch_column
       batch_col = get_batch_column(adata) if adata is not None else None
       if batch_col:
         plot_labels = _match_label_length(adata.obs[batch_col].values)

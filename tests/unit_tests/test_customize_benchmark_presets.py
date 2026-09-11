@@ -7,11 +7,10 @@ import sys
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 pytest.importorskip("streamlit")
 
-from gui import customize_benchmark
+from scrbenchmark.gui import customize_benchmark
 
 
 def test_report_method_commands_repeat_without_output_collision():

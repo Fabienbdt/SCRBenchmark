@@ -1,7 +1,9 @@
 # Vendored scRAW Dedicated Backend
 
 This directory contains the lightweight `scraw_dedicated` Python package used by
-the SCRBenchmark `scraw` adapter and the stable_generalist reproduction scripts.
+the transductive checkpoint and stable-generalist reproduction scripts. The
+registered SCRBenchmark `scRAW` adapter uses the public backend in the sibling
+`vendor/scraw_inductive` directory.
 
 The import path is:
 
@@ -13,5 +15,5 @@ SCRBenchmark loads this path automatically. To override it with another checkout
 set:
 
 ```bash
-export SCRAW_DEDICATED_ROOT=/path/to/scRAW_EXPERIMENTAL
+export SCRAW_EXPERIMENTAL_ROOT=/path/to/scRAW_EXPERIMENTAL
 ```

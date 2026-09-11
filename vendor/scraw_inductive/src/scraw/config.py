@@ -1,11 +1,11 @@
-"""JSON-backed configuration objects for the scRAW pipeline."""
+"""JSON/YAML-backed configuration objects for the scRAW pipeline."""
 
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 import json
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Mapping, Optional
 
 
 @dataclass
@@ -153,10 +153,23 @@ class ScRAWConfig:
 
 
 def load_config(path: str | Path) -> ScRAWConfig:
-    """Load one JSON config file from disk."""
+    """Load one JSON or YAML config file from disk."""
     config_path = Path(path)
-    payload = json.loads(config_path.read_text(encoding="utf-8"))
-    return ScRAWConfig.from_dict(payload)
+    text = config_path.read_text(encoding="utf-8")
+    if config_path.suffix.lower() in {".yaml", ".yml"}:
+        import yaml
+
+        payload = yaml.safe_load(text)
+    else:
+        payload = json.loads(text)
+
+    if payload is None:
+        payload = {}
+    if not isinstance(payload, Mapping):
+        raise ValueError(
+            f"scRAW config {config_path} must contain a mapping at the document root."
+        )
+    return ScRAWConfig.from_dict(dict(payload))
 
 
 def save_config(config: ScRAWConfig, path: str | Path) -> None:

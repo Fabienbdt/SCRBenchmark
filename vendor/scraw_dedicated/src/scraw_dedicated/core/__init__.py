@@ -1,4 +1,4 @@
-# Core module for scDeepCluster GUI
+# Core contracts for the dedicated scRAW backend.
 from .config import Config, HyperparameterConfig
 from .algorithm_registry import AlgorithmRegistry, BaseAlgorithm
 

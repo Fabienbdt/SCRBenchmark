@@ -15,22 +15,24 @@ import re
 import shlex
 import sys
 
-from core.algorithm_registry import AlgorithmRegistry
-from gui.algorithm_config import _generate_cli_command
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.gui.algorithm_config import _generate_cli_command
 
 try:
-  from gui.protocol_designer import render_protocol_registry_panel, render_protocol_workbench
+  from scrbenchmark.gui.protocol_designer import render_protocol_registry_panel, render_protocol_workbench
 except Exception:
   render_protocol_registry_panel = None
   render_protocol_workbench = None
 
 try:
-  from protocols.registry import get_protocol_spec, protocol_to_customize_configs
+  from scrbenchmark.protocols.registry import get_protocol_spec, protocol_to_customize_configs
 except Exception:
   get_protocol_spec = None
   protocol_to_customize_configs = None
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+from scrbenchmark.paths import resource_root
+
+REPO_ROOT = resource_root()
 REPRODUCTION_SCRIPTS = REPO_ROOT / "scripts" / "reproduction"
 if str(REPRODUCTION_SCRIPTS) not in sys.path:
   sys.path.insert(0, str(REPRODUCTION_SCRIPTS))
@@ -188,7 +190,7 @@ def _load_report_method_specs() -> Dict[str, Any]:
     from scrbenchmark.methods import load_method_specs
   except Exception:
     try:
-      from methods import load_method_specs
+      from scrbenchmark.methods import load_method_specs
     except Exception:
       return {}
 
@@ -1790,7 +1792,7 @@ def render_customize_benchmark_page():
 
 def _render_custom_algo_params(algo_name: str, config: Dict[str, Any], config_idx: int):
   """Render hyperparameter editors for a specific algorithm within a custom config."""
-  from core.config import ParamType
+  from scrbenchmark.core.config import ParamType
 
   algo_class = AlgorithmRegistry.get(algo_name)
   hyperparams = algo_class.get_hyperparameters()

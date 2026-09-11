@@ -18,9 +18,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-import utils.visualization as viz
-from utils.dataset_splitter import get_batch_column
-from utils.metrics import compute_accuracy, compute_ari, compute_error_analysis, compute_nmi
+import scrbenchmark.utils.visualization as viz
+from scrbenchmark.utils.dataset_splitter import get_batch_column
+from scrbenchmark.utils.metrics import compute_accuracy, compute_ari, compute_error_analysis, compute_nmi
 
 
 _RESULT_STATE_KEY = "latent_reclustering_result"

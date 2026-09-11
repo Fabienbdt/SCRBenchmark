@@ -36,7 +36,7 @@ From the repository root:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -e ".[gui]"
 pip install -r requirements-reproduction.txt
 pip check
 ./scrbenchmark list-algorithms
@@ -164,7 +164,7 @@ columns are versioned in
 similarly named but differently preprocessed datasets if exact report numbers
 are required.
 
-The full source audit is [`dataset_sources.md`](dataset_sources.md). It contains
+The full source audit is [`dataset_sources.md`](../dataset_sources.md). It contains
 the public download URLs, distinguishes the report's 10 datasets from the three
 later extensions, and records the Zeisel, pancreas-alias, and Tabula Muris Senis
 provenance caveats. A new maintainer should read it before rebuilding any H5AD.

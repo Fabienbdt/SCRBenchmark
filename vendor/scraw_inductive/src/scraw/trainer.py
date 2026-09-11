@@ -297,8 +297,25 @@ class ScRAWTrainer:
 
     def __init__(self, config: ScRAWConfig) -> None:
         self.config = config
+        self._validate_supported_configuration()
         self._configure_runtime_environment()
         self.device = resolve_device(config.runtime.device)
+
+    def _validate_supported_configuration(self) -> None:
+        """Reject options that this public backend does not implement."""
+        reconstruction = str(self.config.training.reconstruction_distribution).strip().lower()
+        if reconstruction != "mse":
+            raise ValueError(
+                "The vendored public scRAW backend currently supports only "
+                "training.reconstruction_distribution='mse'."
+            )
+
+        mmd_weight = float(self.config.batch_correction.mmd_weight)
+        if not np.isfinite(mmd_weight) or mmd_weight != 0.0:
+            raise ValueError(
+                "batch_correction.mmd_weight is not implemented by the vendored public "
+                "scRAW backend; set it to 0.0."
+            )
 
     def _configure_runtime_environment(self) -> None:
         """Apply process-wide runtime settings before any CUDA device resolution."""

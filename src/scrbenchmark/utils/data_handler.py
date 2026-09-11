@@ -415,9 +415,24 @@ class DataHandler:
         self.adata = sc.read_10x_mtx(parent)
         self._extract_labels()
 
+    def set_label_column(self, column: str) -> None:
+        """Use an explicitly requested observation column, including after filtering."""
+        if self.adata is None or column not in self.adata.obs:
+            raise ValueError(f"Label column {column!r} is missing from the input data.")
+        if self.adata.obs[column].isna().any():
+            raise ValueError(f"Label column {column!r} contains missing values.")
+        self._selected_label_column = column
+        self.adata.uns.pop('label_map', None)
+        self._extract_labels()
+        if self.adata_original is not None:
+            self.adata_original.obs['labels'] = self.adata.obs['labels'].copy()
+            self.adata_original.obs['labels_encoded'] = self.adata.obs['labels_encoded'].copy()
+            self.adata_original.uns['label_map'] = self.adata.uns.get('label_map', {}).copy()
+
     def _extract_labels(self):
         """Extract labels from loaded AnnData."""
-        for col in self.LABEL_COLUMNS:
+        selected = getattr(self, '_selected_label_column', None)
+        for col in ([selected] if selected is not None else self.LABEL_COLUMNS):
             if col in self.adata.obs.columns:
                 self.adata.obs['labels'] = self.adata.obs[col]
                 self._encode_labels()
@@ -426,6 +441,10 @@ class DataHandler:
     def _encode_labels(self):
         """Encode string labels to integers."""
         labels = self.adata.obs['labels']
+        if len(labels) == 0:
+            self.labels = np.array([], dtype=int)
+            self.adata.obs['labels_encoded'] = self.labels
+            return
 
         # Convert bytes to string if necessary
         if len(labels) > 0 and isinstance(labels.iloc[0], bytes):
@@ -468,11 +487,7 @@ class DataHandler:
 
         if params.get('skip', False):
             logger.info("Skipping preprocessing as requested.")
-            # Ensure labels are set correctly even if skipping
-            if 'Group' in self.adata.obs:
-                self.labels = self.adata.obs['Group'].values
-            elif 'labels' in self.adata.obs:
-                self.labels = self.adata.obs['labels'].values
+            self._extract_labels()
             
             # Store current X as original_X for algorithms that need raw data
             # ONLY if not already present. This is CRITICAL if batch correction was applied at import,
@@ -570,39 +585,20 @@ class DataHandler:
             dropout_params['method'] = 'none'
             dropout_params['noise_level'] = 0.0
 
-        # Create fresh AnnData preserving important metadata columns
-        import pandas as pd
-        
-        # Columns to preserve (batch, cell type, sample info)
-        preserve_cols = ['tech', 'batch', 'Batch', 'dataset', 'dataset_source', 
-                         'study', 'sample', 'donor', 'platform',
-                         'celltype', 'cell_type', 'CellType', 'cell_types']
-        
-        obs_df = pd.DataFrame(index=range(X.shape[0]))
-        if y is not None:
-            obs_df['Group'] = y
-        
-        # Preserve existing important columns from original adata
-        if self.adata_original is not None:
-            for col in preserve_cols:
-                if col in self.adata_original.obs.columns:
-                    # Handle potential index mismatch due to cell filtering
-                    if len(self.adata_original.obs) == X.shape[0]:
-                        obs_df[col] = self.adata_original.obs[col].values
-                    else:
-                        logger.warning(f"Cannot preserve '{col}': cell count mismatch after filtering")
-        
-        var_df = None
-        if self.adata is not None and getattr(self.adata, 'var', None) is not None:
-            if self.adata.var.shape[0] == X.shape[1]:
-                var_df = self.adata.var.copy()
-            else:
-                logger.warning("Cannot preserve var: gene count mismatch after preprocessing input")
+        # Preserve identifiers and annotations from the current aligned input.
+        # Rebuilding a RangeIndex breaks joins between exports and the input cells.
+        from copy import deepcopy
 
-        if var_df is not None:
-            self.adata = sc.AnnData(X, obs=obs_df, var=var_df)
-        else:
-            self.adata = sc.AnnData(X, obs=obs_df)
+        obs_df = self.adata.obs.copy()
+        if y is not None and 'Group' not in obs_df:
+            obs_df['Group'] = y
+        layers = {}
+        if batch_corr_at_import and 'original_X' in self.adata.layers:
+            layers['original_X'] = self.adata.layers['original_X'].copy()
+        self.adata = sc.AnnData(
+            X, obs=obs_df, var=self.adata.var.copy(),
+            uns=deepcopy(self.adata.uns), layers=layers,
+        )
 
         # Cell filtering (if enabled)
         do_cell_filtering = params.get('do_cell_filtering', True)
@@ -622,8 +618,15 @@ class DataHandler:
             if min_cells > 0:
                 sc.pp.filter_genes(self.adata, min_cells=min_cells)
 
-        # Store raw counts before any modification
-        X_raw = self.adata.X.copy()
+        if self.adata.n_obs == 0 or self.adata.n_vars == 0:
+            raise ValueError(
+                "Preprocessing removed all cells or genes. Lower min_genes_per_cell "
+                "or min_cells_per_gene, or disable the corresponding filter."
+            )
+
+        # Import-time correction changes X; retain its aligned raw count layer.
+        counts = self.adata.layers.get('original_X', self.adata.X) if batch_corr_at_import else self.adata.X
+        X_raw = counts.copy()
         if sp.issparse(X_raw):
             X_raw = X_raw.toarray()
 
@@ -737,7 +740,7 @@ class DataHandler:
         if do_batch_correction:
             strict_bc = bool(params.get('batch_correction_strict', False))
             try:
-                from utils.batch_correction import apply_batch_correction
+                from scrbenchmark.utils.batch_correction import apply_batch_correction
                 
                 method = batch_correction_method
                 is_sysvi = method == 'sysvi'
@@ -828,19 +831,7 @@ class DataHandler:
         # adata.raw stores the HVG-filtered raw counts (for tools expecting adata.raw)
         self.adata.raw = sc.AnnData(raw_counts, var=self.adata.var.copy(), obs=self.adata.obs.copy())
 
-        # Update labels (preserve label_map from initial _set_labels)
-        saved_label_map = self.adata.uns.get('label_map', None)
-        if 'Group' in self.adata.obs:
-            self.labels = self.adata.obs['Group'].values
-            try:
-                self.labels = self.labels.astype(int)
-            except (ValueError, TypeError):
-                unique_labels = np.unique(self.labels)
-                label_map = {label: i for i, label in enumerate(unique_labels)}
-                self.labels = np.array([label_map[l] for l in self.labels])
-        # Restore label_map if it was lost during preprocessing
-        if saved_label_map is not None and 'label_map' not in self.adata.uns:
-            self.adata.uns['label_map'] = saved_label_map
+        self._extract_labels()
 
         logger.info(f"Preprocessed data: {self.adata.shape[0]} cells, "
                    f"{self.adata.shape[1]} genes")

@@ -12,17 +12,16 @@ import seaborn as sns
 from scipy import sparse
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from utils.data_handler import DataHandler
-from utils.reference_datasets import get_available_datasets, load_reference_dataset
-from utils.dataset_splitter import get_batch_column
-from utils.batch_correction import check_scvi_available
+from scrbenchmark.utils.data_handler import DataHandler
+from scrbenchmark.utils.reference_datasets import get_available_datasets, load_reference_dataset
+from scrbenchmark.utils.dataset_splitter import get_batch_column
+from scrbenchmark.utils.batch_correction import check_scvi_available
 
 
-from gui.shared_components import display_batch_and_distribution_info
-from gui.widgets import display_error
-from gui.state_manager import KEYS, invalidate, set_with_cascade
+from scrbenchmark.gui.shared_components import display_batch_and_distribution_info
+from scrbenchmark.gui.widgets import display_error
+from scrbenchmark.gui.state_manager import KEYS, invalidate, set_with_cascade
 
 def _display_batch_info(handler):
   """Display batch/dataset source information if available."""
@@ -274,8 +273,8 @@ def _render_cells_per_gene_distribution(qc_metrics):
 def _render_batch_gene_inspector_upload(adata):
   """Render batch gene inspector for data upload page."""
   import io
-  from utils.statistics import compute_highly_expressed_genes_by_group
-  import utils.visualization as viz
+  from scrbenchmark.utils.statistics import compute_highly_expressed_genes_by_group
+  import scrbenchmark.utils.visualization as viz
   
   batch_col = get_batch_column(adata)
   
@@ -362,8 +361,8 @@ def _render_batch_gene_inspector_upload(adata):
 def _render_celltype_gene_inspector_upload(adata):
   """Render cell type gene inspector for data upload page."""
   import io
-  from utils.statistics import compute_highly_expressed_genes_by_group
-  import utils.visualization as viz
+  from scrbenchmark.utils.statistics import compute_highly_expressed_genes_by_group
+  import scrbenchmark.utils.visualization as viz
   
   # Detect cell type column
   celltype_col = None
@@ -477,8 +476,8 @@ def _render_celltype_gene_inspector_upload(adata):
 def _render_differential_expression_upload(adata):
   """Render differential expression analysis for data upload page."""
   import io
-  from utils.statistics import compute_marker_genes
-  import utils.visualization as viz
+  from scrbenchmark.utils.statistics import compute_marker_genes
+  import scrbenchmark.utils.visualization as viz
   
   st.markdown("#### Differential Expression Analysis")
   st.caption("Find marker genes that distinguish one group from all others (one-vs-rest comparison).")

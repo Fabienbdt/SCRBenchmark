@@ -14,9 +14,9 @@ from typing import Any, Callable, Iterable, Optional, Sequence
 import pandas as pd
 import streamlit as st
 
-from core.config import HyperparameterConfig, ParamType
-from gui.constants import BATCH_COLUMN_CANDIDATES, LABEL_COLUMN_CANDIDATES
-from gui.i18n import t
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
+from scrbenchmark.gui.constants import BATCH_COLUMN_CANDIDATES, LABEL_COLUMN_CANDIDATES
+from scrbenchmark.gui.i18n import t
 
 
 def check_prerequisites(
@@ -657,19 +657,19 @@ def render_architecture_editor(
       "Encoder layers",
       value=format_layers(encoder_default),
       key=f"{prefix}_enc_txt",
-      help="Exemple: [256,64]",
+      help="Example: [256,64]",
     )
     lat_txt = st.text_input(
       "Latent space",
       value=format_layers([int(latent_default)]),
       key=f"{prefix}_lat_txt",
-      help="Exemple: [32]",
+      help="Example: [32]",
     )
     dec_txt = st.text_input(
       "Decoder layers",
       value=format_layers(decoder_default),
       key=f"{prefix}_dec_txt",
-      help="Exemple: [64,256]",
+      help="Example: [64,256]",
     )
     encoder_layers = parse_layers(enc_txt)
     latent_layers = parse_layers(lat_txt) or [int(latent_default)]

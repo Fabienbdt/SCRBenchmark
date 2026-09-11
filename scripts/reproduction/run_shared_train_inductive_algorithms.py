@@ -36,9 +36,9 @@ from scraw.preprocessing import fit_preprocess_adata, save_preprocessing_state, 
 from scraw.presets import resolve_preset_config  # noqa: E402
 from scraw.trainer import ScRAWTrainer  # noqa: E402
 
-from algorithms.sc_mae import ScMaeAlgorithm  # noqa: E402
-from algorithms.scdeepcluster import ScDeepClusterAlgorithm  # noqa: E402
-from algorithms.scname import ScNAMEAlgorithm  # noqa: E402
+from scrbenchmark.algorithms.sc_mae import ScMaeAlgorithm  # noqa: E402
+from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm  # noqa: E402
+from scrbenchmark.algorithms.scname import ScNAMEAlgorithm  # noqa: E402
 
 
 ALGORITHM_CLASSES = {

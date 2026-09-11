@@ -31,8 +31,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 # =============================================================================
@@ -664,10 +664,12 @@ class ScNAMEAlgorithm(BaseAlgorithm):
         self._n_training_genes = adata.n_vars
 
         adata.raw = adata.copy()
-        sc.pp.normalize_per_cell(adata)
-        adata.obs['size_factors'] = adata.obs.n_counts / np.median(adata.obs.n_counts)
+        n_counts = np.asarray(adata.X.sum(axis=1)).ravel()
+        adata.obs['n_counts'] = n_counts
+        sc.pp.normalize_total(adata, target_sum=None)
+        adata.obs['size_factors'] = n_counts / np.median(n_counts)
         # Store normalization target for consistent test preprocessing
-        self._train_norm_target = float(np.median(adata.obs.n_counts))
+        self._train_norm_target = float(np.median(n_counts))
         sc.pp.log1p(adata)
 
         # Store training statistics BEFORE scaling for use in predict()

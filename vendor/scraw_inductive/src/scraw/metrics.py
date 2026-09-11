@@ -95,6 +95,26 @@ def _rare_acc(labels_true: np.ndarray, labels_pred: np.ndarray, threshold: float
     return float(np.mean(aligned[rare_mask] == labels_true[rare_mask]))
 
 
+def _balanced_rare_acc(
+    labels_true: np.ndarray,
+    labels_pred: np.ndarray,
+    threshold: float = 0.05,
+) -> Optional[float]:
+    """Average per-class recall across rare ground-truth classes after alignment."""
+    aligned = align_labels(labels_true, labels_pred)
+    classes, counts = np.unique(labels_true, return_counts=True)
+    rare_classes = classes[(counts / max(len(labels_true), 1)) < threshold]
+    if len(rare_classes) == 0:
+        return None
+
+    recalls = [
+        float(np.mean(aligned[labels_true == cls] == labels_true[labels_true == cls]))
+        for cls in rare_classes
+        if np.any(labels_true == cls)
+    ]
+    return float(np.mean(recalls)) if recalls else None
+
+
 def _classwise(labels_true: np.ndarray, labels_pred: np.ndarray) -> Dict[str, Dict[str, float]]:
     """Return per-class precision/recall/F1/support after alignment."""
     from sklearn.metrics import precision_recall_fscore_support
@@ -179,6 +199,7 @@ def compute_metrics(
         "UCA": float("nan"),
         "F1_Macro": float("nan"),
         "BalancedACC": float("nan"),
+        "BalancedRareACC": float("nan"),
         "RareACC": float("nan"),
         "UltraRareACC": float("nan"),
         "KNN_Purity": float("nan"),
@@ -198,6 +219,10 @@ def compute_metrics(
         rare_accuracy = _rare_acc(labels_true, labels_pred)
         if rare_accuracy is not None:
             metrics["RareACC"] = float(rare_accuracy)
+
+        balanced_rare_accuracy = _balanced_rare_acc(labels_true, labels_pred)
+        if balanced_rare_accuracy is not None:
+            metrics["BalancedRareACC"] = float(balanced_rare_accuracy)
 
         ultra_rare_accuracy = _rare_acc(labels_true, labels_pred, threshold=0.01)
         if ultra_rare_accuracy is not None:

@@ -16,7 +16,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import numpy as np
 import pandas as pd
 
-from core.config import SplitConfig
+from scrbenchmark.core.config import SplitConfig
 
 logger = logging.getLogger(__name__)
 

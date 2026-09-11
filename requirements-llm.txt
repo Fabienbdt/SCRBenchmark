@@ -1,0 +1,2 @@
+# Optional LLM algorithms and the core application.
+-e .[llm]

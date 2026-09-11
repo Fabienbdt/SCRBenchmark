@@ -16,25 +16,24 @@ import re
 from typing import Any, Dict, List, Optional, Tuple
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.algorithm_registry import AlgorithmRegistry
-from core.config import ParamType
-from utils.hyperparam_search import (
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.core.config import ParamType
+from scrbenchmark.utils.hyperparam_search import (
   HyperparameterSearcher, SearchSummary, SearchResult,
   generate_param_grid_from_config, save_search_results
 )
 try:
-  from core.optimization import OptunaOptimizer
+  from scrbenchmark.core.optimization import OptunaOptimizer
   OPTUNA_AVAILABLE = True
   OPTUNA_IMPORT_ERROR = None
 except Exception as exc:
   OptunaOptimizer = None
   OPTUNA_AVAILABLE = False
   OPTUNA_IMPORT_ERROR = str(exc)
-from utils.dataset_splitter import DatasetSplitter
-from gui.widgets import check_prerequisites
-from gui.widgets import display_error
+from scrbenchmark.utils.dataset_splitter import DatasetSplitter
+from scrbenchmark.gui.widgets import check_prerequisites
+from scrbenchmark.gui.widgets import display_error
 
 
 def render_hyperparam_search_page():

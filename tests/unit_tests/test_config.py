@@ -8,9 +8,8 @@ import json
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
-from core.config import (
+from scrbenchmark.core.config import (
     ParamType, HyperparameterConfig, Config,
     PREPROCESSING_PARAMS, get_all_hyperparameters
 )
@@ -130,8 +129,8 @@ class TestConfig:
     def test_default_values(self):
         """Config should have sensible defaults."""
         config = Config()
-        assert config.app_name == "scDeepCluster Analysis Suite"
-        assert config.version == "1.0.0"
+        assert config.app_name == "SCRBenchmark"
+        assert config.version == "1.1.0"
         assert config.seed == 42
         assert config.device == "auto"
 

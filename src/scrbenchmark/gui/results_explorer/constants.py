@@ -1,7 +1,7 @@
 """Shared constants for the Results Explorer package."""
 
-from gui.constants import ALGO_COLORS as SHARED_ALGO_COLORS
-from gui.constants import ALGO_DISPLAY_NAMES as SHARED_ALGO_DISPLAY_NAMES
+from scrbenchmark.gui.constants import ALGO_COLORS as SHARED_ALGO_COLORS
+from scrbenchmark.gui.constants import ALGO_DISPLAY_NAMES as SHARED_ALGO_DISPLAY_NAMES
 
 ALGO_COLORS = dict(SHARED_ALGO_COLORS)
 ALGO_DISPLAY_NAMES = dict(SHARED_ALGO_DISPLAY_NAMES)

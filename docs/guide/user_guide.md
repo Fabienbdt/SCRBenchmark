@@ -41,7 +41,7 @@ cd /path/to/SCRBenchmark
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -e ".[gui]"
 ```
 
 To reproduce heavy report experiments or use advanced external methods:

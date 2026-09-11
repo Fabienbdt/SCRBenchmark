@@ -23,5 +23,5 @@ else
     PYTHON_BIN="python3"
 fi
 
-# Run the CLI
-exec "$PYTHON_BIN" "$SCRIPT_DIR/src/scrbenchmark/cli.py" "$@"
+# Use the same installed package as the console entry point and the GUI.
+exec "$PYTHON_BIN" -m scrbenchmark "$@"

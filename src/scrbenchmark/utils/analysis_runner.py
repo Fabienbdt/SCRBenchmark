@@ -15,8 +15,8 @@ from datetime import datetime
 import json
 import numpy as np
 
-from core.algorithm_registry import AlgorithmRegistry, BaseAlgorithm
-from core.config import ParamType
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry, BaseAlgorithm
+from scrbenchmark.core.config import ParamType
 from .metrics import (
     compute_metrics, compute_metrics_by_group, compute_benchmark_metrics,
     compute_generalization_gap, BenchmarkMetrics
@@ -62,6 +62,7 @@ class ComparisonResult:
     """Result of comparing multiple algorithms."""
     results: List[AnalysisResult]
     summary: Dict[str, Dict[str, float]]  # algo -> metric -> mean/std
+    failures: List[Dict[str, Any]] = field(default_factory=list)
 
     def get_best_algorithm(self, metric: str = 'NMI') -> str:
         """Get the algorithm with the best mean score for a metric."""
@@ -286,6 +287,13 @@ class AnalysisRunner:
                 extra_info['cumulative_variance'] = float(np.sum(exp_var))
 
         # Collect aligned batch labels for batch-colored UMAP diagnostics.
+        if hasattr(data, 'obs_names'):
+            cell_ids = np.asarray(data.obs_names, dtype=str)
+            if valid_idx is not None:
+                cell_ids = cell_ids[valid_idx]
+            if len(cell_ids) != len(predicted_labels):
+                raise ValueError("Cell identifiers cannot be aligned with algorithm predictions.")
+            extra_info['cell_ids'] = cell_ids.tolist()
         if hasattr(data, 'obs') and predicted_labels is not None:
             batch_col = None
             for candidate in ['batch', 'Batch', 'tech', 'study', 'dataset', 'donor', 'sample']:
@@ -373,6 +381,9 @@ class AnalysisRunner:
         """
         params = params or {}
         all_results = []
+        failures = []
+        if n_repeats < 1:
+            raise ValueError("n_repeats must be a positive integer.")
 
         total_runs = len(algorithm_names) * n_repeats
         current_run = 0
@@ -464,6 +475,7 @@ class AnalysisRunner:
                     all_results.append(result)
                 except Exception as e:
                     logger.error(f"Error running {algo_name}: {e}")
+                    failures.append({'algorithm': algo_name, 'run_id': run_id, 'error': str(e)})
                     if progress_callback:
                         progress_callback(f"Error in {algo_name}: {str(e)}")
                     # Also print to console for debugging
@@ -473,7 +485,7 @@ class AnalysisRunner:
         # Compute summary statistics
         summary = self._compute_summary(all_results)
 
-        return ComparisonResult(results=all_results, summary=summary)
+        return ComparisonResult(results=all_results, summary=summary, failures=failures)
 
     def _compute_summary(self, results: List[AnalysisResult]
                         ) -> Dict[str, Dict[str, float]]:
@@ -1159,6 +1171,9 @@ class AnalysisRunner:
         params = params or {}
         search_spaces = search_spaces or {}
         all_results = []
+        failures = []
+        if n_repeats < 1:
+            raise ValueError("n_repeats must be a positive integer.")
 
         total_runs = len(algorithm_names) * n_repeats
         current_run = 0
@@ -1208,6 +1223,7 @@ class AnalysisRunner:
 
                 except Exception as e:
                     logger.error(f"Error running {algo_name} in benchmark mode: {e}")
+                    failures.append({'algorithm': algo_name, 'run_id': run_id, 'error': str(e)})
                     if progress_callback:
                         progress_callback(f"Error in {algo_name}: {str(e)}")
                     import traceback
@@ -1218,7 +1234,8 @@ class AnalysisRunner:
 
         return BenchmarkComparisonResult(
             results=all_results,
-            summary=summary
+            summary=summary,
+            failures=failures,
         )
 
     def _get_test_embeddings(
@@ -1368,6 +1385,7 @@ class BenchmarkComparisonResult:
     """Result of comparing multiple algorithms in benchmark mode."""
     results: List[BenchmarkResult]
     summary: Dict[str, Dict[str, float]]
+    failures: List[Dict[str, Any]] = field(default_factory=list)
 
     def get_best_algorithm(
         self,

@@ -27,7 +27,7 @@ Create and activate a local environment with:
   source .venv/bin/activate
 
 Then install the dependencies with:
-  ${PYTHON_BIN} -m pip install -r requirements.txt
+  ${PYTHON_BIN} -m pip install -e '.[gui]'
 EOF
     exit 1
 fi
@@ -36,4 +36,4 @@ echo "Launching SCRBenchmark via Streamlit..."
 exec "$PYTHON_BIN" -m streamlit run "$APP_PATH" \
   --server.port 8501 \
   --server.headless false \
-  --server.fileWatcherType none
+  --server.fileWatcherType none "$@"

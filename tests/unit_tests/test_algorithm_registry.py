@@ -7,12 +7,11 @@ import sys
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
-from core.algorithm_registry import (
+from scrbenchmark.core.algorithm_registry import (
     BaseAlgorithm, AlgorithmRegistry, AlgorithmInfo
 )
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 class MockAlgorithm(BaseAlgorithm):
@@ -203,7 +202,7 @@ class TestAlgorithmRegistry:
 
     def test_report_pca_registered_and_removed_algorithms_hidden(self):
         """The Table 1 PCA entry is available and removed baselines are hidden."""
-        import algorithms  # noqa: F401
+        from scrbenchmark import algorithms  # noqa: F401
 
         assert AlgorithmRegistry.get('pca') is not None
         assert AlgorithmRegistry.get('simple_autoencoder') is None

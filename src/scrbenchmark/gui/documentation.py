@@ -1,6 +1,4 @@
-"""
-Documentation page for the scDeepCluster Analysis Suite.
-"""
+"""Documentation page for SCRBenchmark."""
 
 import streamlit as st
 
@@ -10,7 +8,7 @@ def render_documentation_page():
   st.title("Documentation & User Guide")
   
   st.markdown("""
-  Welcome to the **scDeepCluster Analysis Suite** documentation!
+  Welcome to the **SCRBenchmark** documentation.
   
   This guide provides detailed information about the algorithms, parameters, and workflows 
   integrated into this platform. Whether you are looking to understand how a specific 
@@ -29,8 +27,8 @@ def render_documentation_page():
   with tab_overview:
     st.header("1. Overview")
     st.markdown("""
-    The **scDeepCluster Analysis Suite** is a unified platform for benchmarking and running 
-    state-of-the-art deep learning clustering algorithms for single-cell RNA-seq (scRNA-seq) data.
+    **SCRBenchmark** is a unified platform for benchmarking classical and deep-learning
+    clustering algorithms on single-cell RNA-seq (scRNA-seq) data.
     
     ### Key Features
     - **Multi-Algorithm Support**: Run and compare classic methods (PCA+Leiden) and advanced deep learning methods (scDeepCluster, scCDCG, scMAE, scNAME).
@@ -46,6 +44,10 @@ def render_documentation_page():
     | **scMAE** | Deep Learning | Masked Autoencoder for robust feature learning from sparse data. |
     | **scNAME** | Deep Learning | Neighborhood contrastive clustering with mask estimation for denoising. |
     | **PCA + clustering** | Baseline | PCA followed by K-Means, Louvain, Leiden, or HDBSCAN. |
+
+    scRAW is exposed as a registered report method rather than an internal algorithm.
+    Use **Customize Benchmark** or **Report Reproduction** to run it with the public
+    `default` or `baron` preset.
     
     ### New Features
     - **GPU/CPU Control**: Select your compute device (Auto/CPU/GPU) in Algorithm Configuration.

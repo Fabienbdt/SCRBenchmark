@@ -7,11 +7,10 @@ import sys
 
 import pytest
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 pytest.importorskip("streamlit")
 
-from gui import algorithm_config
+from scrbenchmark.gui import algorithm_config
 
 
 class _DummyAlgo:

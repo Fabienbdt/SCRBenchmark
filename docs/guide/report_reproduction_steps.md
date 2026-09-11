@@ -23,7 +23,7 @@ artifacts are reused whenever possible.
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt
+python -m pip install -e ".[gui]"
 pip install -r requirements-reproduction.txt
 ```
 
@@ -37,7 +37,7 @@ Quick check:
 
 ## 1. Download or Materialize Datasets
 
-First read [`dataset_sources.md`](dataset_sources.md). It identifies the 10
+First read [`dataset_sources.md`](../dataset_sources.md). It identifies the 10
 report datasets inside the later 13-dataset campaign and records the public
 upstream URLs and historical aliases.
 

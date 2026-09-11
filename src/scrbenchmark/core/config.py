@@ -1,7 +1,4 @@
-"""
-Configuration module for scDeepCluster GUI.
-Centralized configuration management with support for hyperparameters.
-"""
+"""Centralized SCRBenchmark configuration and hyperparameter definitions."""
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
@@ -84,8 +81,8 @@ class Config:
     """Main configuration class for the application."""
 
     # Application settings
-    app_name: str = "scDeepCluster Analysis Suite"
-    version: str = "1.0.0"
+    app_name: str = "SCRBenchmark"
+    version: str = "1.1.0"
 
     # Paths
     data_dir: Path = field(default_factory=lambda: Path("data"))

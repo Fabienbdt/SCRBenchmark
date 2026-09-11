@@ -10,8 +10,8 @@ import logging
 
 import numpy as np
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 logger = logging.getLogger(__name__)
 
@@ -289,7 +289,7 @@ class PCAClusteringAlgorithm(BaseAlgorithm):
 
     def _fit_pca(self, X: np.ndarray) -> np.ndarray:
         from sklearn.decomposition import PCA
-        from utils.pca_utils import compute_optimal_pca_components
+        from scrbenchmark.utils.pca_utils import compute_optimal_pca_components
 
         seed = int(self.params.get("random_state", 42))
         n_pca_components = int(self.params.get("n_pca_components", 0))

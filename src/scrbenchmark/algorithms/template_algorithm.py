@@ -15,8 +15,8 @@ missing dependency does not hide every other algorithm from the CLI/UI.
 from typing import Any, Dict, List, Optional
 import numpy as np
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 # Uncomment the decorator below to register this algorithm

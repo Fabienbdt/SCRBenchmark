@@ -7,9 +7,8 @@ import numpy as np
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
-from utils.metrics import (
+from scrbenchmark.utils.metrics import (
     compute_nmi, compute_ari, compute_accuracy,
     compute_silhouette, compute_metrics, align_labels,
     compute_balanced_rare_class_accuracy, compute_scib_metrics,
@@ -197,7 +196,7 @@ class TestAlignLabels:
         aligned = align_labels(labels_true, labels_pred)
 
         # Each unique value in aligned should correspond to one unique value in true
-        from utils.metrics import compute_accuracy
+        from scrbenchmark.utils.metrics import compute_accuracy
         acc = compute_accuracy(labels_true, labels_pred)
         assert acc == pytest.approx(1.0, abs=1e-6), \
             "Labels with same structure should have perfect accuracy"

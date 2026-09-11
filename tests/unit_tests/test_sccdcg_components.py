@@ -15,7 +15,6 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 
 class TestSinkhornAlgorithm:
@@ -24,7 +23,7 @@ class TestSinkhornAlgorithm:
     @pytest.fixture
     def sinkhorn_function(self):
         """Import Sinkhorn from scCDCG."""
-        from algorithms.sccdcg import sinkhorn
+        from scrbenchmark.algorithms.sccdcg import sinkhorn
         return sinkhorn
 
     def test_sinkhorn_output_shape(self, sinkhorn_function):
@@ -147,7 +146,7 @@ class TestLaplacianMatrix:
     @pytest.fixture
     def compute_laplacian(self):
         """Import Laplacian computation from scCDCG."""
-        from algorithms.sccdcg import get_laplace_matrix
+        from scrbenchmark.algorithms.sccdcg import get_laplace_matrix
         return get_laplace_matrix
 
     def test_laplacian_symmetric(self, compute_laplacian):
@@ -203,7 +202,7 @@ class TestClusterAssignment:
     @pytest.fixture
     def cluster_assignment_module(self):
         """Import ClusterAssignment from scCDCG."""
-        from algorithms.sccdcg import ClusterAssignment
+        from scrbenchmark.algorithms.sccdcg import ClusterAssignment
         return ClusterAssignment
 
     def test_cluster_assignment_output_shape(self, cluster_assignment_module):
@@ -260,7 +259,7 @@ class TestReproducibilityScCDCG:
 
     def test_sinkhorn_reproducible(self):
         """Sinkhorn should be fully reproducible."""
-        from algorithms.sccdcg import sinkhorn
+        from scrbenchmark.algorithms.sccdcg import sinkhorn
 
         np.random.seed(42)
         n_samples, n_clusters = 50, 5
@@ -284,7 +283,7 @@ class TestReproducibilityScCDCG:
 
     def test_sccdcg_initialization_reproducible(self):
         """scCDCG model initialization should be reproducible."""
-        from algorithms.sccdcg import ScCDCGAlgorithm
+        from scrbenchmark.algorithms.sccdcg import ScCDCGAlgorithm
 
         params = {
             'random_state': 42,
@@ -304,7 +303,7 @@ class TestNCutLoss:
 
     def test_full_nn_forward_pass(self):
         """FULL_NN forward pass should work without errors."""
-        from algorithms.sccdcg import FULL_NN
+        from scrbenchmark.algorithms.sccdcg import FULL_NN
         import torch
 
         n_samples = 50

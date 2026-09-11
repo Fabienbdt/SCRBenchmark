@@ -8,9 +8,8 @@ from pathlib import Path
 import tempfile
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
-from utils.data_handler import DataHandler
+from scrbenchmark.utils.data_handler import DataHandler
 
 
 class TestDataHandler:

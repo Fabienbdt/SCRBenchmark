@@ -15,11 +15,10 @@ from datetime import datetime
 import json
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.algorithm_registry import AlgorithmRegistry
-from core.config import ParamType
-from gui.widgets import (
+from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
+from scrbenchmark.core.config import ParamType
+from scrbenchmark.gui.widgets import (
   check_prerequisites,
   render_architecture_editor,
   render_param_input as render_param_input_widget,
@@ -1045,7 +1044,7 @@ def _generate_cli_command(compact: bool = False, n_repetitions: int = 1, seed: i
   else:
     get_val = lambda k, default=None: state_source.get(k, default)
 
-  parts = ["./scrbenchmark run"]
+  parts = [f"{shlex.quote(sys.executable)} -m scrbenchmark run"]
   warnings: List[str] = []
 
   def _append(flag: str, value: Any = None) -> None:
@@ -1598,7 +1597,7 @@ def _generate_config_dict() -> Dict[str, Any]:
   config = {
     "export_info": {
       "timestamp": datetime.now().isoformat(),
-      "version": "1.0"
+      "version": "1.1.0"
     },
     "preprocessing": st.session_state.get('preprocessing_params', {}),
     "algorithms": {}
@@ -1688,7 +1687,7 @@ def _generate_yaml_export() -> str:
 
     return "\n".join(lines)
 
-  yaml_content = "# scDeepCluster Analysis Suite - Hyperparameters Configuration\n"
+  yaml_content = "# SCRBenchmark - Hyperparameter Configuration\n"
   yaml_content += f"# Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
   yaml_content += dict_to_yaml(config)
 
@@ -1699,7 +1698,7 @@ def _generate_txt_export() -> str:
   """Generate human-readable TXT export of hyperparameters."""
   lines = []
   lines.append("=" * 70)
-  lines.append("scDeepCluster Analysis Suite - Hyperparameters Configuration")
+  lines.append("SCRBenchmark - Hyperparameter Configuration")
   lines.append("=" * 70)
   lines.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
   lines.append("")

@@ -7,17 +7,16 @@ from pathlib import Path
 import sys
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.config import PREPROCESSING_PARAMS, ParamType, SplitConfig
-from utils.dataset_splitter import get_batch_column, DatasetSplitter
-from gui.widgets import (
+from scrbenchmark.core.config import PREPROCESSING_PARAMS, ParamType, SplitConfig
+from scrbenchmark.utils.dataset_splitter import get_batch_column, DatasetSplitter
+from scrbenchmark.gui.widgets import (
   check_prerequisites,
   display_error,
   download_button as render_download_button,
   render_synced_number_input,
 )
-from gui.state_manager import KEYS, set_with_cascade
+from scrbenchmark.gui.state_manager import KEYS, set_with_cascade
 
 def render_split_ratios(prefix: str = "") -> dict:
   """Reusable component for inputting train/val/test ratios."""
@@ -883,7 +882,7 @@ def render_preprocessing_page():
 
     # --- Post-Preprocessing Distribution Analysis ---
     st.markdown("---")
-    from gui.shared_components import display_batch_and_distribution_info
+    from scrbenchmark.gui.shared_components import display_batch_and_distribution_info
     display_batch_and_distribution_info(
       handler.adata, 
       handler, 
@@ -1187,7 +1186,7 @@ def _render_preprocessing_output_save_section(handler, info):
       st.error(f"Failed to save matrix: {str(e)}")
 
 
-from utils.dataset_splitter import BenchmarkPreprocessor
+from scrbenchmark.utils.dataset_splitter import BenchmarkPreprocessor
 
 def _snapshot_preprocessing_params(params):
   """Return a stable subset of preprocessing params for staleness checks."""

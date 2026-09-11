@@ -20,8 +20,8 @@ from sklearn.cluster import KMeans
 from sklearn import metrics
 from sklearn.preprocessing import StandardScaler
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 import logging
 logger = logging.getLogger(__name__)
@@ -1004,9 +1004,9 @@ class ScDeepClusterAlgorithm(BaseAlgorithm):
             adata.raw = adata.copy()
 
             # 1. Normalize and get size factors
-            sc.pp.normalize_per_cell(adata)
-            # Handle both old and new scanpy n_counts location
-            n_counts = adata.obs.n_counts if 'n_counts' in adata.obs.columns else adata.obs['n_counts']
+            n_counts = np.asarray(adata.X.sum(axis=1)).ravel()
+            adata.obs['n_counts'] = n_counts
+            sc.pp.normalize_total(adata, target_sum=None)
             adata.obs['size_factors'] = n_counts / np.median(n_counts)
             
             # 2. Log transform

@@ -36,6 +36,23 @@ methods:
         - '{device}'
         - --preset
         - '{scraw_preset}'
+        - --n-top-genes
+        - '{n_top_genes}'
+        - --min-genes-per-cell
+        - '{min_genes_per_cell}'
+        - --max-genes-per-cell
+        - '{max_genes_per_cell}'
+        - --min-cells-per-gene
+        - '{min_cells_per_gene}'
+        - --target-sum
+        - '{target_sum}'
+        - --scale-max-value
+        - '{scale_max_value}'
+        - --hvg-flavor
+        - '{hvg_flavor}'
+        - '{overwrite_flag}'
+        - '{verbose_flag}'
+        - '{param_args}'
     output:
       expected_file: results/analysis_results.csv
   - name: PCA

@@ -10,7 +10,7 @@ import inspect
 import logging
 import pkgutil
 # pylint: disable=import-error
-from core.algorithm_registry import BaseAlgorithm
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm
 
 logger = logging.getLogger(__name__)
 

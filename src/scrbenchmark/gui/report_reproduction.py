@@ -12,9 +12,11 @@ import pandas as pd
 import streamlit as st
 
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+from scrbenchmark.paths import resource_root
+
+REPO_ROOT = resource_root()
 MAP_PATH = REPO_ROOT / "reproducibility" / "report_reproduction_map.csv"
-DOC_PATH = REPO_ROOT / "docs" / "report_reproduction_map.md"
+DOC_PATH = REPO_ROOT / "docs" / "guide" / "report_reproduction_map.md"
 
 
 def _quote(parts: Iterable[object]) -> str:

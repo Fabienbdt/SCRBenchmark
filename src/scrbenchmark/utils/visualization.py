@@ -21,8 +21,8 @@ def plot_metrics_comparison(
     Plot boxplots of metrics comparison with optional statistical significance.
     """
     # Import here to avoid circular dependencies if any
-    from utils.statistics import compute_significance_groups
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.utils.statistics import compute_significance_groups
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
     
     metrics = ['NMI', 'ARI', 'ACC', 'Silhouette']
     algo_names = list(results_summary.keys())
@@ -1055,7 +1055,7 @@ def plot_benchmark_comparison(results_summary: Dict[str, Any]) -> plt.Figure:
     """
     Plot Train vs Test performance comparison for benchmark results.
     """
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
     
     metrics = ['NMI', 'ARI', 'ACC']
     algo_names = list(results_summary.keys())
@@ -1116,7 +1116,7 @@ def plot_generalization_gap(results_summary: Dict[str, Any]) -> plt.Figure:
     """
     Plot generalization gap (Train - Test).
     """
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
     
     metrics = ['NMI', 'ARI', 'ACC']
     algo_names = list(results_summary.keys())
@@ -1285,7 +1285,7 @@ def plot_radar_chart(results_summary: Dict[str, Any]) -> plt.Figure:
     """
     Plot radar chart comparing multiple algorithms across standard metrics.
     """
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
     
     metrics = ['NMI', 'ARI', 'ACC', 'Silhouette']
     labels = metrics
@@ -1456,7 +1456,7 @@ def plot_confusion_matrix_multi(
     """
     from sklearn.metrics.cluster import contingency_matrix
     from scipy.optimize import linear_sum_assignment
-    from core.algorithm_registry import AlgorithmRegistry
+    from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
 
     # Get unique algorithms
     true_labels = np.array(true_labels)

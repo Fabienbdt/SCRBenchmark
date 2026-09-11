@@ -8,8 +8,8 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 import logging
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 logger = logging.getLogger(__name__)
 
@@ -266,7 +266,7 @@ class PCALeidenAlgorithm(BaseAlgorithm):
         from sklearn.decomposition import PCA
         import scanpy as sc
         import anndata
-        from utils.pca_utils import get_pca_with_auto_components
+        from scrbenchmark.utils.pca_utils import get_pca_with_auto_components
 
         # Get data matrix (optionally use raw data)
         use_raw_data = self.params.get('use_raw_data', False)

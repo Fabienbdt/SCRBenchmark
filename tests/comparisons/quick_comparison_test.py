@@ -67,7 +67,7 @@ def run_scdeepcluster(X, labels, n_clusters):
     print("="*60)
 
     try:
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
 
         algo = ScDeepClusterAlgorithm({
             'n_clusters': n_clusters,
@@ -102,7 +102,7 @@ def run_sccdcg(X, labels, n_clusters):
     print("="*60)
 
     try:
-        from algorithms.sccdcg import ScCDCGAlgorithm
+        from scrbenchmark.algorithms.sccdcg import ScCDCGAlgorithm
 
         algo = ScCDCGAlgorithm({
             'n_clusters': n_clusters,
@@ -133,7 +133,7 @@ def run_scmae(X, labels, n_clusters):
     print("="*60)
 
     try:
-        from algorithms.sc_mae import ScMaeAlgorithm
+        from scrbenchmark.algorithms.sc_mae import ScMaeAlgorithm
 
         algo = ScMaeAlgorithm({
             'n_clusters': n_clusters,
@@ -166,7 +166,7 @@ def run_scname(X, labels, n_clusters):
     print("="*60)
 
     try:
-        from algorithms.scname import ScNAMEAlgorithm
+        from scrbenchmark.algorithms.scname import ScNAMEAlgorithm
 
         algo = ScNAMEAlgorithm({
             'n_clusters': n_clusters,

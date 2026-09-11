@@ -90,7 +90,7 @@ def _plot_combined_umap(per_cell_csv: Path, output_png: Path) -> bool:
     if "batch" in df.columns:
         panels.append(("batch", "Batch"))
     if "predicted_label" in df.columns:
-        panels.append(("predicted_label", "Label predit"))
+        panels.append(("predicted_label", "Predicted label"))
     if "true_label" in df.columns:
         panels.append(("true_label", "Ground truth"))
     if "scraw_reconstruction_weight" in df.columns:

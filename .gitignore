@@ -131,3 +131,8 @@ scraw-transductive-stable-generalist/.cache/
 scraw-transductive-stable-generalist/logs/
 scraw-transductive-stable-generalist/launcher.screen.log
 scraw-transductive-stable-generalist/**/__pycache__/
+
+# Python distributions and local validation outputs
+/build/
+/dist/
+/.validation/

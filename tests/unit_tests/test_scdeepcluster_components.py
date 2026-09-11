@@ -15,7 +15,6 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 
 class TestZINBLoss:
@@ -24,7 +23,7 @@ class TestZINBLoss:
     @pytest.fixture
     def zinb_loss_function(self):
         """Import ZINB loss from scDeepCluster."""
-        from algorithms.scdeepcluster import ZINBLoss
+        from scrbenchmark.algorithms.scdeepcluster import ZINBLoss
         return ZINBLoss()
 
     @pytest.fixture
@@ -123,7 +122,7 @@ class TestSoftAssignment:
     @pytest.fixture
     def scdeepcluster_model(self):
         """Create a minimal scDeepCluster model for testing."""
-        from algorithms.scdeepcluster import scDeepCluster
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster
 
         model = scDeepCluster(
             input_dim=100,
@@ -204,7 +203,7 @@ class TestTargetDistribution:
 
     @pytest.fixture
     def scdeepcluster_model(self):
-        from algorithms.scdeepcluster import scDeepCluster
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster
 
         model = scDeepCluster(
             input_dim=100,
@@ -272,7 +271,7 @@ class TestReproducibility:
 
     def test_scdeepcluster_deterministic(self):
         """scDeepCluster should produce identical results with same seed."""
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
         import numpy as np
 
         # Create synthetic data
@@ -301,7 +300,7 @@ class TestReproducibility:
 
     def test_zinb_loss_deterministic(self):
         """ZINB loss should be deterministic."""
-        from algorithms.scdeepcluster import ZINBLoss
+        from scrbenchmark.algorithms.scdeepcluster import ZINBLoss
 
         torch.manual_seed(42)
         zinb = ZINBLoss()
@@ -323,7 +322,7 @@ class TestGammaWeighting:
 
     def test_gamma_double_application_documented(self):
         """Document that gamma is applied twice (matching original implementation)."""
-        from algorithms.scdeepcluster import scDeepCluster
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster
 
         # This test documents the known behavior
         # In the original scDeepCluster, gamma is applied:
@@ -360,7 +359,7 @@ class TestDtypeHandling:
 
     def test_float32_on_mps_simulation(self):
         """Model should use float32 when force_float32=True."""
-        from algorithms.scdeepcluster import scDeepCluster
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster
 
         model = scDeepCluster(
             input_dim=100,
@@ -376,7 +375,7 @@ class TestDtypeHandling:
 
     def test_float64_default_on_cpu(self):
         """Model should use float64 by default on CPU."""
-        from algorithms.scdeepcluster import scDeepCluster
+        from scrbenchmark.algorithms.scdeepcluster import scDeepCluster
 
         model = scDeepCluster(
             input_dim=100,

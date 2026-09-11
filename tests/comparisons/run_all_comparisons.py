@@ -78,26 +78,25 @@ def run_tests():
 
 
 def print_summary():
-    """Print overall summary."""
+    """Print the scope and limitations of the comparison checks."""
     print_header("IMPLEMENTATION COMPARISON SUMMARY")
 
     summary = """
-    +-----------------+----------------+------------------+-------------------+
-    | Algorithm       | Framework      | SCRBenchmark     | Methodology       |
-    +-----------------+----------------+------------------+-------------------+
-    | scDeepCluster   | PyTorch        | PyTorch          | IDENTICAL         |
-    | scCDCG          | PyTorch        | PyTorch          | IDENTICAL         |
-    | scMAE           | PyTorch Lightning | PyTorch       | IDENTICAL         |
-    | scNAME          | TensorFlow 1.x | PyTorch          | IDENTICAL         |
-    +-----------------+----------------+------------------+-------------------+
+    +-----------------+-------------------+------------------------------------------+
+    | Algorithm       | Check type        | Interpretation                           |
+    +-----------------+-------------------+------------------------------------------+
+    | scDeepCluster   | Direct + smoke    | Direct checks require optional source    |
+    | scCDCG          | Direct + smoke    | Direct checks require optional source    |
+    | scMAE           | Methodology/smoke | Not a formal equivalence proof           |
+    | scNAME          | Methodology/smoke | Cross-framework; not equivalence proof   |
+    +-----------------+-------------------+------------------------------------------+
 
-    CONCLUSIONS:
-    -----------
-    1. All algorithms are methodologically faithful to original implementations
-    2. Cross-framework ports (TF -> PyTorch) maintain algorithmic equivalence
-    3. Minor differences are in:
-       - Framework-specific syntax (no algorithmic impact)
-       - Code organization (Streamlit integration)
+    INTERPRETATION:
+    ---------------
+    1. Passing component and smoke tests supports implementation consistency.
+    2. A skipped original-source test provides no evidence of direct equivalence.
+    3. Review the pytest pass/skip counts above before drawing conclusions.
+    4. The methodology-only checks do not prove numerical or algorithmic identity.
 
     For detailed component-by-component analysis, run individual reports:
         python compare_<algorithm>.py

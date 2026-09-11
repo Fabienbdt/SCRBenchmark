@@ -44,6 +44,7 @@ def main() -> int:
             data_path=args.data,
             output_dir=args.output,
             device=args.device,
+            label_key=args.label_key,
         )
     else:
         if not args.preprocessing_state or not args.centroid_reference:

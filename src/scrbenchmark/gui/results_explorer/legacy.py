@@ -23,7 +23,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 from scipy import stats
-from gui.widgets import render_export_panel
+from scrbenchmark.gui.widgets import render_export_panel
 from .constants import (
   ALGO_COLORS,
   ALGO_DISPLAY_NAMES,
@@ -33,14 +33,8 @@ from .constants import (
 )
 from .registry import FigureRegistry, debug_registry_state
 
-# Setup path to import shared visualization utilities (same strategy as CLI)
-# legacy.py now lives in gui/results_explorer/, so go three levels up to src/scrbenchmark.
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
-if str(PROJECT_ROOT) not in sys.path:
-  sys.path.insert(0, str(PROJECT_ROOT))
-
 try:
-  from utils import visualization as viz_utils
+  from scrbenchmark.utils import visualization as viz_utils
 except Exception:
   viz_utils = None
 
@@ -53,7 +47,7 @@ except ImportError:
 
 # Optional import for Compact Letter Display (CLD)
 try:
-  from utils.statistics import compute_significance_groups
+  from scrbenchmark.utils.statistics import compute_significance_groups
   HAS_CLD = True
 except ImportError:
   HAS_CLD = False
@@ -634,7 +628,7 @@ def _inject_batch_from_h5ad(labels_data: Dict[str, Dict[str, pd.DataFrame]],
       import itertools
       import json
       import anndata as ad
-      from utils.dataset_splitter import DatasetSplitter, get_batch_column
+      from scrbenchmark.utils.dataset_splitter import DatasetSplitter, get_batch_column
 
       # Find a target row count from any run*_full labels file.
       full_lengths = []
@@ -5170,7 +5164,7 @@ def render_results_explorer_page():
       # 4. Figures
       def _plot_loss_curves_gallery(all_data, selected_algos, target_conditions):
         """Build a gallery figure from loss curve JSONs or PNGs found in result dirs."""
-        import utils.visualization as viz_mod
+        import scrbenchmark.utils.visualization as viz_mod
 
         entries = []
         for condition in target_conditions:

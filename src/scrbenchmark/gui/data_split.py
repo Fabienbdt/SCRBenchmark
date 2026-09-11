@@ -9,10 +9,10 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-from utils.dataset_splitter import DatasetSplitter, get_batch_column, list_batches
-from gui.widgets import check_prerequisites
-from gui.widgets import display_error
-from gui.state_manager import KEYS, invalidate, set_with_cascade
+from scrbenchmark.utils.dataset_splitter import DatasetSplitter, get_batch_column, list_batches
+from scrbenchmark.gui.widgets import check_prerequisites
+from scrbenchmark.gui.widgets import display_error
+from scrbenchmark.gui.state_manager import KEYS, invalidate, set_with_cascade
 
 
 def render_data_split_page():

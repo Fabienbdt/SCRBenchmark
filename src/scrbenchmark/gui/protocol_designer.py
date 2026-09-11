@@ -9,7 +9,7 @@ import pandas as pd
 import streamlit as st
 
 try:
-  from protocols.registry import (
+  from scrbenchmark.protocols.registry import (
     build_job_plan,
     collect_result_rows,
     expand_sweep_configs,

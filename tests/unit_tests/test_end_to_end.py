@@ -15,7 +15,6 @@ import sys
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src" / "scrbenchmark"))
 
 
 @pytest.fixture
@@ -71,7 +70,7 @@ class TestDataHandler:
 
     def test_load_h5ad(self, tmp_path):
         """DataHandler should load H5AD files correctly."""
-        from utils.data_handler import DataHandler
+        from scrbenchmark.utils.data_handler import DataHandler
         import anndata
 
         # Create test data
@@ -115,7 +114,7 @@ class TestAlgorithmExecution:
 
     def test_pca_kmeans_execution(self, synthetic_scrnaseq_data):
         """PCA + K-Means should run and produce valid results."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
 
         X, labels = synthetic_scrnaseq_data
 
@@ -135,7 +134,7 @@ class TestAlgorithmExecution:
 
     def test_pca_kmeans_oracle_mode(self, synthetic_scrnaseq_data):
         """PCA + K-Means Oracle mode should use ground truth k."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
 
         X, labels = synthetic_scrnaseq_data
 
@@ -168,7 +167,7 @@ class TestAlgorithmExecution:
     @pytest.mark.slow
     def test_scdeepcluster_execution(self, synthetic_scrnaseq_data, minimal_training_params):
         """scDeepCluster should run and produce valid results."""
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
 
         X, labels = synthetic_scrnaseq_data
 
@@ -189,7 +188,7 @@ class TestAlgorithmExecution:
     @pytest.mark.slow
     def test_scdeepcluster_reproducibility(self, synthetic_scrnaseq_data, minimal_training_params):
         """scDeepCluster should be reproducible with same seed."""
-        from algorithms.scdeepcluster import ScDeepClusterAlgorithm
+        from scrbenchmark.algorithms.scdeepcluster import ScDeepClusterAlgorithm
 
         X, labels = synthetic_scrnaseq_data
 
@@ -214,7 +213,7 @@ class TestMetricsIntegration:
 
     def test_metrics_on_perfect_clustering(self, synthetic_scrnaseq_data):
         """Metrics should be 1.0 for perfect clustering."""
-        from utils.metrics import compute_metrics
+        from scrbenchmark.utils.metrics import compute_metrics
 
         X, labels = synthetic_scrnaseq_data
 
@@ -227,7 +226,7 @@ class TestMetricsIntegration:
 
     def test_metrics_with_noise_filtering(self):
         """Metrics should correctly filter noise labels."""
-        from utils.metrics import compute_metrics
+        from scrbenchmark.utils.metrics import compute_metrics
 
         # Labels with noise (-1)
         labels_true = np.array([0, 0, 1, 1, -1, 2, 2])
@@ -245,8 +244,8 @@ class TestMetricsIntegration:
 
     def test_metrics_on_algorithm_output(self, synthetic_scrnaseq_data):
         """Metrics should work correctly on actual algorithm output."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
-        from utils.metrics import compute_metrics
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.utils.metrics import compute_metrics
 
         X, labels = synthetic_scrnaseq_data
 
@@ -278,7 +277,7 @@ class TestAnalysisRunner:
 
     def test_analysis_runner_single_algorithm(self, synthetic_scrnaseq_data, tmp_path):
         """AnalysisRunner should execute single algorithm correctly."""
-        from utils.analysis_runner import AnalysisRunner
+        from scrbenchmark.utils.analysis_runner import AnalysisRunner
 
         X, labels = synthetic_scrnaseq_data
 
@@ -303,7 +302,7 @@ class TestAnalysisRunner:
 
     def test_analysis_runner_multiple_algorithms(self, synthetic_scrnaseq_data, tmp_path):
         """AnalysisRunner should execute multiple algorithms."""
-        from utils.analysis_runner import AnalysisRunner
+        from scrbenchmark.utils.analysis_runner import AnalysisRunner
 
         X, labels = synthetic_scrnaseq_data
 
@@ -331,7 +330,7 @@ class TestPreprocessingIntegration:
 
     def test_preprocessing_pipeline(self, synthetic_scrnaseq_data):
         """Preprocessing should work correctly end-to-end."""
-        from utils.data_handler import DataHandler
+        from scrbenchmark.utils.data_handler import DataHandler
         import anndata
 
         X, labels = synthetic_scrnaseq_data
@@ -364,7 +363,7 @@ class TestPreprocessingIntegration:
 
     def test_labels_retrievable_after_preprocessing(self, synthetic_scrnaseq_data, tmp_path):
         """Labels should be retrievable after preprocessing workflow."""
-        from utils.data_handler import DataHandler
+        from scrbenchmark.utils.data_handler import DataHandler
         import anndata
 
         X, labels = synthetic_scrnaseq_data
@@ -408,7 +407,7 @@ class TestOracleModeConsistency:
 
     def test_oracle_mode_explicit_vs_implicit(self, synthetic_scrnaseq_data):
         """Oracle mode should only activate when explicitly enabled."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
 
         X, labels = synthetic_scrnaseq_data  # 3 clusters
 
@@ -444,8 +443,8 @@ class TestEdgeCases:
 
     def test_single_cluster_data(self):
         """Pipeline should handle single cluster data."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
-        from utils.metrics import compute_metrics
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.utils.metrics import compute_metrics
 
         np.random.seed(42)
         X = np.random.poisson(5, (100, 50)).astype(np.float64)
@@ -467,8 +466,8 @@ class TestEdgeCases:
 
     def test_many_small_clusters(self):
         """Pipeline should handle many small clusters."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
-        from utils.metrics import compute_metrics
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.utils.metrics import compute_metrics
 
         np.random.seed(42)
         n_clusters = 10
@@ -491,8 +490,8 @@ class TestEdgeCases:
 
     def test_unbalanced_clusters(self):
         """Pipeline should handle highly unbalanced clusters."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
-        from utils.metrics import compute_metrics
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.utils.metrics import compute_metrics
 
         np.random.seed(42)
 
@@ -520,8 +519,8 @@ class TestCrossValidation:
 
     def test_multiple_runs_variance(self, synthetic_scrnaseq_data):
         """Multiple runs with different seeds should show variance."""
-        from algorithms.pca_kmeans import PCAKMeansAlgorithm
-        from utils.metrics import compute_metrics
+        from scrbenchmark.algorithms.pca_kmeans import PCAKMeansAlgorithm
+        from scrbenchmark.utils.metrics import compute_metrics
 
         X, labels = synthetic_scrnaseq_data
 

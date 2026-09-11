@@ -20,8 +20,8 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import BaseAlgorithm, AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 
 
 # ============================================================================
@@ -93,7 +93,7 @@ def apply_noise(X, p):
     """
     import torch
 
-    p = torch.tensor(p)
+    p = torch.as_tensor(p).detach().clone()
     should_swap = torch.bernoulli(
         p.to(X.device) * torch.ones((X.shape)).to(X.device)
     )
@@ -677,7 +677,7 @@ class ScMaeAlgorithm(BaseAlgorithm):
         Pipeline (from datasets.py lines 187-243):
         1. filter_genes(min_counts=1) - optional, disabled for benchmark consistency
         2. filter_cells(min_counts=1) - optional, disabled for benchmark consistency
-        3. normalize_per_cell
+        3. normalize each cell to the legacy median-count target
         4. size_factors = n_counts / median(n_counts)
         5. log1p
         6. highly_variable_genes(min_mean=0.0125, max_mean=3, min_disp=0.5, n_top_genes=1000)
@@ -704,10 +704,12 @@ class ScMaeAlgorithm(BaseAlgorithm):
              adata.X = adata.X.astype(np.float32)
 
         # Step 3-4: Normalize per cell and compute size factors (original lines 230-233)
-        sc.pp.normalize_per_cell(adata)
-        adata.obs['size_factors'] = adata.obs.n_counts / np.median(adata.obs.n_counts)
+        n_counts = np.asarray(adata.X.sum(axis=1)).ravel()
+        adata.obs['n_counts'] = n_counts
+        sc.pp.normalize_total(adata, target_sum=None)
+        adata.obs['size_factors'] = n_counts / np.median(n_counts)
         # Store normalization target for consistent test preprocessing
-        self._train_norm_target = float(np.median(adata.obs.n_counts))
+        self._train_norm_target = float(np.median(n_counts))
 
         # Step 5: Log transform (original line 237)
         sc.pp.log1p(adata)

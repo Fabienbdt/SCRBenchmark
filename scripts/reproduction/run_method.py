@@ -216,7 +216,8 @@ def _common_scrbenchmark_args(
         raise ValueError("--n-labels must be provided for SCRBenchmark CLI methods.")
     cmd = [
         str(args.python_bin),
-        str(REPO_ROOT / "src" / "scrbenchmark" / "cli.py"),
+        "-m",
+        "scrbenchmark",
         "run",
         "--data",
         _data_path(args),

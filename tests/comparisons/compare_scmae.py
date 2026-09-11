@@ -69,7 +69,7 @@ class TestMLPArchitecture:
 
     def test_mlp_structure(self):
         """Compare MLP layer construction."""
-        from algorithms.sc_mae import ScMaeAlgorithm
+        from scrbenchmark.algorithms.sc_mae import ScMaeAlgorithm
 
         # Test configuration
         params = {'hidden_size': 32, 'latent_dim': 32}
@@ -159,7 +159,7 @@ class TestFullPipeline:
 
     def test_scmae_training(self, synthetic_data):
         """Test scMAE training on synthetic data."""
-        from algorithms.sc_mae import ScMaeAlgorithm
+        from scrbenchmark.algorithms.sc_mae import ScMaeAlgorithm
         from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 
         X = synthetic_data['X']

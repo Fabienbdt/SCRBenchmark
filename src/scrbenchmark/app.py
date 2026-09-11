@@ -1,5 +1,5 @@
 """
-scDeepCluster Analysis Suite - Main Streamlit Application
+SCRBenchmark - Main Streamlit Application
 
 A graphical interface for single-cell RNA-seq clustering analysis.
 Supports multiple algorithms including scDeepCluster, scCDCG, scMAE, scNAME,
@@ -26,28 +26,23 @@ _mpl_cache_dir = Path(tempfile.gettempdir()) / "scrbenchmark_mpl_cache"
 _mpl_cache_dir.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(_mpl_cache_dir))
 
-# Add project root to path
-PROJECT_ROOT = Path(__file__).parent
-sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT.parent)) # For accessing src package
-
 # Import pages
-from gui.data_upload import render_data_upload_page
-from gui.data_split import render_data_split_page
-from gui.preprocessing import render_preprocessing_page
-from gui.algorithm_config import render_algorithm_config_page
-from gui.analysis import render_analysis_page
-from gui.latent_reclustering import render_latent_reclustering_page
-from gui.hyperparam_search import render_hyperparam_search_page
-from gui.customize_benchmark import render_customize_benchmark_page
-from gui.report_reproduction import render_report_reproduction_page
-from gui.results_explorer import render_results_explorer_page
-from gui.documentation import render_documentation_page
-from gui.i18n import t
-from gui.state_manager import KEYS, compute_workflow_progress, init_session_defaults
+from scrbenchmark.gui.data_upload import render_data_upload_page
+from scrbenchmark.gui.data_split import render_data_split_page
+from scrbenchmark.gui.preprocessing import render_preprocessing_page
+from scrbenchmark.gui.algorithm_config import render_algorithm_config_page
+from scrbenchmark.gui.analysis import render_analysis_page
+from scrbenchmark.gui.latent_reclustering import render_latent_reclustering_page
+from scrbenchmark.gui.hyperparam_search import render_hyperparam_search_page
+from scrbenchmark.gui.customize_benchmark import render_customize_benchmark_page
+from scrbenchmark.gui.report_reproduction import render_report_reproduction_page
+from scrbenchmark.gui.results_explorer import render_results_explorer_page
+from scrbenchmark.gui.documentation import render_documentation_page
+from scrbenchmark.gui.i18n import t
+from scrbenchmark.gui.state_manager import KEYS, compute_workflow_progress, init_session_defaults
 
 # Import algorithms to register them
-import algorithms # noqa: F401
+from scrbenchmark import algorithms # noqa: F401
 
 
 def main():
@@ -155,10 +150,10 @@ def _render_sidebar():
     completed = progress["completed"]
     total = progress["total"]
     try:
-      st.progress(completed / max(1, total), text=f"Progression Workflow: {completed}/{total}")
+      st.progress(completed / max(1, total), text=f"Workflow progress: {completed}/{total}")
     except TypeError:
       st.progress(completed / max(1, total))
-      st.caption(f"Progression Workflow: {completed}/{total}")
+      st.caption(f"Workflow progress: {completed}/{total}")
 
     workflow_pages = [
       ("Step 1: Data Upload", "Data Upload"),
@@ -242,7 +237,7 @@ def _render_sidebar():
     # About
     with st.expander("About"):
       st.markdown("""
-      **scDeepCluster Analysis Suite v1.1**
+      **SCRBenchmark v1.1.0**
 
       A graphical interface for single-cell RNA-seq
       clustering analysis.
@@ -259,7 +254,7 @@ def _render_sidebar():
       - CSV/TSV
       - MTX (10X Genomics)
 
-      [Documentation](https://github.com/your-repo)
+      [Project documentation](https://github.com/Fabienbdt/SCRBenchmark)
       """)
 
 
@@ -318,7 +313,7 @@ def _render_main_content():
   st.markdown("---")
   col1, col2 = st.columns([1, 1])
   with col1:
-    st.caption("SCRBenchmark v1.1 | Developed for M2 Internship")
+    st.caption("SCRBenchmark v1.1.0 | Developed for an M2 internship")
   with col2:
     st.caption("Based on: scDeepCluster, scVI, scMAE, scNAME, scCDCG")
 

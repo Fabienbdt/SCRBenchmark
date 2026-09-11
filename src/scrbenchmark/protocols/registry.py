@@ -21,7 +21,9 @@ import subprocess
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+from scrbenchmark.paths import resource_root
+
+REPO_ROOT = resource_root()
 DEFAULT_PROTOCOLS_DIR = REPO_ROOT / "protocols"
 REPORT_DATASET_TABLE = REPO_ROOT / "reproducibility" / "stable_generalist" / "stable_generalist_dataset_table.csv"
 REPORT_DATA_ROOT = Path("data") / "stable_generalist"
@@ -519,7 +521,7 @@ def _load_report_method_names() -> set[str]:
         from scrbenchmark.methods import load_method_specs
     except Exception:
         try:
-            from methods import load_method_specs
+            from scrbenchmark.methods import load_method_specs
         except Exception:
             return set()
     try:
@@ -531,8 +533,8 @@ def _load_report_method_names() -> set[str]:
 
 def _load_algorithm_names() -> set[str]:
     try:
-        import algorithms  # noqa: F401
-        from core.algorithm_registry import AlgorithmRegistry
+        from scrbenchmark import algorithms  # noqa: F401
+        from scrbenchmark.core.algorithm_registry import AlgorithmRegistry
 
         return set(AlgorithmRegistry.get_all().keys())
     except Exception:

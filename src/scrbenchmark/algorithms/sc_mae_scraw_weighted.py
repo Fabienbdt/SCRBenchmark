@@ -16,8 +16,8 @@ import logging
 
 import numpy as np
 
-from core.algorithm_registry import AlgorithmInfo, AlgorithmRegistry
-from core.config import HyperparameterConfig, ParamType
+from scrbenchmark.core.algorithm_registry import AlgorithmInfo, AlgorithmRegistry
+from scrbenchmark.core.config import HyperparameterConfig, ParamType
 from .sc_mae import ScMaeAlgorithm, apply_noise
 
 

@@ -11,9 +11,8 @@ from pathlib import Path
 import sys
 
 # Add parent to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from utils.dataset_splitter import get_batch_column
+from scrbenchmark.utils.dataset_splitter import get_batch_column
 
 
 def _render_html_table(table, *, hide_index=False):

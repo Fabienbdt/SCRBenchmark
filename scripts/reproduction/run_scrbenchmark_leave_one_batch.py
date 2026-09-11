@@ -84,7 +84,7 @@ def _safe_split_name(train_batches: Sequence[str], test_batch: str) -> str:
 def build_command(args: argparse.Namespace, train_batches: list[str], test_batch: str, out_dir: Path) -> list[str]:
     cmd = [
         str(args.python_bin),
-        str(CLI_PATH),
+        "-m", "scrbenchmark",
         "run",
         "--data",
         str(Path(args.data_path).expanduser().resolve()),
